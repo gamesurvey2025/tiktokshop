@@ -1,92 +1,493 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dil Seçici ve Giriş Sistemi</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Tik Tok Shop - Mobil</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
-  body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
-  header { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: #222; color: #fff; }
-  .lang-dropdown { position: relative; }
-  .lang-btn { background: #444; color: #fff; border: none; padding: 8px 12px; cursor: pointer; border-radius: 4px; }
-  .lang-list { display: none; position: absolute; right: 0; top: 35px; background: #fff; color: #000; list-style: none; padding: 0; margin: 0; border: 1px solid #ccc; border-radius: 4px; min-width: 150px; }
-  .lang-list li { padding: 8px 12px; cursor: pointer; }
-  .lang-list li:hover { background: #eee; }
-  .form-container { max-width: 400px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 6px; }
-  .form-container h2 { margin-top: 0; }
-  .form-container input { width: 100%; padding: 8px; margin: 8px 0; border: 1px solid #ccc; border-radius: 4px; }
-  .form-container button { background: #28a745; color: #fff; padding: 10px; border: none; cursor: pointer; border-radius: 4px; width: 100%; }
-  .form-container button:hover { background: #218838; }
+  :root{
+    --bg:#f4f6f8;
+    --card:#ffffff;
+    --muted:#8b8f98;
+    --accent:#ffb400; /* ana vurgun (sarı) */
+    --accent-600:#f2a900;
+    --accent-dark:#d08a00;
+    --green:#2bb673;
+    --red:#ff5a5f;
+    --glass: rgba(255,255,255,0.65);
+    --shadow: 0 6px 18px rgba(20,20,30,0.08);
+    --radius:12px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(180deg,#f7f9fb 0%, #eef2f5 100%);
+    margin:0;
+    color:#0f1724;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+
+  /* Mobile frame */
+  .device {
+    max-width:420px;
+    height:812px;
+    margin:18px auto;
+    border-radius:22px;
+    overflow:hidden;
+    box-shadow: 0 20px 50px rgba(10,20,40,0.12);
+    border:1px solid rgba(0,0,0,0.03);
+    background: var(--bg);
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* Top header */
+  header.top {
+    height:68px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 16px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.6));
+    backdrop-filter: blur(6px);
+    border-bottom:1px solid rgba(15,20,36,0.04);
+  }
+  .logo {
+    width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#111827,#111827);
+    display:flex;align-items:center;justify-content:center;color:white;font-weight:700;
+    font-size:14px;
+    box-shadow: var(--shadow);
+    flex-shrink:0;
+  }
+  .title-wrap {flex:1; display:flex;flex-direction:column; justify-content:center; min-width:0;}
+  .page-title { font-weight:700; font-size:16px; color:#111827; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .page-sub { font-size:12px; color:var(--muted); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .lang-switcher {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    background: rgba(0,0,0,0.03);
+    padding: 6px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
+
+  /* Main content area */
+  main.content {
+    flex:1; overflow:auto; padding:14px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Card */
+  .card {
+    background:var(--card);
+    border-radius:14px;
+    padding:16px;
+    box-shadow: var(--shadow);
+    margin-bottom:12px;
+  }
+  .card-title { font-weight: 700; margin-bottom: 12px; font-size:16px; }
+
+  /* Ticker styles from previous version... */
+  .ticker-wrap{margin-top:12px;height:160px;position:relative;overflow:hidden;border-radius:12px;background:linear-gradient(180deg,#ffffff,#fffafa);border:1px solid rgba(15,20,36,0.04);}
+  .ticker{position:absolute;left:0;right:0;padding:10px;display:flex;flex-direction:column;gap:8px;will-change:transform;}
+  .tx{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:linear-gradient(90deg,rgba(255,255,255,0.8),rgba(250,250,250,0.8));border:1px solid rgba(15,20,36,0.03);}
+  .tx .avatar{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;color:white;background:linear-gradient(135deg,#ff7a59,#ffb86b);flex-shrink:0;}
+  .tx .meta{flex:1}
+  .tx .meta .who{font-weight:600;font-size:14px}
+  .tx .meta .what{font-size:12px;color:var(--muted);margin-top:2px}
+  .tx .amount{font-weight:700;font-size:14px;text-align:right;min-width:90px}
+  .in{color:var(--green)}
+  .out{color:var(--red)}
+
+  /* YENİ Partner Logos stili */
+  .partner-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  .partner-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 6px;
+    border-radius: 12px;
+    background: #fff;
+    border: 1px solid #f0f2f5;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(20,20,30,0.04);
+  }
+  .partner-logo .logo-icon {
+    height: 32px;
+    width: 100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .partner-logo .logo-icon svg {
+    max-height: 100%;
+    max-width: 100%;
+    height: auto;
+    width: auto;
+  }
+  .partner-logo .logo-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: #4a5568;
+  }
+
+  /* Genel Form stilleri */
+  .form-container { display: flex; flex-direction: column; gap: 8px; }
+  .form-title { font-weight: 700; }
+  .form-sub { color: var(--muted); }
+  .field { margin-top: 12px; background: #f7f9fb; border: 1px solid #eef2f5; padding: 12px 14px; border-radius: 10px; color: #111827; }
+  .field::placeholder { color: #a0aec0; }
+  .btn-row { display:flex; gap:10px; margin-top:18px }
+  .btn {
+    flex:1; padding:12px; border-radius:30px; background: var(--accent); color: white; text-align:center;font-weight:700; border:none; cursor:pointer;
+    box-shadow: 0 6px 18px rgba(255, 180, 0, 0.25);
+  }
+  .btn.secondary { background: #e2e8f0; color: #2d3748; box-shadow: none; }
+
+  /* Nav ve diğer stiller... */
+  nav.bottom{height:74px;display:flex;align-items:center;justify-content:space-around;gap:6px;padding:8px 10px;border-top:1px solid rgba(15,20,36,0.04);background:linear-gradient(180deg,rgba(255,255,255,0.9),rgba(255,255,255,0.98))}
+  .nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;width:60px;color:var(--muted);text-decoration:none;font-size:12px;cursor:pointer; text-align:center;}
+  .nav-item .ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:transparent}
+  .nav-item.active{color:var(--accent-dark)}
+  .nav-item.active .ic{background:linear-gradient(180deg,var(--accent-600),var(--accent));color:white;box-shadow:var(--shadow)}
+  .muted{color:var(--muted);font-size:13px}
+  .center{text-align:center}
 </style>
 </head>
 <body>
+  <div class="device" role="application">
+    <header class="top">
+      <div class="logo">T</div>
+      <div class="title-wrap">
+        <div class="page-title" id="pageTitle"></div>
+        <div class="page-sub" id="pageSub"></div>
+      </div>
+      <div class="lang-switcher" id="langSwitcher" onclick="toggleLanguage()">EN</div>
+      <div style="width:36px;height:36px;border-radius:10px;background:#e6eef9;display:flex;align-items:center;justify-content:center;font-weight:700;color:#2c5282">
+        A
+      </div>
+    </header>
 
-<header>
-  <h1>My Website</h1>
-  <div class="lang-dropdown">
-    <button class="lang-btn" id="selected-lang">English</button>
-    <ul class="lang-list" id="lang-list">
-      <li data-lang="en">English</li>
-      <li data-lang="si">සිංහල (Sinhala)</li>
-      <li data-lang="ta">தமிழ் (Tamil)</li>
-      <li data-lang="zh">中文 (Chinese)</li>
-      <li data-lang="tr">Türkçe</li>
-    </ul>
+    <main class="content" id="contentArea">
+      <section id="homePage">
+         <div class="card">
+            <div class="card-title" id="partnersTitle">Popüler Platformlar</div>
+            <div class="partner-grid">
+                <div class="partner-logo">
+                    <div class="logo-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.182 19.3182C15.0909 20.4091 13.4545 21 11.5455 21C8.22727 21 5.45455 18.7727 5.45455 15.4545C5.45455 12.9545 7.09091 10.9545 9.40909 10.1818L10.5 9.77273V9.5C10.5 7.5 12.2727 6.13636 14.1818 6.13636C15.4545 6.13636 16.5909 6.72727 17.1364 7.72727L18.5455 6.86364C17.6364 5.18182 16.0455 4 14.1818 4C11.2727 4 9 6.22727 9 9.13636V10.0455L8.59091 10.1818C5.27273 11.3636 3 14.0455 3 17.2727C3 20.9091 6.09091 24 10.0455 24C12.5 24 14.7273 22.9091 16.1818 21.0909L21 16.2727V15.7273L16.182 19.3182Z" fill="#FF9900"></path><path d="M20 15.25C19.3182 15.8409 18.4091 16.1818 17.5 16.1818C15.5909 16.1818 14.0909 14.6818 14.0909 12.7727C14.0909 10.8636 15.5909 9.36364 17.5 9.36364C19.4091 9.36364 20.9091 10.8636 20.9091 12.7727C20.9091 13.7273 20.5909 14.5909 20 15.25Z" fill="#232F3E"></path></svg></div>
+                    <div class="logo-name">Amazon</div>
+                </div>
+                <div class="partner-logo">
+                    <div class="logo-icon"><svg fill="#FF4747" viewBox="0 0 24 24"><path d="M21.13,3.23l-3.3-0.08c-0.3-0.01-0.56,0.18-0.63,0.47c-0.2,0.76-0.45,1.72-0.73,2.83c-1.1-0.7-2.33-1.18-3.69-1.42c-0.34-0.06-0.67,0.14-0.75,0.47c-0.2,0.76-0.45,1.72-0.73,2.83c-1.39-0.21-2.82-0.18-4.22,0.06C6.71,8.47,6.4,8.26,6.1,8.27L2.87,8.35c-0.34,0.01-0.6,0.3-0.55,0.64l1.24,8.44c0.05,0.34,0.36,0.58,0.7,0.57l3.29-0.07c0.34-0.01,0.61-0.28,0.64-0.62c0.09-0.91,0.22-2.18,0.38-3.64c1.23,0.71,2.56,1.21,4.06,1.44c0.38,0.06,0.74-0.15,0.84-0.51c0.23-0.89,0.5-2,0.78-3.21c1.55,0.21,3.15,0.15,4.68-0.16c0.38-0.08,0.64-0.42,0.55-0.79L21.68,3.8C21.63,3.46,21.36,3.23,21.13,3.23z M12.89,12.2c-1.78-0.26-3.3-0.97-4.5-1.95l0.42-2.83c1.22,0.59,2.5,0.96,3.92,1.07L12.89,12.2z M14.7,8.81c-1.28-0.14-2.5-0.55-3.62-1.17l0.42-2.84c1.15,0.5,2.35,0.84,3.61,0.99L14.7,8.81z"></path></svg></div>
+                    <div class="logo-name">AliExpress</div>
+                </div>
+                 <div class="partner-logo">
+                    <div class="logo-icon" style="color: #F1641E; font-size: 28px; font-weight: bold;">E</div>
+                    <div class="logo-name">Etsy</div>
+                </div>
+                <div class="partner-logo">
+                     <div class="logo-icon"><svg viewBox="0 0 96 24"><path fill="#E53238" d="M3,0h18.4c4.3,0,6.7,2.6,6.7,6.2c0,2.3-1.2,4.3-3.4,5.4c2.5,1,4.2,3.1,4.2,5.9c0,4.1-2.9,6.5-7.4,6.5H3V0z M9.4,9.4h5.7c2.1,0,3.3-1.3,3.3-3.2c0-1.9-1.2-3.1-3.3-3.1H9.4V9.4z M9.4,21.5h6.2c2.4,0,3.8-1.4,3.8-3.5c0-2.1-1.4-3.5-3.8-3.5H9.4V21.5z"/><path fill="#0064D3" d="M31.4,0h8.9l-6.2,24h-9L31.4,0z"/><path fill="#F5AF02" d="M49.6,0h8.9l-6.2,24h-9L49.6,0z"/><path fill="#86B817" d="M72.2,0.5c3.2,0,5.3,1.6,5.3,4.3c0,2.9-2.3,4-4.8,4.2l-3.3,0.5v2.1l3.3,0.3c0.6,0,1,0.1,1.4,0.2c2,0.5,3.2,1.8,3.2,3.8c0,2.5-1.7,4.6-5.5,4.6c-3.7,0-5.8-1.9-5.8-4.5c0-2.6,2.1-3.9,4.7-4.2l3.4-0.5V9.1l-2.6-0.3c-2.4-0.3-3.8-1.6-3.8-3.6C67.6,2.2,69.2,0.5,72.2,0.5z"/></svg></div>
+                    <div class="logo-name">eBay</div>
+                </div>
+                <div class="partner-logo">
+                    <div class="logo-icon"><svg viewBox="0 0 24 24" fill="#ff5a5f"><path d="M12,2A10,10,0,0,0,2,12a10,10,0,0,0,10,10,10,10,0,0,0,10-10A10,10,0,0,0,12,2Zm1.5,15h-3v-4h3Zm0-5h-3V8h3Z"/></svg></div>
+                    <div class="logo-name">Shein</div>
+                </div>
+                <div class="partner-logo">
+                     <div class="logo-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 6H16L12 2L8 6H5C3.89543 6 3 6.89543 3 8V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V8C21 6.89543 20.1046 6 19 6Z" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+                    <div class="logo-name">ASOS</div>
+                </div>
+                <div class="partner-logo">
+                    <div class="logo-icon"><svg viewBox="0 0 24 24" fill="#E53238"><path d="M20,7H4V4H20M21,2H3A1,1,0,0,0,2,3V8H22V3A1,1,0,0,0,21,2M2,18H22V10H2V18M2,20V19H22V20H2Z"></path></svg></div>
+                    <div class="logo-name">Banggood</div>
+                </div>
+                <div class="partner-logo">
+                     <div class="logo-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#000" d="M12.53.02C13.84 0 15.14.32 16.43.95c.65.31 1.27.69 1.87 1.14.59.45 1.15.96 1.68 1.54.41.45.8 1 .91 1.61.07.38.07.78.07 1.18v6.78a2.5 2.5 0 01-2.5 2.5H18a.5.5 0 01-.5-.5v-9a.5.5 0 00-.5-.5H15a.5.5 0 00-.5.5v5a.5.5 0 01-.5.5h-2a.5.5 0 01-.5-.5v-6.5a4.5 4.5 0 10-4.5 4.5v2a.5.5 0 01-.5.5h-2a.5.5 0 01-.5-.5V4.53a4.5 4.5 0 004.5 4.5V4.5a.5.5 0 01.5-.5h2a.5.5 0 01.5.5v.02z"/></svg></div>
+                    <div class="logo-name">TikTok Shop</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div class="card-title" id="tickerTitle">Giriş ve Çıkış</div>
+          </div>
+          <div class="ticker-wrap" id="tickerWrap">
+            <div class="ticker" id="tickerA"></div>
+            <div class="ticker" id="tickerB" style="top:100%"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tucPage" style="display:none">
+        <div class="card">
+            <div class="form-container">
+                <div class="form-title" id="merchantLoginTitle"></div>
+                <div class="form-sub" id="merchantLoginSub"></div>
+                <input class="field" id="merchantUser" type="text"/>
+                <input class="field" id="merchantPass" type="password"/>
+                <div class="btn-row">
+                    <button class="btn" id="btnLogin" onclick="alert('Login simulation')"></button>
+                    <button class="btn secondary" id="btnRegister" onclick="alert('Register simulation')"></button>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <section id="calismaPage" style="display:none">
+        <div class="card" id="workLoginContainer">
+            <div class="form-container">
+                <div class="form-title" id="workLoginTitle"></div>
+                <div class="form-sub" id="workLoginSub"></div>
+                <input class="field" id="workUser" type="text"/>
+                <input class="field" id="workPass" type="password"/>
+                <div class="btn-row">
+                    <button class="btn" id="workBtnLogin" onclick="simulateWorkLogin()"></button>
+                </div>
+            </div>
+        </div>
+        <div class="card" id="workDashboard" style="display:none; text-align:center;">
+            <h3 id="workDashboardTitle"></h3>
+            <p id="workDashboardWelcome"></p>
+            <button class="btn secondary" onclick="workLogout()" id="workBtnLogout"></button>
+        </div>
+      </section>
+
+      <section id="kayitPage" style="display:none">
+         <div class="card">
+            <div class="form-container">
+                <div class="form-title" id="registerTitle"></div>
+                <input class="field" id="registerFieldName" type="text"/>
+                <input class="field" id="registerFieldPhone" type="text"/>
+                <input class="field" id="registerFieldPass" type="password"/>
+                <div class="btn-row">
+                    <button class="btn" id="registerBtnSubmit"></button>
+                    <button class="btn secondary" id="registerBtnCancel"></button>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <section id="hesapPage" style="display:none">
+        <div class="card">
+            <div class="form-container">
+                <div class="form-title" id="accountLoginTitle"></div>
+                <div class="form-sub" id="accountLoginSub"></div>
+                <input class="field" id="accountUser" type="text"/>
+                <input class="field" id="accountPass" type="password"/>
+                <div class="btn-row">
+                    <button class="btn" id="accountBtnLogin" onclick="alert('Account login simulation')"></button>
+                    <button class="btn secondary" id="accountBtnRegister" onclick="alert('Account registration simulation')"></button>
+                </div>
+            </div>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom" role="navigation">
+      <div class="nav-item active" data-target="homePage" onclick="switchPage(event)">
+        <div class="ic">🏠</div>
+        <div class="lbl" id="navHome"></div>
+      </div>
+      <div class="nav-item" data-target="tucPage" onclick="switchPage(event)">
+        <div class="ic">🧾</div>
+        <div class="lbl" id="navMerchant"></div>
+      </div>
+      <div class="nav-item" data-target="calismaPage" onclick="switchPage(event)">
+        <div class="ic">⚙️</div>
+        <div class="lbl" id="navWork"></div>
+      </div>
+      <div class="nav-item" data-target="kayitPage" onclick="switchPage(event)">
+        <div class="ic">📝</div>
+        <div class="lbl" id="navRegister"></div>
+      </div>
+      <div class="nav-item" data-target="hesapPage" onclick="switchPage(event)">
+        <div class="ic">👤</div>
+        <div class="lbl" id="navAccount"></div>
+      </div>
+    </nav>
   </div>
-</header>
-
-<div class="form-container" id="login-form">
-  <h2>Login</h2>
-  <input type="text" placeholder="Username" id="login-username">
-  <input type="password" placeholder="Password" id="login-password">
-  <button>Login</button>
-</div>
-
-<div class="form-container" id="register-form">
-  <h2>Register</h2>
-  <input type="text" placeholder="Username" id="reg-username">
-  <input type="password" placeholder="Password" id="reg-password">
-  <button>Register</button>
-</div>
 
 <script>
-  const langBtn = document.getElementById('selected-lang');
-  const langList = document.getElementById('lang-list');
-
-  // Dil listesi aç/kapa
-  langBtn.addEventListener('click', () => {
-    langList.style.display = langList.style.display === 'block' ? 'none' : 'block';
-  });
-
-  // Dil seçme
-  document.querySelectorAll('#lang-list li').forEach(item => {
-    item.addEventListener('click', () => {
-      const langCode = item.getAttribute('data-lang');
-      localStorage.setItem('site-lang', langCode);
-      setLanguage(langCode);
-      langList.style.display = 'none';
-    });
-  });
-
-  // Dil ayarla
-  function setLanguage(lang) {
-    let text = {
-      en: "English",
-      si: "සිංහල",
-      ta: "தமிழ்",
-      zh: "中文",
-      tr: "Türkçe"
-    };
-    langBtn.textContent = text[lang] || "English";
-    // Burada içerik çevirme yapılabilir (JSON çeviri dosyası ile)
+/* ---------------------------
+  Dil ve Çeviri Yönetimi
+--------------------------- */
+const translations = {
+  en: {
+    navHome: "Home", navMerchant: "Merchant", navWork: "Work", navRegister: "Register", navAccount: "My Account",
+    page_homePage: ["Home", "Popular Platforms"], page_tucPage: ["Merchant", "Merchant Access"], page_calismaPage: ["Work", "Task Login"], page_kayitPage: ["Register", "Create New Account"], page_hesapPage: ["My Account", "User Login & Sign Up"],
+    partnersTitle: "Popular E-Commerce Platforms", tickerTitle: "Live Transactions", txIn: "Deposit", txOut: "Withdrawal",
+    merchantLoginTitle: "Merchant Login", merchantLoginSub: "Enter your merchant credentials", merchantUserPlaceholder: "Username/Mobile", merchantPassPlaceholder: "Password", btnLogin: "Login", btnRegister: "Register",
+    workLoginTitle: "Task Login", workLoginSub: "Log in to manage your tasks", workUserPlaceholder: "Worker ID", workPassPlaceholder: "Password", workBtnLogin: "Login",
+    workDashboardTitle: "Work Panel", workDashboardWelcome: "Welcome! Your tasks are ready.", workBtnLogout: "Logout",
+    registerTitle: "Create Account", registerFieldName: "Full Name", registerFieldPhone: "Mobile Phone", registerFieldPass: "Password", registerBtnSubmit: "Sign Up", registerBtnCancel: "Cancel",
+    accountLoginTitle: "User Login", accountLoginSub: "Access your account or register", accountUserPlaceholder: "Username", accountPassPlaceholder: "Password", accountBtnLogin: "Login", accountBtnRegister: "Sign Up",
+  },
+  si: { // Sinhala
+    navHome: "මුල් පිටුව", navMerchant: "වෙළෙන්දා", navWork: "කාර්ය", navRegister: "ලියාපදිංචිය", navAccount: "මගේ ගිණුම",
+    page_homePage: ["මුල් පිටුව", "ජනප්‍රිය වේදිකා"], page_tucPage: ["වෙළෙන්දා", "වෙළඳ ප්‍රවේශය"], page_calismaPage: ["කාර්ය", "කාර්යයට පිවිසෙන්න"], page_kayitPage: ["ලියාපදිංචිය", "නව ගිණුමක් සාදන්න"], page_hesapPage: ["මගේ ගිණුම", "පරිශීලක පිවිසුම"],
+    partnersTitle: "ජනප්‍රිය ඊ-වාණිජ්‍ය වේදිකා", tickerTitle: "සජීවී ගනුදෙනු", txIn: "තැන්පතු", txOut: "ගැනීම",
+    merchantLoginTitle: "වෙළඳ පිවිසුම", merchantLoginSub: "ඔබේ වෙළඳ ఆధారතා ඇතුළත් කරන්න", merchantUserPlaceholder: "පරිශීලක නාමය/ජංගම", merchantPassPlaceholder: "මුරපදය", btnLogin: "පිවිසෙන්න", btnRegister: "ලියාපදිංචි වන්න",
+    workLoginTitle: "කාර්යයට පිවිසෙන්න", workLoginSub: "ඔබේ කාර්යයන් කළමනාකරණය කිරීමට පිවිසෙන්න", workUserPlaceholder: "සේවක හැඳුනුම්පත", workPassPlaceholder: "මුරපදය", workBtnLogin: "පිවිසෙන්න",
+    workDashboardTitle: "කාර්ය පුවරුව", workDashboardWelcome: "සාදරයෙන් පිළිගනිමු! ඔබගේ කාර්යයන් සූදානම්.", workBtnLogout: "ඉවත් වන්න",
+    registerTitle: "ගිණුමක් සාදන්න", registerFieldName: "සම්පූර්ණ නම", registerFieldPhone: "ජංගම දුරකථනය", registerFieldPass: "මුරපදය", registerBtnSubmit: "ලියාපදිංචි වන්න", registerBtnCancel: "අවලංගු කරන්න",
+    accountLoginTitle: "පරිශීලක පිවිසුම", accountLoginSub: "ඔබගේ ගිණුමට පිවිසෙන්න", accountUserPlaceholder: "පරිශීලක නාමය", accountPassPlaceholder: "මුරපදය", accountBtnLogin: "පිවිසෙන්න", accountBtnRegister: "ලියාපදිංචි වන්න",
+  },
+  ta: { // Tamil
+    navHome: "முகப்பு", navMerchant: "வணிகர்", navWork: "பணி", navRegister: "பதிவு", navAccount: "என் கணக்கு",
+    page_homePage: ["முகப்பு", "பிரபலமான தளங்கள்"], page_tucPage: ["வணிகர்", "வணிகர் அணுகல்"], page_calismaPage: ["பணி", "பணி உள்நுழைவு"], page_kayitPage: ["பதிவு", "புதிய கணக்கை உருவாக்கு"], page_hesapPage: ["என் கணக்கு", "பயனர் உள்நுழைவு"],
+    partnersTitle: "பிரபலமான மின்வணிக தளங்கள்", tickerTitle: "நேரடி பரிவர்த்தனைகள்", txIn: "வைப்பு", txOut: "திரும்பப் பெறுதல்",
+    merchantLoginTitle: "வணிகர் உள்நுழைவு", merchantLoginSub: "உங்கள் வணிகர் சான்றுகளை உள்ளிடவும்", merchantUserPlaceholder: "பயனர்பெயர்/மொபைல்", merchantPassPlaceholder: "கடவுச்சொல்", btnLogin: "உள்நுழைக", btnRegister: "பதிவு செய்க",
+    workLoginTitle: "பணி உள்நுழைவு", workLoginSub: "உங்கள் பணிகளை நிர்வகிக்க உள்நுழைக", workUserPlaceholder: "பணியாளர் ஐடி", workPassPlaceholder: "கடவுச்சொல்", workBtnLogin: "உள்நுழைக",
+    workDashboardTitle: "பணி குழு", workDashboardWelcome: "வருக! உங்கள் பணிகள் தயாராக உள்ளன.", workBtnLogout: "வெளியேறு",
+    registerTitle: "கணக்கை உருவாக்கு", registerFieldName: "முழு பெயர்", registerFieldPhone: "கைபேசி", registerFieldPass: "கடவுச்சொல்", registerBtnSubmit: "பதிவு செய்க", registerBtnCancel: "ரத்துசெய்",
+    accountLoginTitle: "பயனர் உள்நுழைவு", accountLoginSub: "உங்கள் கணக்கை அணுகவும்", accountUserPlaceholder: "பயனர்பெயர்", accountPassPlaceholder: "கடவுச்சொல்", accountBtnLogin: "உள்நுழைக", accountBtnRegister: "பதிவு செய்க",
   }
+};
+const langCycle = ['en', 'si', 'ta'];
+let currentLangIndex = 0;
 
-  // Sayfa açıldığında dil yükle
-  window.onload = () => {
-    let savedLang = localStorage.getItem('site-lang') || 'en';
-    setLanguage(savedLang);
-  };
+function setLanguage(lang) {
+    currentLangIndex = langCycle.indexOf(lang);
+    document.documentElement.lang = lang;
+    const t = translations[lang];
+
+    Object.keys(t).forEach(key => {
+        const el = document.getElementById(key);
+        if (el) {
+            if (key.startsWith('page_')) return;
+            if (key.endsWith('Placeholder')) {
+                document.getElementById(key.replace('Placeholder', '')).placeholder = t[key];
+            } else {
+                el.innerHTML = t[key];
+            }
+        }
+    });
+    
+    const activePage = document.querySelector('nav .active').getAttribute('data-target');
+    const [title, sub] = t['page_' + activePage] || ["", ""];
+    document.getElementById('pageTitle').innerText = title;
+    document.getElementById('pageSub').innerText = sub;
+
+    document.getElementById('langSwitcher').innerText = lang.toUpperCase();
+    renderTickers();
+}
+
+function toggleLanguage() {
+    currentLangIndex = (currentLangIndex + 1) % langCycle.length;
+    setLanguage(langCycle[currentLangIndex]);
+}
+
+
+/* ---------------------------
+  Ticker & Other Functions...
+--------------------------- */
+const tickerA = document.getElementById('tickerA');
+const tickerB = document.getElementById('tickerB');
+let items = [];
+
+function genTx(){
+  const lang = langCycle[currentLangIndex];
+  const isDeposit = Math.random() < 0.55;
+  const type = isDeposit ? translations[lang].txIn : translations[lang].txOut;
+  return {type, cls: isDeposit ? 'in' : 'out'};
+}
+function createTxElement(tx){
+  const el = document.createElement('div');
+  el.className = 'tx';
+  el.innerHTML = `<div class="avatar">${tx.type.slice(0,1)}</div><div class="meta"><div class="who">user***${Math.floor(Math.random()*900)}</div><div class="what">${tx.type}</div></div><div class="amount ${tx.cls}">$${(Math.random()*200+10).toFixed(2)}</div>`;
+  return el;
+}
+function renderTickers(){
+  tickerA.innerHTML = '';
+  tickerB.innerHTML = '';
+  const list = items.slice(-20);
+  list.forEach(tx => tickerA.appendChild(createTxElement(tx)));
+  list.forEach(tx => tickerB.appendChild(createTxElement(tx)));
+  tickerA.style.transform = 'translateY(0%)';
+  tickerB.style.transform = 'translateY(100%)';
+}
+function seedInitial(n=20){ for(let i=0;i<n;i++){ items.push(genTx()); } renderTickers(); }
+let posA = 0, posB = 100, lastFrame = performance.now();
+function animateTickers(now){
+  const delta = now - lastFrame; lastFrame = now;
+  const step = 0.035 * (delta/16.67);
+  posA -= step; posB -= step;
+  if(posA <= -100){ posA = posB + 100; items.push(genTx()); renderTickers();}
+  if(posB <= -100){ posB = posA + 100; items.push(genTx()); renderTickers();}
+  tickerA.style.transform = `translateY(${posA}%)`;
+  tickerB.style.transform = `translateY(${posB}%)`;
+  requestAnimationFrame(animateTickers);
+}
+setInterval(()=> { items.push(genTx()); }, 3000);
+
+
+/* ---------------------------
+  Page & App Logic
+--------------------------- */
+function switchPage(e){
+  const target = e.currentTarget.getAttribute('data-target');
+  document.querySelectorAll('.nav-item').forEach(n=> n.classList.remove('active'));
+  e.currentTarget.classList.add('active');
+
+  document.querySelectorAll('main.content section').forEach(s=> s.style.display='none');
+  const sec = document.getElementById(target);
+  if(sec) sec.style.display = 'block';
+  
+  const lang = langCycle[currentLangIndex];
+  const [title, sub] = translations[lang]['page_' + target];
+  document.getElementById('pageTitle').innerText = title;
+  document.getElementById('pageSub').innerText = sub;
+}
+
+/* YENİ: Çalışma sayfası giriş simülasyonu */
+function simulateWorkLogin() {
+    const user = document.getElementById('workUser').value;
+    const pass = document.getElementById('workPass').value;
+    if (user.trim() === '' || pass.trim() === '') {
+        alert('Please fill in both fields.');
+        return;
+    }
+    document.getElementById('workLoginContainer').style.display = 'none';
+    document.getElementById('workDashboard').style.display = 'block';
+}
+
+function workLogout() {
+    document.getElementById('workLoginContainer').style.display = 'block';
+    document.getElementById('workDashboard').style.display = 'none';
+    document.getElementById('workUser').value = '';
+    document.getElementById('workPass').value = '';
+}
+
+
+/* ---------------------------
+  Init
+--------------------------- */
+function initializeApp() {
+    const userLang = (navigator.language || navigator.userLanguage).slice(0, 2);
+    let initialLang = 'en';
+    if (userLang === 'si') initialLang = 'si';
+    if (userLang === 'ta') initialLang = 'ta';
+    
+    setLanguage(initialLang);
+
+    seedInitial(22);
+    requestAnimationFrame(animateTickers);
+}
+
+initializeApp();
 </script>
-
 </body>
 </html>
