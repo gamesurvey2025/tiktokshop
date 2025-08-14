@@ -3,15 +3,31 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>Tik Tok Shop - Functional Demo</title>
+<title>Tik Tok Shop - Mobil</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f4f6f8; --card:#ffffff; --muted:#8b8f98; --accent:#ffb400; --accent-600:#f2a900; --accent-dark:#d08a00; --green:#2bb673; --red:#ff5a5f; --shadow: 0 6px 18px rgba(20,20,30,0.08);
+    --bg:#f4f6f8;
+    --card:#ffffff;
+    --muted:#8b8f98;
+    --accent:#ffb400;
+    --accent-600:#f2a900;
+    --accent-dark:#d08a00;
+    --green:#2bb673;
+    --red:#ff5a5f;
+    --shadow: 0 6px 18px rgba(20,20,30,0.08);
+    --radius:12px;
   }
   *{box-sizing:border-box}
   html,body{height:100%}
-  body{font-family:Inter, system-ui, sans-serif; background: linear-gradient(180deg,#f7f9fb 0%, #eef2f5 100%); margin:0; color:#0f1724; -webkit-font-smoothing:antialiased;}
+  body{
+    font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(180deg,#f7f9fb 0%, #eef2f5 100%);
+    margin:0;
+    color:#0f1724;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
   .device { max-width:420px; height:812px; margin:18px auto; border-radius:22px; overflow:hidden; box-shadow: 0 20px 50px rgba(10,20,40,0.12); border:1px solid rgba(0,0,0,0.03); background: var(--bg); display:flex; flex-direction:column; }
   header.top { height:68px; display:flex; align-items:center; gap:12px; padding:12px 16px; background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.6)); backdrop-filter: blur(6px); border-bottom:1px solid rgba(15,20,36,0.04); position:relative; z-index: 10; }
   .logo { width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#111827,#111827); display:flex;align-items:center;justify-content:center;color:white;font-weight:700; font-size:14px; box-shadow: var(--shadow); flex-shrink:0; }
@@ -22,13 +38,19 @@
   .card { background:var(--card); border-radius:14px; padding:16px; box-shadow: var(--shadow); margin-bottom:12px; }
   .card-title { font-weight: 700; margin-bottom: 12px; font-size:16px; }
 
-  /* Gelişmiş Dil Menüsü Stilleri */
+  /* YENİ: Dil Menüsü Stilleri */
   .lang-menu-container { position: relative; }
   .lang-switcher-button { font-size: 12px; font-weight: 600; color: var(--muted); background: rgba(0,0,0,0.03); padding: 6px 10px; border-radius: 6px; cursor: pointer; border: 1px solid transparent; margin-right: 8px; flex-shrink: 0; }
   .lang-dropdown { display: none; position: absolute; top: 50px; right: 0; background: white; border-radius: 8px; box-shadow: var(--shadow); border: 1px solid #f0f2f5; overflow: hidden; z-index: 11; min-width: 150px; }
   .lang-dropdown a { color: #2d3748; padding: 10px 15px; text-decoration: none; display: block; font-size: 14px; }
   .lang-dropdown a:hover { background-color: #f7f9fb; }
 
+  /* Ticker ve diğer stiller... */
+  .partner-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .partner-logo { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 12px 6px; border-radius: 12px; background: #fff; border: 1px solid #f0f2f5; text-align: center; box-shadow: 0 2px 8px rgba(20,20,30,0.04); }
+  .partner-logo .logo-icon { height: 32px; width: 100%; display:flex; align-items:center; justify-content:center; }
+  .partner-logo .logo-icon svg { max-height: 100%; max-width: 100%; height: auto; width: auto; }
+  .partner-logo .logo-name { font-size: 12px; font-weight: 600; color: #4a5568; }
   .form-container { display: flex; flex-direction: column; gap: 8px; }
   .form-title { font-weight: 700; }
   .form-sub { color: var(--muted); }
@@ -60,19 +82,89 @@
               <a href="#" onclick="selectLanguage(event, 'ta')">தமிழ் (TA)</a>
           </div>
       </div>
-      <div style="width:36px;height:36px;border-radius:10px;background:#e6eef9;display:flex;align-items:center;justify-content:center;font-weight:700;color:#2c5282">A</div>
+      <div style="width:36px;height:36px;border-radius:10px;background:#e6eef9;display:flex;align-items:center;justify-content:center;font-weight:700;color:#2c5282"> A </div>
     </header>
 
     <main class="content" id="contentArea">
-      <section id="homePage"></section>
+      <section id="homePage">
+        <div class="card">
+            <div class="card-title" id="partnersTitle"></div>
+            <div class="partner-grid">
+                 <div class="partner-logo"><div class="logo-icon" style="color:#FF9900;font-weight:bold;font-size:24px">a</div><div class="logo-name">Amazon</div></div>
+                 <div class="partner-logo"><div class="logo-icon" style="color:#FF4747;font-weight:bold;font-size:24px">A</div><div class="logo-name">AliExpress</div></div>
+                 <div class="partner-logo"><div class="logo-icon" style="color:#F1641E;font-weight:bold;font-size:24px">E</div><div class="logo-name">Etsy</div></div>
+                 <div class="partner-logo"><div class="logo-icon" style="color:#E53238;font-weight:bold;font-size:16px">ebay</div><div class="logo-name">eBay</div></div>
+                 <div class="partner-logo"><div class="logo-icon" style="color:#ff5a5f;font-weight:bold;font-size:24px">S</div><div class="logo-name">Shein</div></div>
+                 <div class="partner-logo"><div class="logo-icon" style="color:#000;font-weight:bold;font-size:14px">ASOS</div><div class="logo-name">ASOS</div></div>
+                 <div class="partner-logo"><div class="logo-icon" style="color:#E53238;font-weight:bold;font-size:24px">B</div><div class="logo-name">Banggood</div></div>
+                 <div class="partner-logo"><div class="logo-icon" style="color:#000;font-weight:bold;font-size:24px">T</div><div class="logo-name">TikTok</div></div>
+            </div>
+        </div>
+      </section>
 
-      <section id="tucPage" style="display:none;"></section>
+      <section id="tucPage" style="display:none">
+        <div class="card">
+            <div class="form-container">
+                <div class="form-title" id="merchantLoginTitle"></div>
+                <div class="form-sub" id="merchantLoginSub"></div>
+                <input class="field" id="merchantUser" type="text"/>
+                <input class="field" id="merchantPass" type="password"/>
+                <div class="btn-row">
+                    <button class="btn" id="btnLogin" onclick="alert('Login simulation')"></button>
+                    <button class="btn secondary" id="btnRegister" onclick="alert('Register simulation')"></button>
+                </div>
+            </div>
+        </div>
+      </section>
 
-      <section id="calismaPage" style="display:none;"></section>
+      <section id="calismaPage" style="display:none">
+        <div class="card" id="workLoginContainer">
+            <div class="form-container">
+                <div class="form-title" id="workLoginTitle"></div>
+                <div class="form-sub" id="workLoginSub"></div>
+                <input class="field" id="workUser" type="text"/>
+                <input class="field" id="workPass" type="password"/>
+                <div class="btn-row">
+                    <button class="btn" id="workBtnLogin" onclick="simulateWorkLogin()"></button>
+                </div>
+            </div>
+        </div>
+        <div class="card" id="workDashboard" style="display:none; text-align:center;">
+            <h3 id="workDashboardTitle"></h3>
+            <p id="workDashboardWelcome"></p>
+            <button class="btn secondary" onclick="workLogout()" id="workBtnLogout"></button>
+        </div>
+      </section>
 
-      <section id="kayitPage" style="display:none;"></section>
+      <section id="kayitPage" style="display:none">
+         <div class="card">
+            <div class="form-container">
+                <div class="form-title" id="registerTitle"></div>
+                <input class="field" id="registerFullName" type="text"/>
+                <input class="field" id="registerPhone" type="text"/>
+                <input class="field" id="registerPass" type="password"/>
+                <div class="btn-row">
+                    <button class="btn" id="registerBtnSubmit"></button>
+                    <button class="btn secondary" id="registerBtnCancel"></button>
+                </div>
+            </div>
+        </div>
+      </section>
 
-      <section id="hesapPage" style="display:none;"></section>
+      <section id="hesapPage" style="display:none">
+        <div class="card">
+            <div class="form-container">
+                <div class="form-title" id="accountLoginTitle"></div>
+                <div class="form-sub" id="accountLoginSub"></div>
+                <input class="field" id="accountUser" type="text"/>
+                <input class="field" id="accountPass" type="password"/>
+                <div class="btn-row">
+                    <button class="btn" id="accountBtnLogin" onclick="alert('Account login simulation')"></button>
+                    <button class="btn secondary" id="accountBtnRegister" onclick="alert('Account registration simulation')"></button>
+                </div>
+            </div>
+        </div>
+      </section>
     </main>
 
     <nav class="bottom" role="navigation">
@@ -85,235 +177,36 @@
   </div>
 
 <script>
-/* -------------------------------------------------- */
-/* --- ÇEVİRİ VE METİN YÖNETİMİ --- */
-/* -------------------------------------------------- */
+/* ---------------------------
+  Dil ve Çeviri Yönetimi
+--------------------------- */
 const translations = {
   en: {
     navHome: "Home", navMerchant: "Merchant", navWork: "Work", navRegister: "Register", navAccount: "My Account",
-    page_homePage: ["Home", "Welcome"], page_tucPage: ["Merchant", "Merchant Access"], page_calismaPage: ["Work", "Task Login"], page_kayitPage: ["Register", "Create New Account"], page_hesapPage: ["My Account", "User Login"],
-    // Placeholders
-    merchantUserPlaceholder: "Merchant ID", merchantPassPlaceholder: "Password",
-    workUserPlaceholder: "Username", workPassPlaceholder: "Password",
-    registerUserPlaceholder: "Choose a Username", registerPassPlaceholder: "Create a Password",
-    accountUserPlaceholder: "Username", accountPassPlaceholder: "Password",
-    // Titles & Buttons
-    merchantLoginTitle: "Merchant Login", btnLogin: "Login", btnRegister: "Register",
-    workLoginTitle: "Work Login", workBtnLogin: "Login",
-    registerTitle: "Create Account", registerBtnSubmit: "Sign Up",
-    accountLoginTitle: "My Account Login", accountBtnLogin: "Login", accountBtnRegister: "Sign Up",
-    // Logged In Panels
-    workDashboardTitle: "Work Panel", workDashboardWelcome: "Welcome back! Your tasks are waiting.", btnLogout: "Logout",
-    accountDashboardTitle: "My Account", accountDashboardWelcome: "Hello! Welcome to your account.",
-    // Alerts
-    alertFillFields: "Please fill in all fields.", alertUserExists: "This username already exists. Please choose another one.", alertRegisterSuccess: "Registration successful! You can now log in.", alertLoginFailed: "Incorrect username or password.",
+    page_homePage: ["Home", "Popular Platforms"], page_tucPage: ["Merchant", "Merchant Access"], page_calismaPage: ["Work", "Task Login"], page_kayitPage: ["Register", "Create New Account"], page_hesapPage: ["My Account", "User Login & Sign Up"],
+    partnersTitle: "Popular E-Commerce Platforms",
+    merchantLoginTitle: "Merchant Login", merchantLoginSub: "Enter your merchant credentials", merchantUserPlaceholder: "Username", merchantPassPlaceholder: "Password", btnLogin: "Login", btnRegister: "Register",
+    workLoginTitle: "Task Login", workLoginSub: "Log in to manage your tasks", workUserPlaceholder: "Username", workPassPlaceholder: "Password", workBtnLogin: "Login",
+    workDashboardTitle: "Work Panel", workDashboardWelcome: "Welcome! Your tasks are ready.", workBtnLogout: "Logout",
+    registerTitle: "Create Account", registerFullNamePlaceholder: "Full Name", registerPhonePlaceholder: "Mobile Phone", registerPassPlaceholder: "Password", registerBtnSubmit: "Sign Up", registerBtnCancel: "Cancel",
+    accountLoginTitle: "User Login", accountLoginSub: "Access your account or register", accountUserPlaceholder: "Username", accountPassPlaceholder: "Password", accountBtnLogin: "Login", accountBtnRegister: "Sign Up",
   },
   si: { // Sinhala
     navHome: "මුල් පිටුව", navMerchant: "වෙළෙන්දා", navWork: "කාර්ය", navRegister: "ලියාපදිංචිය", navAccount: "මගේ ගිණුම",
-    page_homePage: ["මුල් පිටුව", "සාදරයෙන් පිළිගනිමු"], page_tucPage: ["වෙළෙන්දා", "වෙළඳ ප්‍රවේශය"], page_calismaPage: ["කාර්ය", "කාර්යයට පිවිසෙන්න"], page_kayitPage: ["ලියාපදිංචිය", "නව ගිණුමක් සාදන්න"], page_hesapPage: ["මගේ ගිණුම", "පරිශීලක පිවිසුම"],
-    merchantUserPlaceholder: "වෙළඳ හැඳුනුම්පත", merchantPassPlaceholder: "මුරපදය",
-    workUserPlaceholder: "පරිශීලක නාමය", workPassPlaceholder: "මුරපදය",
-    registerUserPlaceholder: "පරිශීලක නාමයක් තෝරන්න", registerPassPlaceholder: "මුරපදයක් සාදන්න",
-    accountUserPlaceholder: "පරිශීලක නාමය", accountPassPlaceholder: "මුරපදය",
-    merchantLoginTitle: "වෙළඳ පිවිසුම", btnLogin: "පිවිසෙන්න", btnRegister: "ලියාපදිංචි වන්න",
-    workLoginTitle: "කාර්යයට පිවිසෙන්න", workBtnLogin: "පිවිසෙන්න",
-    registerTitle: "ගිණුමක් සාදන්න", registerBtnSubmit: "ලියාපදිංචි වන්න",
-    accountLoginTitle: "මගේ ගිණුමට පිවිසෙන්න", accountBtnLogin: "පිවිසෙන්න", accountBtnRegister: "ලියාපදිංචි වන්න",
-    workDashboardTitle: "කාර්ය පුවරුව", workDashboardWelcome: "නැවතත් සාදරයෙන් පිළිගනිමු! ඔබගේ කාර්යයන් බලා සිටී.", btnLogout: "ඉවත් වන්න",
-    accountDashboardTitle: "මගේ ගිණුම", accountDashboardWelcome: "ආයුබෝවන්! ඔබගේ ගිණුමට සාදරයෙන් පිළිගනිමු.",
-    alertFillFields: "කරුණාකර සියලුම ක්ෂේත්‍ර පුරවන්න.", alertUserExists: "මෙම පරිශීලක නාමය දැනටමත් භාවිතයේ ඇත. කරුණාකර වෙනත් එකක් තෝරන්න.", alertRegisterSuccess: "ලියාපදිංචිය සාර්ථකයි! ඔබට දැන් පිවිසිය හැක.", alertLoginFailed: "වැරදි පරිශීලක නාමය හෝ මුරපදය.",
+    page_homePage: ["මුල් පිටුව", "ජනප්‍රිය වේදිකා"], page_tucPage: ["වෙළෙන්දා", "වෙළඳ ප්‍රවේශය"], page_calismaPage: ["කාර්ය", "කාර්යයට පිවිසෙන්න"], page_kayitPage: ["ලියාපදිංචිය", "නව ගිණුමක් සාදන්න"], page_hesapPage: ["මගේ ගිණුම", "පරිශීලක පිවිසුම"],
+    partnersTitle: "ජනප්‍රිය ඊ-වාණිජ්‍ය වේදිකා",
+    merchantLoginTitle: "වෙළඳ පිවිසුම", merchantLoginSub: "ඔබේ වෙළඳ ఆధారතා ඇතුළත් කරන්න", merchantUserPlaceholder: "පරිශීලක නාමය", merchantPassPlaceholder: "මුරපදය", btnLogin: "පිවිසෙන්න", btnRegister: "ලියාපදිංචි වන්න",
+    workLoginTitle: "කාර්යයට පිවිසෙන්න", workLoginSub: "ඔබේ කාර්යයන් කළමනාකරණය කිරීමට පිවිසෙන්න", workUserPlaceholder: "පරිශීලක නාමය", workPassPlaceholder: "මුරපදය", workBtnLogin: "පිවිසෙන්න",
+    workDashboardTitle: "කාර්ය පුවරුව", workDashboardWelcome: "සාදරයෙන් පිළිගනිමු! ඔබගේ කාර්යයන් සූදානම්.", workBtnLogout: "ඉවත් වන්න",
+    registerTitle: "ගිණුමක් සාදන්න", registerFullNamePlaceholder: "සම්පූර්ණ නම", registerPhonePlaceholder: "ජංගම දුරකථනය", registerPassPlaceholder: "මුරපදය", registerBtnSubmit: "ලියාපදිංචි වන්න", registerBtnCancel: "අවලංගු කරන්න",
+    accountLoginTitle: "පරිශීලක පිවිසුම", accountLoginSub: "ඔබගේ ගිණුමට පිවිසෙන්න", accountUserPlaceholder: "පරිශීලක නාමය", accountPassPlaceholder: "මුරපදය", accountBtnLogin: "පිවිසෙන්න", accountBtnRegister: "ලියාපදිංචි වන්න",
   },
   ta: { // Tamil
     navHome: "முகப்பு", navMerchant: "வணிகர்", navWork: "பணி", navRegister: "பதிவு", navAccount: "என் கணக்கு",
-    page_homePage: ["முகப்பு", "நல்வரவு"], page_tucPage: ["வணிகர்", "வணிகர் அணுகல்"], page_calismaPage: ["பணி", "பணி உள்நுழைவு"], page_kayitPage: ["பதிவு", "புதிய கணக்கை உருவாக்கு"], page_hesapPage: ["என் கணக்கு", "பயனர் உள்நுழைவு"],
-    merchantUserPlaceholder: "வணிகர் ஐடி", merchantPassPlaceholder: "கடவுச்சொல்",
-    workUserPlaceholder: "பயனர்பெயர்", workPassPlaceholder: "கடவுச்சொல்",
-    registerUserPlaceholder: "ஒரு பயனர்பெயரைத் தேர்ந்தெடுக்கவும்", registerPassPlaceholder: "கடவுச்சொல்லை உருவாக்கவும்",
-    accountUserPlaceholder: "பயனர்பெயர்", accountPassPlaceholder: "கடவுச்சொல்",
-    merchantLoginTitle: "வணிகர் உள்நுழைவு", btnLogin: "உள்நுழைக", btnRegister: "பதிவு செய்க",
-    workLoginTitle: "பணி உள்நுழைவு", workBtnLogin: "உள்நுழைக",
-    registerTitle: "கணக்கை உருவாக்கு", registerBtnSubmit: "பதிவு செய்க",
-    accountLoginTitle: "என் கணக்கு உள்நுழைவு", accountBtnLogin: "உள்நுழைக", accountBtnRegister: "பதிவு செய்க",
-    workDashboardTitle: "பணி குழு", workDashboardWelcome: "மீண்டும் வருக! உங்கள் பணிகள் காத்திருக்கின்றன.", btnLogout: "வெளியேறு",
-    accountDashboardTitle: "என் கணக்கு", accountDashboardWelcome: "வணக்கம்! உங்கள் கணக்கிற்கு வரவேற்கிறோம்.",
-    alertFillFields: "அனைத்து புலங்களையும் நிரப்பவும்.", alertUserExists: "இந்த பயனர்பெயர் ஏற்கனவே உள்ளது. மற்றொன்றைத் தேர்ந்தெடுக்கவும்.", alertRegisterSuccess: "பதிவு வெற்றி! நீங்கள் இப்போது உள்நுழையலாம்.", alertLoginFailed: "தவறான பயனர்பெயர் அல்லது கடவுச்சொல்.",
-  }
-};
-
-/* -------------------------------------------------- */
-/* --- UYGULAMA ALTYAPISI VE KULLANICI YÖNETİMİ --- */
-/* -------------------------------------------------- */
-let currentLang = 'en';
-let users = [];
-let loggedInUser = null;
-
-// Kullanıcıları localStorage'dan yükle
-function loadUsers() {
-    const storedUsers = localStorage.getItem('appUsers');
-    if (storedUsers) {
-        users = JSON.parse(storedUsers);
-    }
-}
-
-// Kullanıcıları localStorage'a kaydet
-function saveUsers() {
-    localStorage.setItem('appUsers', JSON.stringify(users));
-}
-
-// Kayıt işlemini yönet
-function handleRegister() {
-    const username = document.getElementById('registerUser').value.trim();
-    const password = document.getElementById('registerPass').value.trim();
-    const t = translations[currentLang];
-
-    if (!username || !password) {
-        alert(t.alertFillFields);
-        return;
-    }
-    if (users.find(u => u.username === username)) {
-        alert(t.alertUserExists);
-        return;
-    }
-
-    users.push({ username, password });
-    saveUsers();
-    alert(t.alertRegisterSuccess);
-    document.getElementById('registerUser').value = '';
-    document.getElementById('registerPass').value = '';
-}
-
-// Giriş işlemini yönet
-function handleLogin(page) {
-    const username = document.getElementById(`${page}User`).value.trim();
-    const password = document.getElementById(`${page}Pass`).value.trim();
-    const t = translations[currentLang];
-
-    const user = users.find(u => u.username === username && u.password === password);
-    if (user) {
-        loggedInUser = user;
-        renderCurrentPage(); // Giriş sonrası sayfayı yeniden çiz
-    } else {
-        alert(t.alertLoginFailed);
-    }
-}
-
-// Çıkış işlemini yönet
-function handleLogout() {
-    loggedInUser = null;
-    renderCurrentPage(); // Çıkış sonrası sayfayı yeniden çiz
-}
-
-/* -------------------------------------------------- */
-/* --- ARAYÜZ OLUŞTURMA VE SAYFA YÖNETİMİ --- */
-/* -------------------------------------------------- */
-
-// Sayfaların içeriğini (HTML) oluşturan fonksiyonlar
-function getHomePageHTML(t) { return `<div class="card"><div class="card-title">Home Page Content</div></div>`; }
-function getTucPageHTML(t) { return `<div class="card"><div class="form-container"><div class="form-title">${t.merchantLoginTitle}</div><input class="field" id="merchantUser" placeholder="${t.merchantUserPlaceholder}"/><input class="field" id="merchantPass" type="password" placeholder="${t.merchantPassPlaceholder}"/><div class="btn-row"><button class="btn" onclick="alert('Merchant login is for demo purposes.')">${t.btnLogin}</button></div></div></div>`; }
-function getKayitPageHTML(t) { return `<div class="card"><div class="form-container"><div class="form-title">${t.registerTitle}</div><input class="field" id="registerUser" placeholder="${t.registerUserPlaceholder}"/><input class="field" id="registerPass" type="password" placeholder="${t.registerPassPlaceholder}"/><div class="btn-row"><button class="btn" onclick="handleRegister()">${t.registerBtnSubmit}</button></div></div></div>`; }
-
-function getCalismaPageHTML(t) {
-    if (loggedInUser) {
-        return `<div class="card" style="text-align:center;"><h3 class="card-title">${t.workDashboardTitle}</h3><p>${t.workDashboardWelcome.replace('Welcome back!', `Welcome back, <strong>${loggedInUser.username}</strong>!`)}</p><button class="btn secondary" onclick="handleLogout()">${t.btnLogout}</button></div>`;
-    }
-    return `<div class="card"><div class="form-container"><div class="form-title">${t.workLoginTitle}</div><input class="field" id="calismaUser" placeholder="${t.workUserPlaceholder}"/><input class="field" id="calismaPass" type="password" placeholder="${t.workPassPlaceholder}"/><div class="btn-row"><button class="btn" onclick="handleLogin('calisma')">${t.workBtnLogin}</button></div></div></div>`;
-}
-
-function getHesapPageHTML(t) {
-    if (loggedInUser) {
-        return `<div class="card" style="text-align:center;"><h3 class="card-title">${t.accountDashboardTitle}</h3><p>${t.accountDashboardWelcome.replace('Hello!', `Hello, <strong>${loggedInUser.username}</strong>!`)}</p><button class="btn secondary" onclick="handleLogout()">${t.btnLogout}</button></div>`;
-    }
-    return `<div class="card"><div class="form-container"><div class="form-title">${t.accountLoginTitle}</div><input class="field" id="hesapUser" placeholder="${t.accountUserPlaceholder}"/><input class="field" id="hesapPass" type="password" placeholder="${t.accountPassPlaceholder}"/><div class="btn-row"><button class="btn" onclick="handleLogin('hesap')">${t.accountBtnLogin}</button><button class="btn secondary" onclick="document.querySelector('[data-target=kayitPage]').click()">${t.btnRegister}</button></div></div></div>`;
-}
-
-const pageRenderers = {
-    homePage: getHomePageHTML,
-    tucPage: getTucPageHTML,
-    calismaPage: getCalismaPageHTML,
-    kayitPage: getKayitPageHTML,
-    hesapPage: getHesapPageHTML
-};
-
-// Aktif sayfayı yeniden çizer
-function renderCurrentPage() {
-    const activePageId = document.querySelector('.nav-item.active').getAttribute('data-target');
-    const t = translations[currentLang];
-    document.getElementById(activePageId).innerHTML = pageRenderers[activePageId](t);
-}
-
-// Dil seçimini yönet
-function setLanguage(lang) {
-    currentLang = lang;
-    const t = translations[currentLang];
-    
-    // Navigasyon ve buton metinlerini güncelle
-    document.documentElement.lang = lang;
-    document.getElementById('langSwitcherButton').innerText = lang.toUpperCase();
-    Object.keys(t).forEach(key => {
-        const el = document.getElementById(key);
-        if (el) {
-            if (!key.startsWith('page_') && !key.endsWith('Placeholder') && !key.startsWith('alert')) {
-                el.innerHTML = t[key];
-            }
-        }
-    });
-
-    renderCurrentPage(); // Sayfanın içeriğini yeni dilde yeniden oluştur
-    updatePageTitles(); // Üst başlıkları güncelle
-}
-
-function updatePageTitles() {
-    const activePageId = document.querySelector('.nav-item.active').getAttribute('data-target');
-    const [title, sub] = translations[currentLang]['page_' + activePageId] || ["", ""];
-    document.getElementById('pageTitle').innerText = title;
-    document.getElementById('pageSub').innerText = sub;
-}
-
-// Sayfa değiştirme
-function switchPage(event) {
-  const targetId = event.currentTarget.getAttribute('data-target');
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  event.currentTarget.classList.add('active');
-
-  document.querySelectorAll('main.content section').forEach(s => { s.style.display = 'none'; });
-  document.getElementById(targetId).style.display = 'block';
-
-  renderCurrentPage();
-  updatePageTitles();
-}
-
-// Dil menüsü yönetimi
-const langDropdown = document.getElementById('langDropdown');
-function toggleLangDropdown() {
-    langDropdown.style.display = langDropdown.style.display === 'block' ? 'none' : 'block';
-}
-function selectLanguage(event, lang) {
-    event.preventDefault();
-    setLanguage(lang);
-    langDropdown.style.display = 'none';
-}
-window.onclick = function(event) {
-    if (!event.target.matches('.lang-switcher-button')) {
-        if (langDropdown.style.display === 'block') {
-            langDropdown.style.display = 'none';
-        }
-    }
-}
-
-/* -------------------------------------------------- */
-/* --- UYGULAMAYI BAŞLATMA --- */
-/* -------------------------------------------------- */
-function initializeApp() {
-    loadUsers(); // Kayıtlı kullanıcıları yükle
-    const userLang = (navigator.language || navigator.userLanguage).slice(0, 2);
-    let initialLang = 'en';
-    if (userLang === 'si') initialLang = 'si';
-    if (userLang === 'ta') initialLang = 'ta';
-    
-    setLanguage(initialLang); // Başlangıç dilini ayarla ve ilk sayfayı çiz
-}
-
-initializeApp();
-</script>
-</body>
-</html>
+    page_homePage: ["முகப்பு", "பிரபலமான தளங்கள்"], page_tucPage: ["வணிகர்", "வணிகர் அணுகல்"], page_calismaPage: ["பணி", "பணி உள்நுழைவு"], page_kayitPage: ["பதிவு", "புதிய கணக்கை உருவாக்கு"], page_hesapPage: ["என் கணக்கு", "பயனர் உள்நுழைவு"],
+    partnersTitle: "பிரபலமான மின்வணிக தளங்கள்",
+    merchantLoginTitle: "வணிகர் உள்நுழைவு", merchantLoginSub: "உங்கள் வணிகர் சான்றுகளை உள்ளிடவும்", merchantUserPlaceholder: "பயனர்பெயர்", merchantPassPlaceholder: "கடவுச்சொல்", btnLogin: "உள்நுழைக", btnRegister: "பதிவு செய்க",
+    workLoginTitle: "பணி உள்நுழைவு", workLoginSub: "உங்கள் பணிகளை நிர்வகிக்க உள்நுழைக", workUserPlaceholder: "பயனர்பெயர்", workPassPlaceholder: "கடவுச்சொல்", workBtnLogin: "உள்நுழைக",
+    workDashboardTitle: "பணி குழு", workDashboardWelcome: "வருக! உங்கள் பணிகள் தயாராக உள்ளன.", workBtnLogout: "வெளியேறு",
+    registerTitle: "கணக்கை உருவாக்கு", registerFullNamePlaceholder: "முழு பெயர்", registerPhonePlaceholder: "கைபேசி", registerPassPlaceholder: "கடவுச்சொல்", registerBtnSubmit: "பதிவு செய்க", registerBtnCancel: "ரத்துசெய்",
+    accountLoginTitle: "பயனர் உள்நுழைவு", accountLoginSub: "உங்கள் கணக்கை அணுகவும்", accountUserPlaceholder: "
