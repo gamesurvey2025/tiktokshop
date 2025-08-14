@@ -1,848 +1,656 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TikTok Shop - Mobil</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-        }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Tik Tok Shop - Mobil</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f6f8;
+    --card:#ffffff;
+    --muted:#8b8f98;
+    --accent:#ffb400; /* ana vurgun (sarı) */
+    --accent-600:#f2a900;
+    --accent-dark:#d08a00;
+    --green:#2bb673;
+    --red:#ff5a5f;
+    --glass: rgba(255,255,255,0.65);
+    --shadow: 0 6px 18px rgba(20,20,30,0.08);
+    --radius:12px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(180deg,#f7f9fb 0%, #eef2f5 100%);
+    margin:0;
+    color:#0f1724;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
 
-        body {
-            background: linear-gradient(135deg, #f5f7fa, #e4e7eb);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+  /* Mobile frame */
+  .device {
+    max-width:420px;
+    height:812px;
+    margin:18px auto;
+    border-radius:22px;
+    overflow:hidden;
+    box-shadow: 0 20px 50px rgba(10,20,40,0.12);
+    border:1px solid rgba(0,0,0,0.03);
+    background: var(--bg);
+    display:flex;
+    flex-direction:column;
+  }
 
-        .device {
-            width: 100%;
-            max-width: 420px;
-            height: 812px;
-            background: #f8f9fa;
-            border-radius: 40px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            border: 12px solid #1a1a1a;
-        }
+  /* Top header */
+  header.top {
+    height:68px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 16px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.6));
+    backdrop-filter: blur(6px);
+    border-bottom:1px solid rgba(15,20,36,0.04);
+  }
+  .logo {
+    width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#111827,#111827);
+    display:flex;align-items:center;justify-content:center;color:white;font-weight:700;
+    font-size:14px;
+    box-shadow: var(--shadow);
+    flex-shrink:0;
+  }
+  .title-wrap {flex:1; display:flex;flex-direction:column; justify-content:center}
+  .page-title { font-weight:700; font-size:16px; color:#111827; margin:0; }
+  .page-sub { font-size:12px; color:var(--muted); margin-top:2px }
+  .lang-switcher {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    background: rgba(0,0,0,0.03);
+    padding: 6px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 8px;
+  }
 
-        /* Status Bar */
-        .status-bar {
-            height: 44px;
-            background: #fff;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #333;
-            border-bottom: 1px solid #eee;
-        }
+  /* Main content area */
+  main.content {
+    flex:1; overflow:auto; padding:14px;
+    -webkit-overflow-scrolling: touch;
+  }
 
-        /* Header */
-        header.top {
-            height: 68px;
-            background: #fff;
-            display: flex;
-            align-items: center;
-            padding: 0 16px;
-            border-bottom: 1px solid #eee;
-        }
+  /* Card */
+  .card {
+    background:var(--card);
+    border-radius:14px;
+    padding:12px;
+    box-shadow: var(--shadow);
+    margin-bottom:12px;
+  }
+  .card-title { font-weight: 700; margin-bottom: 12px; }
 
-        .logo {
-            width: 44px;
-            height: 44px;
-            background: linear-gradient(135deg, #111827, #1e293b);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 800;
-            font-size: 20px;
-            margin-right: 12px;
-        }
+  /* Home top banner */
+  .hero {
+    display:flex; gap:12px; align-items:center;
+    padding:12px; border-radius:12px; overflow:hidden;
+    background: linear-gradient(90deg, #fff, #fff);
+  }
+  .hero-image {
+    width:78px;height:78px;border-radius:10px;background:linear-gradient(135deg,#0ea5a4,#6366f1);
+    display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:18px;
+    flex-shrink:0;
+  }
+  .hero-text {flex:1}
+  .hero-text h3 {margin:0;font-size:16px}
+  .hero-text p {margin:6px 0 0;font-size:13px;color:var(--muted)}
 
-        .title-wrap {
-            flex: 1;
-        }
+  /* Kayan işlemler (ticker) */
+  .ticker-wrap {
+    margin-top:12px;
+    height:160px;
+    position:relative;
+    overflow:hidden;
+    border-radius:12px;
+    background: linear-gradient(180deg,#ffffff,#fffafa);
+    border:1px solid rgba(15,20,36,0.04);
+  }
+  .ticker {
+    position:absolute;
+    left:0; right:0;
+    padding:10px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    will-change:transform;
+  }
+  .tx {
+    display:flex; align-items:center; gap:10px;
+    padding:10px; border-radius:10px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.8), rgba(250,250,250,0.8));
+    border:1px solid rgba(15,20,36,0.03);
+  }
+  .tx .avatar {
+    width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;color:white;
+    background:linear-gradient(135deg,#ff7a59,#ffb86b);flex-shrink:0;
+  }
+  .tx .meta {flex:1}
+  .tx .meta .who {font-weight:600;font-size:14px}
+  .tx .meta .what {font-size:12px;color:var(--muted);margin-top:2px}
+  .tx .amount {font-weight:700; font-size:14px; text-align:right; min-width:90px}
 
-        .page-title {
-            font-weight: 800;
-            font-size: 18px;
-            color: #1e293b;
-        }
+  /* small label colors */
+  .in { color:var(--green) }
+  .out { color:var(--red) }
 
-        .page-sub {
-            font-size: 13px;
-            color: #64748b;
-            margin-top: 2px;
-        }
+  /* fake stats row */
+  .stats {
+    display:flex; gap:8px; margin-top:12px;
+  }
+  .stat {
+    flex:1; padding:12px;border-radius:10px;background: linear-gradient(180deg,#fff,#fff);
+    border:1px solid rgba(15,20,36,0.03); text-align:center;
+  }
+  .stat .num {font-weight:700;font-size:18px}
+  .stat .lbl {font-size:12px;color:var(--muted);margin-top:6px}
 
-        .header-actions {
-            display: flex;
-            gap: 12px;
-        }
+  /* Partner Logos */
+  .partner-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  .partner-logo {
+    width: calc(25% - 8px);
+    aspect-ratio: 1.5 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: #f7f9fb;
+    border: 1px solid #eef2f5;
+    font-weight: 700;
+    color: #4a5568;
+    font-size: 14px;
+    overflow: hidden;
+  }
+  .partner-logo img {
+      max-width: 80%;
+      max-height: 80%;
+      object-fit: contain;
+  }
 
-        .header-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            background: #f1f5f9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #334155;
-            font-size: 18px;
-        }
 
-        /* Main Content */
-        main.content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 16px;
-            background: #f8fafc;
-        }
+  /* Pages: login style for others */
+  .yellow-page {
+    min-height:380px; border-radius:16px; padding:20px; color:#111827;
+    background: linear-gradient(180deg, var(--accent), var(--accent-600));
+    display:flex; flex-direction:column; justify-content:flex-start;
+    box-shadow: var(--shadow);
+  }
+  .field { margin-top:12px; background: rgba(255,255,255,0.12); padding:12px 14px; border-radius:10px; color:white; border:1px solid rgba(255,255,255,0.06) }
+  .btn-row { display:flex; gap:10px; margin-top:18px }
+  .btn {
+    flex:1; padding:12px;border-radius:30px;background:rgba(255,255,255,0.95);text-align:center;font-weight:700;
+    color:#111827; box-shadow: 0 6px 18px rgba(15,20,30,0.08);
+  }
 
-        .card {
-            background: white;
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 16px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
-            border: 1px solid #f1f5f9;
-        }
+  /* bottom nav */
+  nav.bottom {
+    height:74px; display:flex; align-items:center; justify-content:space-around; gap:6px;
+    padding:8px 10px; border-top:1px solid rgba(15,20,36,0.04);
+    background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.98));
+  }
+  .nav-item {
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; width:54px;
+    color:var(--muted); text-decoration:none; font-size:12px; cursor:pointer;
+  }
+  .nav-item .ic {
+    width:36px;height:36px;border-radius:10px; display:flex;align-items:center;justify-content:center;
+    background:transparent;
+  }
+  .nav-item.active { color:var(--accent-dark) }
+  .nav-item.active .ic { background: linear-gradient(180deg, var(--accent-600), var(--accent)); color:white; box-shadow: var(--shadow) }
 
-        .hero {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-        }
+  /* small helpers */
+  .muted { color:var(--muted); font-size:13px }
+  .center { text-align:center }
 
-        .hero-image {
-            width: 80px;
-            height: 80px;
-            border-radius: 16px;
-            background: linear-gradient(135deg, #4f46e5, #7c3aed);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 800;
-            font-size: 24px;
-            flex-shrink: 0;
-        }
-
-        .hero-text h3 {
-            font-size: 20px;
-            font-weight: 800;
-            color: #1e293b;
-            margin-bottom: 6px;
-        }
-
-        .hero-text p {
-            color: #64748b;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-
-        .section-title {
-            font-weight: 700;
-            font-size: 18px;
-            color: #1e293b;
-            margin-bottom: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .live-clock {
-            font-size: 14px;
-            color: #64748b;
-            font-weight: 600;
-        }
-
-        /* E-commerce logos */
-        .ecom-logos {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-top: 16px;
-        }
-
-        .ecom-logo {
-            background: white;
-            border-radius: 14px;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-weight: 700;
-            font-size: 12px;
-            color: #334155;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.03);
-            border: 1px solid #f1f5f9;
-            transition: all 0.3s ease;
-        }
-
-        .ecom-logo:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
-        }
-
-        .ecom-logo i {
-            font-size: 24px;
-            margin-bottom: 8px;
-        }
-
-        .ecom-logo.amazon i { color: #ff9900; }
-        .ecom-logo.aliexpress i { color: #ff6a00; }
-        .ecom-logo.etsy i { color: #d5641c; }
-        .ecom-logo.ebay i { color: #0064d2; }
-        .ecom-logo.shein i { color: #da0b7a; }
-        .ecom-logo.asos i { color: #00a0e3; }
-        .ecom-logo.banggood i { color: #e22e2e; }
-        .ecom-logo.tiktok i { color: #000; }
-
-        /* Ticker */
-        .ticker-wrap {
-            height: 240px;
-            position: relative;
-            overflow: hidden;
-            border-radius: 16px;
-            background: white;
-            border: 1px solid #f1f5f9;
-            margin-top: 12px;
-        }
-
-        .ticker {
-            position: absolute;
-            left: 0;
-            right: 0;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .tx {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
-            border-radius: 14px;
-            background: #f8fafc;
-            border: 1px solid #f1f5f9;
-        }
-
-        .avatar {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #f97316, #f59e0b);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 18px;
-            flex-shrink: 0;
-        }
-
-        .meta {
-            flex: 1;
-        }
-
-        .who {
-            font-weight: 700;
-            font-size: 15px;
-            color: #1e293b;
-        }
-
-        .what {
-            font-size: 12px;
-            color: #64748b;
-            margin-top: 4px;
-        }
-
-        .amount {
-            font-weight: 800;
-            font-size: 16px;
-            min-width: 90px;
-            text-align: right;
-        }
-
-        .in { color: #10b981; }
-        .out { color: #ef4444; }
-
-        /* Stats */
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-top: 16px;
-        }
-
-        .stat {
-            background: white;
-            border-radius: 16px;
-            padding: 16px;
-            text-align: center;
-            border: 1px solid #f1f5f9;
-        }
-
-        .num {
-            font-weight: 800;
-            font-size: 18px;
-            color: #1e293b;
-            margin-bottom: 4px;
-        }
-
-        .lbl {
-            font-size: 13px;
-            color: #64748b;
-        }
-
-        /* Footer Navigation */
-        nav.bottom {
-            height: 80px;
-            background: white;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 0 10px;
-            border-top: 1px solid #eee;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            width: 60px;
-            color: #94a3b8;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            padding: 8px 0;
-            border-radius: 12px;
-        }
-
-        .nav-item i {
-            font-size: 20px;
-        }
-
-        .nav-item.active {
-            color: #4f46e5;
-            background: #eef2ff;
-        }
-
-        .nav-item .label {
-            font-size: 12px;
-        }
-
-        /* Other Pages */
-        .page-content {
-            display: none;
-        }
-
-        /* Language Selector */
-        .lang-selector {
-            position: relative;
-            display: inline-block;
-        }
-
-        .lang-btn {
-            background: #f1f5f9;
-            border-radius: 10px;
-            padding: 8px 12px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #334155;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-        }
-
-        .lang-btn i {
-            font-size: 16px;
-        }
-
-        .lang-dropdown {
-            position: absolute;
-            top: 120%;
-            right: 0;
-            background: white;
-            border-radius: 14px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            width: 160px;
-            display: none;
-            z-index: 100;
-            border: 1px solid #f1f5f9;
-            overflow: hidden;
-        }
-
-        .lang-dropdown.active {
-            display: block;
-        }
-
-        .lang-option {
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 14px;
-            color: #334155;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .lang-option:hover {
-            background: #f8fafc;
-        }
-
-        .lang-option i {
-            font-size: 18px;
-        }
-
-        /* Form Elements */
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #334155;
-            font-size: 14px;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 14px;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-            background: #f8fafc;
-            font-size: 15px;
-            transition: all 0.3s;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #a5b4fc;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(165, 180, 252, 0.3);
-        }
-
-        .btn {
-            padding: 14px;
-            border-radius: 14px;
-            font-weight: 700;
-            font-size: 16px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: none;
-        }
-
-        .btn-primary {
-            background: linear-gradient(to right, #4f46e5, #7c3aed);
-            color: white;
-            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: #4f46e5;
-            border: 1px solid #c7d2fe;
-        }
-    </style>
+  @media (max-width:420px){
+    .device { margin:6px; border-radius:12px }
+    header.top { height:64px; padding:10px }
+  }
+</style>
 </head>
 <body>
-    <div class="device">
-        <div class="status-bar">
-            <div>9:41</div>
-            <div>
-                <i class="fas fa-signal"></i>
-                <i class="fas fa-wifi"></i>
-                <i class="fas fa-battery-full"></i>
+  <div class="device" role="application" aria-label="Mobil site önizleme">
+    <header class="top">
+      <div class="logo">T</div>
+      <div class="title-wrap">
+        <div class="page-title" id="pageTitle">Ana Sayfa</div>
+        <div class="page-sub" id="pageSub">Tik Tok Shop</div>
+      </div>
+      <div class="lang-switcher" id="langSwitcher" onclick="toggleLanguage()">Dil: TR</div>
+      <div style="width:36px;height:36px;border-radius:10px;background:#e6eef9;display:flex;align-items:center;justify-content:center;font-weight:700;color:#2c5282">
+        A
+      </div>
+    </header>
+
+    <main class="content" id="contentArea">
+      <section id="homePage">
+        <div class="card hero">
+          <div class="hero-image">Shop</div>
+          <div class="hero-text">
+            <h3 id="heroTitle">Tik Tok Shop</h3>
+            <p id="heroDesc">E-ticaret & ödeme akışlarını gösteren canlı deneme arayüzü.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div class="card-title" id="tickerTitle">Giriş ve Çıkış</div>
+            <div class="muted" id="liveClock"></div>
+          </div>
+          <div class="ticker-wrap" id="tickerWrap" aria-hidden="false">
+            <div class="ticker" id="tickerA"></div>
+            <div class="ticker" id="tickerB" style="top:100%"></div>
+          </div>
+          <div class="stats" aria-hidden="true">
+            <div class="stat">
+              <div class="num" id="statTotal">₺ 125.432</div>
+              <div class="lbl" id="statTotalLabel">Toplam Akış</div>
             </div>
+            <div class="stat">
+              <div class="num" id="statIn">₺ 82.133</div>
+              <div class="lbl" id="statInLabel">Yükleme</div>
+            </div>
+            <div class="stat">
+              <div class="num" id="statOut">₺ 43.299</div>
+              <div class="lbl" id="statOutLabel">Çekme</div>
+            </div>
+          </div>
         </div>
         
-        <header class="top">
-            <div class="logo">T</div>
-            <div class="title-wrap">
-                <div class="page-title">Ana Sayfa</div>
-                <div class="page-sub">TikTok Shop</div>
+        <div class="card">
+            <div class="card-title" id="partnersTitle">Popüler Platformlar</div>
+            <div class="partner-grid">
+                <div class="partner-logo">Amazon</div>
+                <div class="partner-logo">AliExpress</div>
+                <div class="partner-logo">eBay</div>
+                <div class="partner-logo">Etsy</div>
+                <div class="partner-logo">Shein</div>
+                <div class="partner-logo">Asos</div>
+                <div class="partner-logo">Banggood</div>
+                <div class="partner-logo">TikTok</div>
             </div>
-            <div class="header-actions">
-                <div class="lang-selector">
-                    <div class="lang-btn">
-                        <i class="fas fa-globe"></i>
-                        <span>TR</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="lang-dropdown">
-                        <div class="lang-option">
-                            <i class="fas fa-language"></i>
-                            <span>Türkçe</span>
-                        </div>
-                        <div class="lang-option">
-                            <i class="fas fa-language"></i>
-                            <span>English</span>
-                        </div>
-                        <div class="lang-option">
-                            <i class="fas fa-language"></i>
-                            <span>Deutsch</span>
-                        </div>
-                        <div class="lang-option">
-                            <i class="fas fa-language"></i>
-                            <span>Français</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="header-icon">
-                    <i class="fas fa-bell"></i>
-                </div>
+        </div>
+
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:54px;height:54px;border-radius:10px;background:#fff;border:1px solid rgba(0,0,0,0.04);display:flex;align-items:center;justify-content:center">
+              <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='%230f1724' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M2 12h7l3 9 4-18 3 9h5'></path></svg>" alt="" />
             </div>
-        </header>
-        
-        <main class="content">
-            <!-- Home Page -->
-            <div id="homePage">
-                <div class="card">
-                    <div class="hero">
-                        <div class="hero-image">
-                            <i class="fas fa-store"></i>
-                        </div>
-                        <div class="hero-text">
-                            <h3>TikTok Shop</h3>
-                            <p>E-ticaret ve ödeme akışlarını gösteren canlı demo arayüzü. Global platformlarla entegre çalışma imkanı.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="section-title">
-                        <span>Popüler E-Ticaret Platformları</span>
-                    </div>
-                    <div class="ecom-logos">
-                        <div class="ecom-logo amazon">
-                            <i class="fab fa-amazon"></i>
-                            <span>Amazon</span>
-                        </div>
-                        <div class="ecom-logo aliexpress">
-                            <i class="fab fa-alipay"></i>
-                            <span>AliExpress</span>
-                        </div>
-                        <div class="ecom-logo etsy">
-                            <i class="fab fa-etsy"></i>
-                            <span>Etsy</span>
-                        </div>
-                        <div class="ecom-logo ebay">
-                            <i class="fab fa-ebay"></i>
-                            <span>eBay</span>
-                        </div>
-                        <div class="ecom-logo shein">
-                            <i class="fas fa-tshirt"></i>
-                            <span>Shein</span>
-                        </div>
-                        <div class="ecom-logo asos">
-                            <i class="fas fa-shopping-bag"></i>
-                            <span>ASOS</span>
-                        </div>
-                        <div class="ecom-logo banggood">
-                            <i class="fas fa-box"></i>
-                            <span>Banggood</span>
-                        </div>
-                        <div class="ecom-logo tiktok">
-                            <i class="fab fa-tiktok"></i>
-                            <span>TikTok Shop</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="section-title">
-                        <span>Son İşlemler</span>
-                        <span class="live-clock">15:24:32</span>
-                    </div>
-                    <div class="ticker-wrap">
-                        <div class="ticker" id="tickerContent">
-                            <!-- Transactions will be added here by JS -->
-                        </div>
-                    </div>
-                    
-                    <div class="stats">
-                        <div class="stat">
-                            <div class="num">₺ 142.856</div>
-                            <div class="lbl">Toplam Akış</div>
-                        </div>
-                        <div class="stat">
-                            <div class="num">₺ 98.421</div>
-                            <div class="lbl">Yükleme</div>
-                        </div>
-                        <div class="stat">
-                            <div class="num">₺ 44.435</div>
-                            <div class="lbl">Çekme</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="hero">
-                        <div style="width: 54px; height: 54px; border-radius: 14px; background: #e0f2fe; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #0ea5e9;">
-                            <i class="fab fa-tiktok"></i>
-                        </div>
-                        <div>
-                            <div style="font-weight: 700; font-size: 16px;">TikTok Shop</div>
-                            <div style="color: #64748b; font-size: 14px; margin-top: 4px;">Global e-ticaret entegrasyon platformu</div>
-                        </div>
-                    </div>
-                </div>
+            <div>
+              <div style="font-weight:700" id="platformName">TikTok Shop</div>
+              <div class="muted" id="platformDesc">E-ticaret hizmet platformu (DTC)</div>
             </div>
-            
-            <!-- Merchant Page -->
-            <div id="merchantPage" class="page-content">
-                <div class="card">
-                    <div class="section-title">
-                        <span>Tüccar Girişi</span>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Kullanıcı Adı / Telefon</label>
-                        <input type="text" class="form-input" placeholder="Kullanıcı adı veya telefon numarası">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Şifre</label>
-                        <input type="password" class="form-input" placeholder="Şifrenizi girin">
-                    </div>
-                    
-                    <div class="form-group">
-                        <button class="btn btn-primary">Giriş Yap</button>
-                    </div>
-                    
-                    <div class="form-group">
-                        <button class="btn btn-outline">Yeni Hesap Oluştur</button>
-                    </div>
-                </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tucPage" style="display:none">
+        <div class="card">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div class="card-title" id="merchantLoginTitle">Tüccar Girişi</div>
+            <div class="muted" id="merchantLoginSub">Kullanıcı Adı / Cep Telefonu</div>
+            <input class="field" id="merchantUser" placeholder="Kullanıcı Adı/Cep Telefonu" />
+            <input class="field" id="merchantPass" placeholder="Şifre" type="password" />
+            <div class="btn-row">
+              <div class="btn" id="btnLogin" onclick="alert('Giriş simülasyonu')">Giriş</div>
+              <div class="btn" id="btnRegister" style="background:transparent;color:var(--accent-dark);border-radius:10px;border:1px solid rgba(15,20,36,0.05)" onclick="alert('Kayıt simülasyonu')">Kayıt Ol</div>
             </div>
-            
-            <!-- Work Page -->
-            <div id="workPage" class="page-content">
-                <div class="card" style="background: linear-gradient(to right, #4f46e5, #7c3aed); color: white;">
-                    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
-                        <div style="width: 60px; height: 60px; background: rgba(255,255,255,0.2); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px;">
-                            <i class="fas fa-tasks"></i>
-                        </div>
-                        <div>
-                            <div style="font-size: 20px; font-weight: 800;">Çalışma Alanı</div>
-                            <div style="opacity: 0.9; font-size: 14px;">Görevlerinizi ve işlemlerinizi yönetin</div>
-                        </div>
-                    </div>
-                    
-                    <div style="background: rgba(255,255,255,0.15); border-radius: 16px; padding: 20px;">
-                        <div class="form-group">
-                            <input type="text" class="form-input" placeholder="Kullanıcı adı veya e-posta" style="background: rgba(255,255,255,0.1); color: white; border-color: rgba(255,255,255,0.2);">
-                        </div>
-                        
-                        <div class="form-group">
-                            <input type="password" class="form-input" placeholder="Şifre" style="background: rgba(255,255,255,0.1); color: white; border-color: rgba(255,255,255,0.2);">
-                        </div>
-                        
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px;">
-                            <button class="btn" style="background: white; color: #4f46e5;">Giriş Yap</button>
-                            <button class="btn" style="background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3);">Kayıt Ol</button>
-                        </div>
-                    </div>
-                </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="calismaPage" style="display:none">
+        <div class="yellow-page">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:56px;height:56px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;color:#111827">TS</div>
+            <div>
+              <div style="font-weight:800;color:#fff" id="workTitle">Çalışma</div>
+              <div style="color:rgba(255,255,255,0.9);font-size:13px;margin-top:4px" id="workSub">Kullanıcı işlemleri ve görevler</div>
             </div>
-            
-            <!-- Account Page -->
-            <div id="accountPage" class="page-content">
-                <div class="card">
-                    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
-                        <div style="width: 64px; height: 64px; background: linear-gradient(to right, #8b5cf6, #ec4899); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; color: white;">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div>
-                            <div style="font-size: 20px; font-weight: 800;">Erkin Kaya</div>
-                            <div style="color: #64748b; font-size: 14px; margin-top: 4px;">erkin@example.com</div>
-                        </div>
-                    </div>
-                    
-                    <div class="stats">
-                        <div class="stat">
-                            <div class="num">₺ 1,428.50</div>
-                            <div class="lbl">Bakiye</div>
-                        </div>
-                        <div class="stat">
-                            <div class="num">12</div>
-                            <div class="lbl">Sipariş</div>
-                        </div>
-                        <div class="stat">
-                            <div class="num">4.8</div>
-                            <div class="lbl">Puan</div>
-                        </div>
-                    </div>
-                    
-                    <div style="margin-top: 20px;">
-                        <div style="padding: 16px; background: #f8fafc; border-radius: 14px; margin-bottom: 12px; display: flex; align-items: center; gap: 12px;">
-                            <i class="fas fa-cog" style="color: #4f46e5;"></i>
-                            <span>Hesap Ayarları</span>
-                        </div>
-                        <div style="padding: 16px; background: #f8fafc; border-radius: 14px; margin-bottom: 12px; display: flex; align-items: center; gap: 12px;">
-                            <i class="fas fa-shield-alt" style="color: #10b981;"></i>
-                            <span>Güvenlik</span>
-                        </div>
-                        <div style="padding: 16px; background: #f8fafc; border-radius: 14px; display: flex; align-items: center; gap: 12px;">
-                            <i class="fas fa-sign-out-alt" style="color: #ef4444;"></i>
-                            <span>Çıkış Yap</span>
-                        </div>
-                    </div>
-                </div>
+          </div>
+          <div style="margin-top:18px">
+            <div class="field" id="workFieldUser">Kullanıcı Adı/Cep Telefonu</div>
+            <div class="field" id="workFieldPass">Şifre</div>
+            <div class="btn-row">
+              <div class="btn" id="workBtnLogin">Giriş</div>
+              <div class="btn" id="workBtnRegister" style="background:transparent;color:rgba(255,255,255,0.95);border:1px solid rgba(255,255,255,0.08)">Kayıt Ol</div>
             </div>
-        </main>
-        
-        <nav class="bottom">
-            <div class="nav-item active" data-page="homePage">
-                <i class="fas fa-home"></i>
-                <div class="label">Ana Sayfa</div>
+          </div>
+          <div style="margin-top:auto;color:rgba(255,255,255,0.95);font-size:13px" class="muted">
+            <small id="workFooter">Bu alanda görevleri takip edebilir, gelir raporlarını görebilirsiniz.</small>
+          </div>
+        </div>
+      </section>
+      <section id="kayitPage" style="display:none">
+        <div class="yellow-page">
+          <div style="font-weight:700;font-size:18px;color:white" id="registerTitle">Kayıt Ol</div>
+          <div class="field" id="registerFieldName">Ad Soyad</div>
+          <div class="field" id="registerFieldPhone">Cep Telefonu</div>
+          <div class="field" id="registerFieldPass">Şifre</div>
+          <div class="btn-row">
+            <div class="btn" id="registerBtnSubmit">Kayıt Ol</div>
+            <div class="btn" id="registerBtnCancel" style="background:transparent;color:rgba(255,255,255,0.95);border:1px solid rgba(255,255,255,0.08)">İptal</div>
+          </div>
+        </div>
+      </section>
+      <section id="hesapPage" style="display:none">
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#6ee7b7,#60a5fa);display:flex;align-items:center;justify-content:center;color:white;font-weight:800">E</div>
+            <div>
+              <div style="font-weight:800">Erkin K.</div>
+              <div class="muted" id="accountInfo">Hesap: m***r • ₺ 1.254,32</div>
             </div>
-            <div class="nav-item" data-page="merchantPage">
-                <i class="fas fa-store"></i>
-                <div class="label">Tüccar</div>
-            </div>
-            <div class="nav-item" data-page="workPage">
-                <i class="fas fa-tasks"></i>
-                <div class="label">Çalışma</div>
-            </div>
-            <div class="nav-item" data-page="accountPage">
-                <i class="fas fa-user"></i>
-                <div class="label">Hesabım</div>
-            </div>
-        </nav>
-    </div>
+          </div>
+          <div style="margin-top:12px;display:flex;gap:8px;flex-direction:column">
+            <div id="accountBalance" style="padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fff);border:1px solid rgba(15,20,36,0.04)">Bakiye: <strong>₺ 1.254,32</strong></div>
+            <div id="accountSettings" style="padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fff);border:1px solid rgba(15,20,36,0.04)">Hesap Ayarları</div>
+            <div id="accountLogout" style="padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fff);border:1px solid rgba(15,20,36,0.04)">Çıkış Yap</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom" role="navigation" aria-label="Alt menü">
+      <div class="nav-item active" data-target="homePage" onclick="switchPage(event)">
+        <div class="ic">🏠</div>
+        <div class="lbl" id="navHome">Ana Sayfa</div>
+      </div>
+      <div class="nav-item" data-target="tucPage" onclick="switchPage(event)">
+        <div class="ic">🧾</div>
+        <div class="lbl" id="navMerchant">Tüccar</div>
+      </div>
+      <div class="nav-item" data-target="calismaPage" onclick="switchPage(event)">
+        <div class="ic">⚙️</div>
+        <div class="lbl" id="navWork">Çalışma</div>
+      </div>
+      <div class="nav-item" data-target="kayitPage" onclick="switchPage(event)">
+        <div class="ic">📝</div>
+        <div class="lbl" id="navRegister">Kayıt</div>
+      </div>
+      <div class="nav-item" data-target="hesapPage" onclick="switchPage(event)">
+        <div class="ic">👤</div>
+        <div class="lbl" id="navAccount">Hesabım</div>
+      </div>
+    </nav>
+  </div>
+
+<script>
+/* ---------------------------
+  Dil ve Çeviri Yönetimi
+--------------------------- */
+const translations = {
+  tr: {
+    // Nav
+    navHome: "Ana Sayfa", navMerchant: "Tüccar", navWork: "Çalışma", navRegister: "Kayıt", navAccount: "Hesabım",
+    // Page Titles
+    page_homePage: ["Ana Sayfa", "Tik Tok Shop"], page_tucPage: ["Tüccar", "Tüccar Girişi"], page_calismaPage: ["Çalışma", "Görevler & Raporlar"], page_kayitPage: ["Kayıt", "Yeni Üyelik"], page_hesapPage: ["Hesabım", "Hesap Bilgileri"],
+    // Home Page
+    heroTitle: "Tik Tok Shop", heroDesc: "E-ticaret & ödeme akışlarını gösteren canlı deneme arayüzü.", tickerTitle: "Giriş ve Çıkış",
+    statTotalLabel: "Toplam Akış", statInLabel: "Yükleme", statOutLabel: "Çekme",
+    partnersTitle: "Popüler Platformlar", platformName: "TikTok Shop", platformDesc: "E-ticaret hizmet platformu (DTC)",
+    // Ticker Types
+    txIn: "Yükleme", txOut: "Para Çekme", timeAgo: "s önce",
+    // Merchant Page
+    merchantLoginTitle: "Tüccar Girişi", merchantLoginSub: "Kullanıcı Adı / Cep Telefonu",
+    merchantUserPlaceholder: "Kullanıcı Adı/Cep Telefonu", merchantPassPlaceholder: "Şifre",
+    btnLogin: "Giriş", btnRegister: "Kayıt Ol",
+    // Work Page
+    workTitle: "Çalışma", workSub: "Kullanıcı işlemleri ve görevler", workFieldUser: "Kullanıcı Adı/Cep Telefonu", workFieldPass: "Şifre",
+    workBtnLogin: "Giriş", workBtnRegister: "Kayıt Ol", workFooter: "Bu alanda görevleri takip edebilir, gelir raporlarını görebilirsiniz.",
+    // Register Page
+    registerTitle: "Kayıt Ol", registerFieldName: "Ad Soyad", registerFieldPhone: "Cep Telefonu", registerFieldPass: "Şifre",
+    registerBtnSubmit: "Kayıt Ol", registerBtnCancel: "İptal",
+    // Account Page
+    accountInfo: "Hesap: m***r • ₺ 1.254,32", accountBalance: "Bakiye: <strong>₺ 1.254,32</strong>", accountSettings: "Hesap Ayarları", accountLogout: "Çıkış Yap",
+  },
+  en: {
+    // Nav
+    navHome: "Home", navMerchant: "Merchant", navWork: "Work", navRegister: "Register", navAccount: "My Account",
+    // Page Titles
+    page_homePage: ["Home", "Tik Tok Shop"], page_tucPage: ["Merchant", "Merchant Login"], page_calismaPage: ["Work", "Tasks & Reports"], page_kayitPage: ["Register", "New Membership"], page_hesapPage: ["My Account", "Account Information"],
+    // Home Page
+    heroTitle: "Tik Tok Shop", heroDesc: "Live demo interface showing e-commerce & payment flows.", tickerTitle: "Ins and Outs",
+    statTotalLabel: "Total Flow", statInLabel: "Deposits", statOutLabel: "Withdrawals",
+    partnersTitle: "Popular Platforms", platformName: "TikTok Shop", platformDesc: "E-commerce service platform (DTC)",
+    // Ticker Types
+    txIn: "Deposit", txOut: "Withdrawal", timeAgo: "s ago",
+    // Merchant Page
+    merchantLoginTitle: "Merchant Login", merchantLoginSub: "Username / Mobile",
+    merchantUserPlaceholder: "Username/Mobile", merchantPassPlaceholder: "Password",
+    btnLogin: "Login", btnRegister: "Register",
+    // Work Page
+    workTitle: "Work", workSub: "User operations and tasks", workFieldUser: "Username/Mobile", workFieldPass: "Password",
+    workBtnLogin: "Login", workBtnRegister: "Register", workFooter: "In this area, you can track tasks and view income reports.",
+    // Register Page
+    registerTitle: "Sign Up", registerFieldName: "Full Name", registerFieldPhone: "Mobile Phone", registerFieldPass: "Password",
+    registerBtnSubmit: "Sign Up", registerBtnCancel: "Cancel",
+    // Account Page
+    accountInfo: "Account: m***r • $ 1,254.32", accountBalance: "Balance: <strong>$ 1,254.32</strong>", accountSettings: "Account Settings", accountLogout: "Log Out",
+  }
+};
+let currentLang = 'tr';
+
+function setLanguage(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    const t = translations[lang];
+
+    // Update all elements with an ID
+    Object.keys(t).forEach(key => {
+        const el = document.getElementById(key);
+        if (el) {
+            // Special handling for page titles which are an array
+            if (key.startsWith('page_')) return;
+            // Special handling for input placeholders
+            if (key.endsWith('Placeholder')) {
+                const realId = key.replace('Placeholder', '');
+                document.getElementById(realId).placeholder = t[key];
+            } else {
+                el.innerHTML = t[key];
+            }
+        }
+    });
     
-    <script>
-        // Transactions data
-        const transactions = [
-            { name: "Ahmet Y.", type: "Yükleme", amount: "₺ 1,250", time: "2 dk önce" },
-            { name: "Mehmet K.", type: "Para Çekme", amount: "₺ 850", time: "12 dk önce" },
-            { name: "Ayşe T.", type: "Yükleme", amount: "₺ 2,400", time: "24 dk önce" },
-            { name: "Fatma S.", type: "Para Çekme", amount: "₺ 1,100", time: "38 dk önce" },
-            { name: "Burak D.", type: "Yükleme", amount: "₺ 3,200", time: "45 dk önce" },
-            { name: "Zeynep K.", type: "Para Çekme", amount: "₺ 750", time: "1 saat önce" },
-            { name: "Can Y.", type: "Yükleme", amount: "₺ 1,800", time: "1 saat önce" },
-            { name: "Selin M.", type: "Para Çekme", amount: "₺ 1,350", time: "2 saat önce" }
-        ];
-        
-        // Render transactions
-        function renderTransactions() {
-            const container = document.getElementById('tickerContent');
-            container.innerHTML = '';
-            
-            transactions.forEach(transaction => {
-                const txElement = document.createElement('div');
-                txElement.className = 'tx';
-                
-                const amountClass = transaction.type === "Yükleme" ? "in" : "out";
-                const sign = transaction.type === "Yükleme" ? "+" : "-";
-                
-                txElement.innerHTML = `
-                    <div class="avatar">${transaction.name.charAt(0)}</div>
-                    <div class="meta">
-                        <div class="who">${transaction.name}</div>
-                        <div class="what">${transaction.type} • ${transaction.time}</div>
-                    </div>
-                    <div class="amount ${amountClass}">${sign} ${transaction.amount}</div>
-                `;
-                
-                container.appendChild(txElement);
-            });
-        }
-        
-        // Update clock
-        function updateClock() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('tr-TR', {
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
-            
-            document.querySelector('.live-clock').textContent = timeString;
-        }
-        
-        // Page navigation
-        function setupNavigation() {
-            const navItems = document.querySelectorAll('.nav-item');
-            
-            navItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    // Update active state
-                    navItems.forEach(nav => nav.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Show the selected page
-                    const pageId = this.getAttribute('data-page');
-                    document.querySelectorAll('.page-content').forEach(page => {
-                        page.style.display = 'none';
-                    });
-                    
-                    if (pageId === 'homePage') {
-                        document.getElementById('homePage').style.display = 'block';
-                    } else {
-                        document.getElementById(pageId).style.display = 'block';
-                    }
-                });
-            });
-        }
-        
-        // Language selector
-        function setupLanguageSelector() {
-            const langBtn = document.querySelector('.lang-btn');
-            const langDropdown = document.querySelector('.lang-dropdown');
-            
-            langBtn.addEventListener('click', function() {
-                langDropdown.classList.toggle('active');
-            });
-            
-            // Close dropdown when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
-                    langDropdown.classList.remove('active');
-                }
-            });
-        }
-        
-        // Initialize the app
-        document.addEventListener('DOMContentLoaded', function() {
-            renderTransactions();
-            updateClock();
-            setInterval(updateClock, 1000);
-            setupNavigation();
-            setupLanguageSelector();
-        });
-    </script>
+    // Update active page title
+    const activePage = document.querySelector('nav .active').getAttribute('data-target');
+    const [title, sub] = t['page_' + activePage];
+    document.getElementById('pageTitle').innerText = title;
+    document.getElementById('pageSub').innerText = sub;
+
+    // Update lang switcher text
+    document.getElementById('langSwitcher').innerText = lang === 'tr' ? 'Dil: TR' : 'Lang: EN';
+    
+    // Rerender tickers to update language in them
+    renderTickers();
+}
+
+function toggleLanguage() {
+    const newLang = currentLang === 'tr' ? 'en' : 'tr';
+    setLanguage(newLang);
+}
+
+
+/* ---------------------------
+  Gerçekçi kayan işlem (ticker)
+--------------------------- */
+
+const sampleNames = ["ahmet", "murat", "ayşe", "fatma", "mehmet", "burak", "elif", "emre", "selin", "okan", "deniz", "onur", "seda", "yusuf", "can", "ipek", "berk", "gizem", "naz", "ali"];
+const tickerA = document.getElementById('tickerA');
+const tickerB = document.getElementById('tickerB');
+const wrap = document.getElementById('tickerWrap');
+let items = []; // active items array used as source
+
+function genTx(){
+  const isDeposit = Math.random() < 0.55;
+  const type = isDeposit ? translations[currentLang].txIn : translations[currentLang].txOut;
+  const name = sampleNames[Math.floor(Math.random()*sampleNames.length)];
+  const masked = maskName(name);
+  const amount = (Math.random()*5000 + 10);
+  const amountFmt = formatCurrency(amount);
+  const sign = isDeposit ? '+' : '-';
+  const cls = isDeposit ? 'in' : 'out';
+  const timeAgo = Math.floor(Math.random()*59)+1;
+  return {type, name:masked, amount: amountFmt, cls, timeAgo, sign};
+}
+
+function maskName(n){
+  if(n.length <=3) return n[0] + '*'.repeat(n.length-1);
+  const first = n[0];
+  const last = n[n.length-1];
+  const mid = '*'.repeat(Math.max(1, n.length-2));
+  return first + mid + last;
+}
+
+function formatCurrency(num){
+  const options = { style: 'currency', currency: currentLang === 'tr' ? 'TRY' : 'USD' };
+  return new Intl.NumberFormat(currentLang + '-' + currentLang.toUpperCase(), options).format(num);
+}
+
+function createTxElement(tx){
+  const el = document.createElement('div');
+  el.className = 'tx';
+  el.innerHTML = `
+    <div class="avatar">${tx.name.slice(0,1).toUpperCase()}</div>
+    <div class="meta">
+      <div class="who">${tx.name} <span class="muted" style="font-weight:600;font-size:12px">• ${tx.type}</span></div>
+      <div class="what muted">#${Math.floor(Math.random()*9000+1000)} • ${tx.timeAgo}${translations[currentLang].timeAgo}</div>
+    </div>
+    <div class="amount ${tx.cls}">${tx.sign} ${tx.amount}</div>
+  `;
+  return el;
+}
+
+function seedInitial(n=10){
+  for(let i=0;i<n;i++){
+    items.push(genTx());
+  }
+  renderTickers();
+}
+
+function renderTickers(){
+  tickerA.innerHTML = '';
+  tickerB.innerHTML = '';
+  const list = items.slice(-20);
+  list.forEach(tx => tickerA.appendChild(createTxElement(tx)));
+  list.forEach(tx => tickerB.appendChild(createTxElement(tx)));
+  tickerA.style.transform = 'translateY(0%)';
+  tickerB.style.transform = 'translateY(100%)';
+}
+
+let speed = 0.035;
+let posA = 0;
+let posB = 100;
+let lastFrame = performance.now();
+
+function animateTickers(now){
+  const delta = now - lastFrame;
+  lastFrame = now;
+  const step = speed * (delta/16.67);
+  posA -= step;
+  posB -= step;
+  if(posA <= -100){
+    posA = posB + 100;
+    addNewBatch();
+  }
+  if(posB <= -100){
+    posB = posA + 100;
+    addNewBatch();
+  }
+  tickerA.style.transform = `translateY(${posA}%)`;
+  tickerB.style.transform = `translateY(${posB}%)`;
+  requestAnimationFrame(animateTickers);
+}
+
+function addNewBatch(){
+  const count = Math.floor(Math.random()*3)+1;
+  for(let i=0;i<count;i++){
+    items.push(genTx());
+  }
+  const tail = items.slice(-20);
+  const lastWrap = Math.random() < 0.5 ? tickerA : tickerB;
+  lastWrap.innerHTML = '';
+  tail.forEach(tx => lastWrap.appendChild(createTxElement(tx)));
+  updateStats();
+}
+
+setInterval(()=> {
+  items.push(genTx());
+}, 2400 + Math.random()*1800);
+
+function updateStats(){
+  const recent = items.slice(-40);
+  let inSum=0, outSum=0;
+  recent.forEach(t=>{
+    const val = Number(t.amount.replace(/[^0-9.,-]+/g,"").replace(',','.'));
+    if(t.cls==='in') inSum += val;
+    else outSum += val;
+  });
+  document.getElementById('statTotal').innerText = formatCurrency(inSum + outSum);
+  document.getElementById('statIn').innerText = formatCurrency(inSum);
+  document.getElementById('statOut').innerText = formatCurrency(outSum);
+}
+
+function startClock(){
+  const el = document.getElementById('liveClock');
+  setInterval(()=> {
+    const d = new Date();
+    el.innerText = d.toLocaleTimeString('tr-TR', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  }, 1000);
+}
+
+/* ---------------------------
+  Page switcher (bottom nav)
+--------------------------- */
+function switchPage(e){
+  const target = e.currentTarget.getAttribute('data-target');
+  document.querySelectorAll('.nav-item').forEach(n=> n.classList.remove('active'));
+  e.currentTarget.classList.add('active');
+
+  document.querySelectorAll('main.content section').forEach(s=> s.style.display='none');
+  const sec = document.getElementById(target);
+  if(sec) sec.style.display = 'block';
+
+  // update title based on new language system
+  const [title, sub] = translations[currentLang]['page_' + target];
+  document.getElementById('pageTitle').innerText = title;
+  document.getElementById('pageSub').innerText = sub;
+}
+
+/* ---------------------------
+  Init
+--------------------------- */
+function initializeApp() {
+    // Detect browser language and set initial language
+    const userLang = navigator.language || navigator.userLanguage;
+    const initialLang = userLang.startsWith('tr') ? 'tr' : 'en';
+    setLanguage(initialLang);
+
+    seedInitial(22);
+    requestAnimationFrame(animateTickers);
+    startClock();
+    updateStats();
+}
+
+initializeApp();
+
+</script>
 </body>
 </html>
