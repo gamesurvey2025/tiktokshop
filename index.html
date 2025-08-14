@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+  <title>Tik Tok Shop — Mobil</title>
+  <meta name="theme-color" content="#f7b500"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --brand:#f7b500;           /* ana sarı */
+      --brand-2:#ffc83d;         /* açık sarı */
+      --ink:#101114;             /* ana metin */
+      --muted:#6b7280;           /* ikincil metin */
+      --bg:#fff;                 /* arka plan */
+      --card:#ffffff;            /* kart */
+      --line:#ececec;            /* çizgi */
+      --radius:16px;
+      --shadow: 0 6px 20px rgba(0,0,0,.08);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial; color:var(--ink); background:var(--bg)}
+
+    /* Top App Bar */
+    .appbar{position:sticky; top:0; z-index:50; display:flex; align-items:center; gap:10px; padding:12px 14px; background:linear-gradient(180deg,var(--brand),var(--brand-2)); color:#1b1b1b; box-shadow:0 1px 0 rgba(0,0,0,.06)}
+    .appbar .logo{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;background:#111}
+    .appbar .title{font-weight:800; letter-spacing:.2px}
+    .appbar .subtitle{margin-left:auto; opacity:.85; font-weight:700}
+
+    /* Pages wrapper */
+    main{padding:14px; padding-bottom:90px;}
+    .page{display:none; animation:.25s ease both fadeIn}
+    .page.active{display:block}
+    @keyframes fadeIn{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:translateY(0)}}
+
+    /* Cards */
+    .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow)}
+    .card + .card{margin-top:12px}
+
+    /* Home: banner */
+    .banner{overflow:hidden}
+    .banner img{width:100%; display:block}
+
+    /* Partners list */
+    .list{padding:10px}
+    .li{display:flex; gap:12px; align-items:center; padding:10px; border-radius:14px; border:1px dashed #eee}
+    .li+.li{margin-top:8px}
+    .li .ico{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:#000;color:#fff;font-weight:900}
+    .li b{font-weight:800}
+    .li p{margin:2px 0 0; color:var(--muted); font-size:12px}
+
+    /* Segmented controls */
+    .seg{display:flex; gap:6px; background:#fff; border:1px solid var(--line); border-radius:999px; padding:6px; width:max-content; margin:10px auto 0}
+    .seg button{border:none; background:transparent; font-weight:700; padding:8px 14px; border-radius:999px}
+    .seg button.active{background:var(--ink); color:#fff}
+
+    /* Transactions feed */
+    .feed{margin-top:10px; height:260px; overflow:hidden; border-top:1px solid var(--line)}
+    .feed ul{list-style:none; margin:0; padding:0; will-change:transform}
+    .feed li{display:flex; align-items:center; justify-content:space-between; gap:8px; padding:12px 10px; border-bottom:1px dashed #eee; background:#fff}
+    .feed .left{display:flex; align-items:center; gap:10px}
+    .feed .avatar{width:34px; height:34px; border-radius:50%; background:#f3f4f6; display:grid; place-items:center; font-weight:800}
+    .feed .meta{line-height:1.15}
+    .feed .meta b{display:block}
+    .feed .meta small{color:var(--muted)}
+    .feed .amount{font-weight:900}
+    .up{color:#16a34a}     /* yükleme (giriş) */
+    .down{color:#ef4444}   /* çekme (çıkış) */
+
+    /* Forms (auth) */
+    .form{padding:14px}
+    .field{position:relative; margin:12px 0}
+    .label{display:block; font-size:12px; color:var(--muted); margin-bottom:6px}
+    input[type="text"], input[type="tel"], input[type="password"]{
+      width:100%; padding:14px 44px 14px 14px; border:1px solid var(--line); border-radius:12px; font-size:15px; outline:none;
+    }
+    .toggle-eye{position:absolute; right:10px; top:50%; transform:translateY(-50%); border:none; background:#f8f8f8; width:34px; height:34px; border-radius:10px}
+    .row{display:flex; gap:10px}
+    .row .btn{flex:1}
+    .btn{border:none; padding:12px 14px; border-radius:999px; font-weight:800; background:#fff; border:1px solid var(--line)}
+    .btn.primary{background:linear-gradient(180deg,var(--brand),var(--brand-2));}
+
+    /* Bottom Nav */
+    .tabbar{position:fixed; left:0; right:0; bottom:0; background:#fff; border-top:1px solid var(--line); display:grid; grid-template-columns:repeat(5,1fr); height:64px}
+    .tabbar button{appearance:none; border:none; background:transparent; font:inherit; padding:6px 2px 4px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; color:#7b7b7b}
+    .tabbar button.active{color:#111}
+    .tabbar .ic{width:22px; height:22px}
+    .tabbar small{font-weight:700; font-size:11px}
+
+    /* Helpers */
+    .sp-10{height:10px}
+    .title-line{display:flex; align-items:center; justify-content:space-between; padding:12px 14px; border-bottom:1px solid var(--line); background:var(--card); border-radius:var(--radius) var(--radius) 0 0}
+    .title-line b{font-size:16px}
+  </style>
+</head>
+<body>
+  <!-- Top App Bar -->
+  <header class="appbar">
+    <span class="logo" aria-hidden="true"> 
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="#fff" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a10 10 0 1010 10A10.011 10.011 0 0012 2zm1 15h-2v-5a1 1 0 011-1h1V8h2v3h2v2h-2v2a2 2 0 01-2 2z"/></svg>
+    </span>
+    <div>
+      <div class="title" id="appTitle">Tik Tok Shop</div>
+    </div>
+    <div class="subtitle" id="sectionName">Ana Sayfa</div>
+  </header>
+
+  <main>
+    <!-- ANA SAYFA -->
+    <section id="p-home" class="page active">
+      <div class="card banner">
+        <img src="https://images.unsplash.com/photo-1607083206968-13611e3d76db?q=80&w=1800&auto=format&fit=crop" alt="TikTok Shop banner"/>
+      </div>
+
+      <div class="card list" aria-label="İş ortakları">
+        <div class="li">
+          <div class="ico">TT</div>
+          <div><b>Tik Tok Shop</b><p>E‑ticaret hizmet platformu (DTC)</p></div>
+        </div>
+        <div class="li">
+          <div class="ico" style="background:#0ea5e9">✓</div>
+          <div><b>Akakçe</b><p>Karşılaştırma ve fiyat takibi</p></div>
+        </div>
+        <div class="li">
+          <div class="ico" style="background:#512da8">m</div>
+          <div><b>Morhipo</b><p>Moda ve yaşam</p></div>
+        </div>
+        <div class="li">
+          <div class="ico" style="background:#ff9900">a</div>
+          <div><b>Amazon</b><p>Küresel pazar yeri</p></div>
+        </div>
+      </div>
+
+      <div class="sp-10"></div>
+
+      <div class="card">
+        <div class="title-line"><b>Giriş ve Çıkış</b><small id="now"></small></div>
+
+        <div class="seg" role="tablist" aria-label="İşlem türü">
+          <button class="active" data-mode="all">Tümü</button>
+          <button data-mode="deposit">Yükleme</button>
+          <button data-mode="withdraw">Para Çekme</button>
+        </div>
+
+        <div class="feed" id="feed">
+          <ul id="feedList"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÜCCAR -->
+    <section id="p-merchant" class="page">
+      <div class="card">
+        <div class="title-line"><b>Tüccar</b></div>
+        <form class="form" onsubmit="event.preventDefault()">
+          <div class="field">
+            <label class="label">Kullanıcı Adı/Cep Telefonu</label>
+            <input type="text" placeholder="ornek: 5xx xxx xx xx veya kullanıcı adı" required>
+          </div>
+          <div class="field">
+            <label class="label">Şifre</label>
+            <input id="pass1" type="password" placeholder="••••••••" required>
+            <button class="toggle-eye" type="button" onclick="togglePass('pass1')">👁️</button>
+          </div>
+          <div class="row">
+            <button class="btn primary">Giriş</button>
+            <button class="btn">Kayıt Ol</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ÇALIŞMA -->
+    <section id="p-work" class="page">
+      <div class="card">
+        <div class="title-line"><b>Çalışma</b></div>
+        <form class="form" onsubmit="event.preventDefault()">
+          <div class="field">
+            <label class="label">Kullanıcı Adı/Cep Telefonu</label>
+            <input type="text" placeholder="ornek: 5xx xxx xx xx veya kullanıcı adı" required>
+          </div>
+          <div class="field">
+            <label class="label">Şifre</label>
+            <input id="pass2" type="password" placeholder="••••••••" required>
+            <button class="toggle-eye" type="button" onclick="togglePass('pass2')">👁️</button>
+          </div>
+          <div class="row">
+            <button class="btn primary">Giriş</button>
+            <button class="btn">Kayıt Ol</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- KAYIT -->
+    <section id="p-register" class="page">
+      <div class="card">
+        <div class="title-line"><b>Kayıt</b></div>
+        <form class="form" onsubmit="event.preventDefault()">
+          <div class="field">
+            <label class="label">Kullanıcı Adı/Cep Telefonu</label>
+            <input type="text" placeholder="ornek: 5xx xxx xx xx veya kullanıcı adı" required>
+          </div>
+          <div class="field">
+            <label class="label">Şifre</label>
+            <input id="pass3" type="password" placeholder="••••••••" required>
+            <button class="toggle-eye" type="button" onclick="togglePass('pass3')">👁️</button>
+          </div>
+          <div class="row">
+            <button class="btn primary">Giriş</button>
+            <button class="btn">Kayıt Ol</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- HESABIM -->
+    <section id="p-account" class="page">
+      <div class="card">
+        <div class="title-line"><b>Hesabım</b></div>
+        <form class="form" onsubmit="event.preventDefault()">
+          <div class="field">
+            <label class="label">Kullanıcı Adı/Cep Telefonu</label>
+            <input type="text" placeholder="ornek: 5xx xxx xx xx veya kullanıcı adı" required>
+          </div>
+          <div class="field">
+            <label class="label">Şifre</label>
+            <input id="pass4" type="password" placeholder="••••••••" required>
+            <button class="toggle-eye" type="button" onclick="togglePass('pass4')">👁️</button>
+          </div>
+          <div class="row">
+            <button class="btn primary">Giriş</button>
+            <button class="btn">Kayıt Ol</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Bottom Tab Bar -->
+  <nav class="tabbar" aria-label="Alt menü">
+    <button class="active" data-go="home">
+      <svg class="ic" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3z"/></svg>
+      <small>Ana Sayfa</small>
+    </button>
+    <button data-go="merchant">
+      <svg class="ic" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16v2H4zM4 8h16l-1.6 10.2A2 2 0 0116.42 20H7.58a2 2 0 01-1.98-1.8z"/></svg>
+      <small>Tüccar</small>
+    </button>
+    <button data-go="work">
+      <svg class="ic" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M10 4h4a2 2 0 012 2v2h4v12H4V8h4V6a2 2 0 012-2zm0 4h4V6h-4z"/></svg>
+      <small>Çalışma</small>
+    </button>
+    <button data-go="register">
+      <svg class="ic" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 12a5 5 0 10-5-5 5 5 0 005 5zm-7 9a7 7 0 1114 0z"/></svg>
+      <small>Kayıt</small>
+    </button>
+    <button data-go="account">
+      <svg class="ic" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 12a5 5 0 10-5-5 5 5 0 005 5zm-7 9a7 7 0 1114 0z"/></svg>
+      <small>Hesabım</small>
+    </button>
+  </nav>
+
+  <script>
+    /* ------------------- UI: Tabbar navigation ------------------- */
+    const pages = {
+      home: document.getElementById('p-home'),
+      merchant: document.getElementById('p-merchant'),
+      work: document.getElementById('p-work'),
+      register: document.getElementById('p-register'),
+      account: document.getElementById('p-account')
+    };
+    const tabButtons = document.querySelectorAll('.tabbar button');
+    const sectionName = document.getElementById('sectionName');
+
+    const labels = {home:'Ana Sayfa', merchant:'Tüccar', work:'Çalışma', register:'Kayıt', account:'Hesabım'};
+
+    tabButtons.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const go = btn.dataset.go;
+        Object.values(pages).forEach(p=>p.classList.remove('active'));
+        pages[go].classList.add('active');
+        tabButtons.forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        sectionName.textContent = labels[go];
+        window.scrollTo({top:0, behavior:'smooth'});
+      })
+    })
+
+    /* ------------------- Forms: toggle password ------------------- */
+    function togglePass(id){
+      const el = document.getElementById(id);
+      el.type = el.type === 'password' ? 'text' : 'password';
+    }
+
+    /* ------------------- Home: clock ------------------- */
+    function tick(){
+      const t = new Date();
+      const pad = n=> String(n).padStart(2,'0');
+      document.getElementById('now').textContent = `${pad(t.getHours())}:${pad(t.getMinutes())}:${pad(t.getSeconds())}`;
+    }
+    setInterval(tick, 1000); tick();
+
+    /* ------------------- Home: transactions feed ------------------- */
+    const names = ['mehmet','ayse','merve','ali','hakan','zeynep','mustafa','emre','elif','burak','omer','selin','deniz','yusuf','fatma','esra','gizem','kerem','murat','sevgi'];
+    const banks = ['Ziraat','Garanti','İş','YapıKredi','Akbank','Enpara','Papara'];
+
+    const feedList = document.getElementById('feedList');
+    let translateY = 0;
+
+    function mask(n){
+      if(n.length <= 2) return n + '*';
+      return n[0] + '***' + n[n.length-1];
+    }
+
+    function rand(min, max){return Math.floor(Math.random()*(max-min+1))+min}
+
+    function amount(){
+      // daha gerçekçi aralıklar
+      const ranges = [ [50,250], [300,950], [1000,3500], [5000,15000] ];
+      const r = ranges[Math.random()<.7 ? rand(0,2) : 3];
+      const val = (Math.random()<.4) ? (rand(r[0], r[1]) + 0.99) : rand(r[0], r[1]);
+      return val.toLocaleString('tr-TR', {style:'currency', currency:'TRY', maximumFractionDigits: (val%1?2:0)});
+    }
+
+    function newItem(){
+      const type = Math.random()<.56 ? 'deposit' : 'withdraw'; // daha çok yükleme
+      const user = mask(names[rand(0, names.length-1)]);
+      const bank = banks[rand(0, banks.length-1)];
+      const amt = amount();
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <div class="left">
+          <div class="avatar">${user[0].toUpperCase()}</div>
+          <div class="meta">
+            <b>${type==='deposit'? 'Yükleme' : 'Para Çekme'}</b>
+            <small>${user} • ${bank} • ${new Date().toLocaleTimeString('tr-TR',{hour:'2-digit', minute:'2-digit'})}</small>
+          </div>
+        </div>
+        <div class="amount ${type==='deposit'?'up':'down'}">${type==='deposit'?'+':'-'} ${amt}</div>`;
+      li.dataset.type = type;
+      return li;
+    }
+
+    // başlangıçta 12 öğe doldur
+    for(let i=0;i<12;i++){ feedList.appendChild(newItem()); }
+
+    // filtre butonları
+    document.querySelectorAll('.seg button').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        document.querySelectorAll('.seg button').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const mode = btn.dataset.mode;
+        Array.from(feedList.children).forEach(li=>{
+          li.style.display = (mode==='all' || li.dataset.type===mode) ? 'flex' : 'none';
+        })
+      })
+    })
+
+    // sürekli akış: yeni öğe ekle, yukarı kaydır
+    function loop(){
+      const li = newItem();
+      feedList.appendChild(li);
+      const first = feedList.children[0];
+      const step = first.offsetHeight; // ilk öğe yüksekliği kadar kaydır
+      translateY += step;
+      feedList.style.transition = 'transform .6s ease';
+      feedList.style.transform = `translateY(-${translateY}px)`;
+      // animasyon bitince ilk öğeyi kaldır ve transform'u sıfırla
+      setTimeout(()=>{
+        feedList.removeChild(first);
+        translateY -= step;
+        feedList.style.transition = 'none';
+        feedList.style.transform = `translateY(-${translateY}px)`; // görsel olarak aynı kalır
+      }, 620);
+    }
+    setInterval(loop, 1600);
+  </script>
+</body>
+</html>
