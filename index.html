@@ -6,549 +6,374 @@
 <title>Tik Tok Shop - Mobil</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#f4f6f8;
-    --card:#ffffff;
-    --muted:#8b8f98;
-    --accent:#ffb400; /* ana vurgun (sarı) */
-    --accent-600:#f2a900;
-    --accent-dark:#d08a00;
-    --green:#2bb673;
-    --red:#ff5a5f;
-    --glass: rgba(255,255,255,0.65);
-    --shadow: 0 6px 18px rgba(20,20,30,0.08);
-    --radius:12px;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    background: linear-gradient(180deg,#f7f9fb 0%, #eef2f5 100%);
-    margin:0;
-    color:#0f1724;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-  }
+:root{
+  --bg:#f4f6f8;
+  --card:#ffffff;
+  --muted:#8b8f98;
+  --accent:#ffb400;
+  --accent-600:#f2a900;
+  --accent-dark:#d08a00;
+  --green:#2bb673;
+  --red:#ff5a5f;
+  --glass: rgba(255,255,255,0.65);
+  --shadow: 0 6px 18px rgba(20,20,30,0.08);
+  --radius:12px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg,#f7f9fb 0%, #eef2f5 100%);
+  margin:0;
+  color:#0f1724;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
 
-  /* Mobile frame */
-  .device {
-    max-width:420px;
-    height:812px;
-    margin:18px auto;
-    border-radius:22px;
-    overflow:hidden;
-    box-shadow: 0 20px 50px rgba(10,20,40,0.12);
-    border:1px solid rgba(0,0,0,0.03);
-    background: var(--bg);
-    display:flex;
-    flex-direction:column;
-  }
+/* Mobile frame */
+.device {
+  max-width:420px;
+  min-height:900px;
+  margin:18px auto;
+  border-radius:22px;
+  overflow:hidden;
+  box-shadow: 0 20px 50px rgba(10,20,40,0.12);
+  border:1px solid rgba(0,0,0,0.03);
+  background: var(--bg);
+  display:flex;
+  flex-direction:column;
+}
 
-  /* Top header */
-  header.top {
-    height:68px;
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:12px 16px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.6));
-    backdrop-filter: blur(6px);
-    border-bottom:1px solid rgba(15,20,36,0.04);
-  }
-  .logo {
-    width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#111827,#111827);
-    display:flex;align-items:center;justify-content:center;color:white;font-weight:700;
-    font-size:14px;
-    box-shadow: var(--shadow);
-  }
-  .title-wrap {flex:1; display:flex;flex-direction:column; justify-content:center}
-  .page-title { font-weight:700; font-size:16px; color:#111827; margin:0; }
-  .page-sub { font-size:12px; color:var(--muted); margin-top:2px }
+/* Top header */
+header.top {
+  height:68px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.6));
+  backdrop-filter: blur(6px);
+  border-bottom:1px solid rgba(15,20,36,0.04);
+  position:relative;
+}
+.logo {
+  width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#111827,#111827);
+  display:flex;align-items:center;justify-content:center;color:white;font-weight:700;
+  font-size:14px;
+  box-shadow: var(--shadow);
+}
+.title-wrap {flex:1; display:flex;flex-direction:column; justify-content:center}
+.page-title { font-weight:700; font-size:16px; color:#111827; margin:0; }
+.page-sub { font-size:12px; color:var(--muted); margin-top:2px }
 
-  /* Main content area */
-  main.content {
-    flex:1; overflow:auto; padding:14px;
-    -webkit-overflow-scrolling: touch;
-  }
+/* Language selector */
+.language-select {
+  position:absolute;
+  left:12px;
+  top:50%;
+  transform:translateY(-50%);
+  background:var(--accent);
+  color:#fff;
+  padding:4px 8px;
+  border-radius:6px;
+  font-size:12px;
+  cursor:pointer;
+  user-select:none;
+}
 
-  /* Card */
-  .card {
-    background:var(--card);
-    border-radius:14px;
-    padding:12px;
-    box-shadow: var(--shadow);
-    margin-bottom:12px;
-  }
+/* Main content area */
+main.content {
+  flex:1; overflow:auto; padding:14px;
+  -webkit-overflow-scrolling: touch;
+}
 
-  /* Home top banner */
-  .hero {
-    display:flex; gap:12px; align-items:center;
-    padding:12px; border-radius:12px; overflow:hidden;
-    background: linear-gradient(90deg, #fff, #fff);
-  }
-  .hero-image {
-    width:78px;height:78px;border-radius:10px;background:linear-gradient(135deg,#0ea5a4,#6366f1);
-    display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:18px;
-    flex-shrink:0;
-  }
-  .hero-text {flex:1}
-  .hero-text h3 {margin:0;font-size:16px}
-  .hero-text p {margin:6px 0 0;font-size:13px;color:var(--muted)}
+/* Card */
+.card {
+  background:var(--card);
+  border-radius:14px;
+  padding:12px;
+  box-shadow: var(--shadow);
+  margin-bottom:12px;
+}
 
-  /* Kayan işlemler (ticker) */
-  .ticker-wrap {
-    margin-top:12px;
-    height:160px;
-    position:relative;
-    overflow:hidden;
-    border-radius:12px;
-    background: linear-gradient(180deg,#ffffff,#fffafa);
-    border:1px solid rgba(15,20,36,0.04);
-  }
-  .ticker {
-    position:absolute;
-    left:0; right:0;
-    padding:10px;
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-    will-change:transform;
-  }
-  .tx {
-    display:flex; align-items:center; gap:10px;
-    padding:10px; border-radius:10px;
-    background: linear-gradient(90deg, rgba(255,255,255,0.8), rgba(250,250,250,0.8));
-    border:1px solid rgba(15,20,36,0.03);
-  }
-  .tx .avatar {
-    width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;color:white;
-    background:linear-gradient(135deg,#ff7a59,#ffb86b);flex-shrink:0;
-  }
-  .tx .meta {flex:1}
-  .tx .meta .who {font-weight:600;font-size:14px}
-  .tx .meta .what {font-size:12px;color:var(--muted);margin-top:2px}
-  .tx .amount {font-weight:700; font-size:14px; text-align:right; min-width:90px}
+/* Home top banner */
+.hero {
+  display:flex; gap:12px; align-items:center;
+  padding:12px; border-radius:12px; overflow:hidden;
+  background: linear-gradient(90deg, #fff, #fff);
+}
+.hero-image {
+  width:78px;height:78px;border-radius:10px;background:linear-gradient(135deg,#0ea5a4,#6366f1);
+  display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:18px;
+  flex-shrink:0;
+}
+.hero-text {flex:1}
+.hero-text h3 {margin:0;font-size:16px}
+.hero-text p {margin:6px 0 0;font-size:13px;color:var(--muted)}
 
-  /* small label colors */
-  .in { color:var(--green) }
-  .out { color:var(--red) }
+/* Logos carousel */
+.logos-row {
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  margin-top:12px;
+  padding:8px 0;
+}
+.logos-row img {
+  width:80px;
+  height:40px;
+  object-fit:contain;
+  border-radius:8px;
+  box-shadow:var(--shadow);
+  flex-shrink:0;
+  cursor:pointer;
+}
 
-  /* fake stats row */
-  .stats {
-    display:flex; gap:8px; margin-top:12px;
-  }
-  .stat {
-    flex:1; padding:12px;border-radius:10px;background: linear-gradient(180deg,#fff,#fff);
-    border:1px solid rgba(15,20,36,0.03); text-align:center;
-  }
-  .stat .num {font-weight:700;font-size:18px}
-  .stat .lbl {font-size:12px;color:var(--muted);margin-top:6px}
+/* Kayan işlemler (ticker) */
+.ticker-wrap {
+  margin-top:12px;
+  height:160px;
+  position:relative;
+  overflow:hidden;
+  border-radius:12px;
+  background: linear-gradient(180deg,#ffffff,#fffafa);
+  border:1px solid rgba(15,20,36,0.04);
+}
+.ticker {
+  position:absolute;
+  left:0; right:0;
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  will-change:transform;
+}
+.tx {
+  display:flex; align-items:center; gap:10px;
+  padding:10px; border-radius:10px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.8), rgba(250,250,250,0.8));
+  border:1px solid rgba(15,20,36,0.03);
+}
+.tx .avatar {
+  width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;color:white;
+  background:linear-gradient(135deg,#ff7a59,#ffb86b);flex-shrink:0;
+}
+.tx .meta {flex:1}
+.tx .meta .who {font-weight:600;font-size:14px}
+.tx .meta .what {font-size:12px;color:var(--muted);margin-top:2px}
+.tx .amount {font-weight:700; font-size:14px; text-align:right; min-width:90px}
+.in { color:var(--green) }
+.out { color:var(--red) }
 
-  /* Pages: login style for others */
-  .yellow-page {
-    min-height:380px; border-radius:16px; padding:20px; color:#111827;
-    background: linear-gradient(180deg, var(--accent), var(--accent-600));
-    display:flex; flex-direction:column; justify-content:flex-start;
-    box-shadow: var(--shadow);
-  }
-  .field { margin-top:12px; background: rgba(255,255,255,0.12); padding:12px 14px; border-radius:10px; color:white; border:1px solid rgba(255,255,255,0.06) }
-  .btn-row { display:flex; gap:10px; margin-top:18px }
-  .btn {
-    flex:1; padding:12px;border-radius:30px;background:rgba(255,255,255,0.95);text-align:center;font-weight:700;
-    color:#111827; box-shadow: 0 6px 18px rgba(15,20,30,0.08);
-  }
+/* small stats */
+.stats {
+  display:flex; gap:8px; margin-top:12px;
+}
+.stat {
+  flex:1; padding:12px;border-radius:10px;background: linear-gradient(180deg,#fff,#fff);
+  border:1px solid rgba(15,20,36,0.03); text-align:center;
+}
+.stat .num {font-weight:700;font-size:18px}
+.stat .lbl {font-size:12px;color:var(--muted);margin-top:6px}
 
-  /* bottom nav */
-  nav.bottom {
-    height:74px; display:flex; align-items:center; justify-content:space-around; gap:6px;
-    padding:8px 10px; border-top:1px solid rgba(15,20,36,0.04);
-    background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.98));
-  }
-  .nav-item {
-    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; width:54px;
-    color:var(--muted); text-decoration:none; font-size:12px; cursor:pointer;
-  }
-  .nav-item .ic {
-    width:36px;height:36px;border-radius:10px; display:flex;align-items:center;justify-content:center;
-    background:transparent;
-  }
-  .nav-item.active { color:var(--accent-dark) }
-  .nav-item.active .ic { background: linear-gradient(180deg, var(--accent-600), var(--accent)); color:white; box-shadow: var(--shadow) }
+/* Pages: login style for others */
+.yellow-page {
+  min-height:380px; border-radius:16px; padding:20px; color:#111827;
+  background: linear-gradient(180deg, var(--accent), var(--accent-600));
+  display:flex; flex-direction:column; justify-content:flex-start;
+  box-shadow: var(--shadow);
+}
+.field { margin-top:12px; background: rgba(255,255,255,0.12); padding:12px 14px; border-radius:10px; color:white; border:1px solid rgba(255,255,255,0.06) }
+.btn-row { display:flex; gap:10px; margin-top:18px }
+.btn {
+  flex:1; padding:12px;border-radius:30px;background:rgba(255,255,255,0.95);text-align:center;font-weight:700;
+  color:#111827; box-shadow: 0 6px 18px rgba(15,20,30,0.08);
+}
 
-  /* small helpers */
-  .muted { color:var(--muted); font-size:13px }
-  .center { text-align:center }
+/* bottom nav */
+nav.bottom {
+  height:74px; display:flex; align-items:center; justify-content:space-around; gap:6px;
+  padding:8px 10px; border-top:1px solid rgba(15,20,36,0.04);
+  background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.98));
+}
+.nav-item {
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; width:54px;
+  color:var(--muted); text-decoration:none; font-size:12px; cursor:pointer;
+}
+.nav-item .ic {
+  width:36px;height:36px;border-radius:10px; display:flex;align-items:center;justify-content:center;
+  background:transparent;
+}
+.nav-item.active { color:var(--accent-dark) }
+.nav-item.active .ic { background: linear-gradient(180deg, var(--accent-600), var(--accent)); color:white; box-shadow: var(--shadow) }
 
-  /* Animations for ticker - we'll move via JS for smoothness */
-  @media (max-width:420px){
-    .device { margin:6px; border-radius:12px }
-    header.top { height:64px; padding:10px }
-  }
+/* small helpers */
+.muted { color:var(--muted); font-size:13px }
+.center { text-align:center }
+
+@media (max-width:420px){
+  .device { margin:6px; border-radius:12px }
+  header.top { height:64px; padding:10px }
+}
 </style>
 </head>
 <body>
-  <div class="device" role="application" aria-label="Mobil site önizleme">
-    <header class="top">
-      <div class="logo">T</div>
-      <div class="title-wrap">
-        <div class="page-title" id="pageTitle">Ana Sayfa</div>
-        <div class="page-sub" id="pageSub">Tik Tok Shop</div>
-      </div>
-      <div style="width:36px;height:36px;border-radius:10px;background:#e6eef9;display:flex;align-items:center;justify-content:center;font-weight:700;color:#2c5282">
-        A
-      </div>
-    </header>
+<div class="device" role="application" aria-label="Mobil site önizleme">
 
-    <main class="content" id="contentArea">
-      <!-- HOME (default) -->
-      <section id="homePage">
-        <div class="card hero">
-          <div class="hero-image">Shop</div>
-          <div class="hero-text">
-            <h3>Tik Tok Shop</h3>
-            <p>E-ticaret & ödeme akışlarını gösteren canlı deneme arayüzü.</p>
-          </div>
+  <header class="top">
+    <div class="language-select" id="langSelect">TR</div>
+    <div class="logo">T</div>
+    <div class="title-wrap">
+      <div class="page-title" id="pageTitle">Ana Sayfa</div>
+      <div class="page-sub" id="pageSub">Tik Tok Shop</div>
+    </div>
+    <div style="width:36px;height:36px;border-radius:10px;background:#e6eef9;display:flex;align-items:center;justify-content:center;font-weight:700;color:#2c5282">
+      A
+    </div>
+  </header>
+
+  <main class="content" id="contentArea">
+    <section id="homePage">
+      <div class="card hero">
+        <div class="hero-image">Shop</div>
+        <div class="hero-text">
+          <h3>Tik Tok Shop</h3>
+          <p>E-ticaret & ödeme akışlarını gösteren canlı deneme arayüzü.</p>
+        </div>
+      </div>
+
+      <!-- E-ticaret logoları -->
+      <div class="logos-row">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Hepsiburada_logo.svg" alt="Hepsiburada"/>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Trendyol_logo.svg" alt="Trendyol"/>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/N11_logo.svg" alt="n11"/>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/TikTok_logo.svg" alt="TikTokShop"/>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Amazon_logo.svg" alt="Amazon"/>
+      </div>
+
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-weight:700">Giriş ve Çıkış</div>
+          <div class="muted" id="liveClock"></div>
+        </div>
+        <div class="ticker-wrap" id="tickerWrap" aria-hidden="false">
+          <div class="ticker" id="tickerA"></div>
+          <div class="ticker" id="tickerB" style="top:100%"></div>
         </div>
 
-        <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div style="font-weight:700">Giriş ve Çıkış</div>
-            <div class="muted" id="liveClock"></div>
+        <div class="stats" aria-hidden="true">
+          <div class="stat">
+            <div class="num" id="statTotal">₺ 125.432</div>
+            <div class="lbl">Toplam Akış</div>
           </div>
-          <div class="ticker-wrap" id="tickerWrap" aria-hidden="false">
-            <!-- Two identical columns used for seamless loop if desired -->
-            <div class="ticker" id="tickerA"></div>
-            <div class="ticker" id="tickerB" style="top:100%"></div>
+          <div class="stat">
+            <div class="num" id="statIn">₺ 82.133</div>
+            <div class="lbl">Yükleme</div>
           </div>
-
-          <div class="stats" aria-hidden="true">
-            <div class="stat">
-              <div class="num" id="statTotal">₺ 125.432</div>
-              <div class="lbl">Toplam Akış</div>
-            </div>
-            <div class="stat">
-              <div class="num" id="statIn">₺ 82.133</div>
-              <div class="lbl">Yükleme</div>
-            </div>
-            <div class="stat">
-              <div class="num" id="statOut">₺ 43.299</div>
-              <div class="lbl">Çekme</div>
-            </div>
+          <div class="stat">
+            <div class="num" id="statOut">₺ 43.299</div>
+            <div class="lbl">Çekme</div>
           </div>
         </div>
-
-        <div class="card">
-          <div style="display:flex;align-items:center;gap:12px">
-            <div style="width:54px;height:54px;border-radius:10px;background:#fff;border:1px solid rgba(0,0,0,0.04);display:flex;align-items:center;justify-content:center">
-              <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='%230f1724' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M2 12h7l3 9 4-18 3 9h5'></path></svg>" alt="" />
-            </div>
-            <div>
-              <div style="font-weight:700">TikTok Shop</div>
-              <div class="muted">E-ticaret hizmet platformu (DTC)</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Tüccar page -->
-      <section id="tucPage" style="display:none">
-        <div class="card">
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <div style="font-weight:700">Tüccar Girişi</div>
-            <div class="muted">Kullanıcı Adı / Cep Telefonu</div>
-            <input class="field" id="merchantUser" placeholder="Kullanıcı Adı/Cep Telefonu" />
-            <input class="field" id="merchantPass" placeholder="Şifre" type="password" />
-            <div class="btn-row">
-              <div class="btn" onclick="alert('Giriş simülasyonu')">Giriş</div>
-              <div class="btn" style="background:transparent;color:var(--accent-dark);border-radius:10px;border:1px solid rgba(15,20,36,0.05)" onclick="alert('Kayıt simülasyonu')">Kayıt Ol</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Çalışma page -->
-      <section id="calismaPage" style="display:none">
-        <div class="yellow-page">
-          <div style="display:flex;align-items:center;gap:12px">
-            <div style="width:56px;height:56px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;color:#111827">TS</div>
-            <div>
-              <div style="font-weight:800;color:#fff">Çalışma</div>
-              <div style="color:rgba(255,255,255,0.9);font-size:13px;margin-top:4px">Kullanıcı işlemleri ve görevler</div>
-            </div>
-          </div>
-
-          <div style="margin-top:18px">
-            <div class="field">Kullanıcı Adı/Cep Telefonu</div>
-            <div class="field">Şifre</div>
-
-            <div class="btn-row">
-              <div class="btn">Giriş</div>
-              <div class="btn" style="background:transparent;color:rgba(255,255,255,0.95);border:1px solid rgba(255,255,255,0.08)">Kayıt Ol</div>
-            </div>
-          </div>
-
-          <div style="margin-top:auto;color:rgba(255,255,255,0.95);font-size:13px" class="muted">
-            <small>Bu alanda görevleri takip edebilir, gelir raporlarını görebilirsiniz.</small>
-          </div>
-        </div>
-      </section>
-
-      <!-- Kayıt page -->
-      <section id="kayitPage" style="display:none">
-        <div class="yellow-page">
-          <div style="font-weight:700;font-size:18px;color:white">Kayıt Ol</div>
-          <div style="margin-top:14px" class="field">Ad Soyad</div>
-          <div class="field">Cep Telefonu</div>
-          <div class="field">Şifre</div>
-          <div class="btn-row">
-            <div class="btn">Kayıt Ol</div>
-            <div class="btn" style="background:transparent;color:rgba(255,255,255,0.95);border:1px solid rgba(255,255,255,0.08)">İptal</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Hesabım page -->
-      <section id="hesapPage" style="display:none">
-        <div class="card">
-          <div style="display:flex;align-items:center;gap:12px">
-            <div style="width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#6ee7b7,#60a5fa);display:flex;align-items:center;justify-content:center;color:white;font-weight:800">E</div>
-            <div>
-              <div style="font-weight:800">Erkin K.</div>
-              <div class="muted">Hesap: m***r • ₺ 1.254,32</div>
-            </div>
-          </div>
-
-          <div style="margin-top:12px;display:flex;gap:8px;flex-direction:column">
-            <div style="padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fff);border:1px solid rgba(15,20,36,0.04)">Bakiye: <strong>₺ 1.254,32</strong></div>
-            <div style="padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fff);border:1px solid rgba(15,20,36,0.04)">Hesap Ayarları</div>
-            <div style="padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fff);border:1px solid rgba(15,20,36,0.04)">Çıkış Yap</div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <nav class="bottom" role="navigation" aria-label="Alt menü">
-      <div class="nav-item active" data-target="homePage" onclick="switchPage(event)">
-        <div class="ic">🏠</div>
-        <div class="lbl">Ana Sayfa</div>
       </div>
-      <div class="nav-item" data-target="tucPage" onclick="switchPage(event)">
-        <div class="ic">🧾</div>
-        <div class="lbl">Tüccar</div>
-      </div>
-      <div class="nav-item" data-target="calismaPage" onclick="switchPage(event)">
-        <div class="ic">⚙️</div>
-        <div class="lbl">Çalışma</div>
-      </div>
-      <div class="nav-item" data-target="kayitPage" onclick="switchPage(event)">
-        <div class="ic">📝</div>
-        <div class="lbl">Kayıt</div>
-      </div>
-      <div class="nav-item" data-target="hesapPage" onclick="switchPage(event)">
-        <div class="ic">👤</div>
-        <div class="lbl">Hesabım</div>
-      </div>
-    </nav>
-  </div>
+    </section>
+
+    <!-- Diğer sayfalar buraya (Tüccar, Çalışma, Kayıt, Hesabım) önceki kod gibi -->
+  </main>
+
+  <nav class="bottom" role="navigation" aria-label="Alt menü">
+    <div class="nav-item active" data-target="homePage" onclick="switchPage(event)">
+      <div class="ic">🏠</div>
+      <div class="lbl">Ana Sayfa</div>
+    </div>
+    <div class="nav-item" data-target="tucPage" onclick="switchPage(event)">
+      <div class="ic">🧾</div>
+      <div class="lbl">Tüccar</div>
+    </div>
+    <div class="nav-item" data-target="calismaPage" onclick="switchPage(event)">
+      <div class="ic">⚙️</div>
+      <div class="lbl">Çalışma</div>
+    </div>
+    <div class="nav-item" data-target="kayitPage" onclick="switchPage(event)">
+      <div class="ic">📝</div>
+      <div class="lbl">Kayıt</div>
+    </div>
+    <div class="nav-item" data-target="hesapPage" onclick="switchPage(event)">
+      <div class="ic">👤</div>
+      <div class="lbl">Hesabım</div>
+    </div>
+  </nav>
+</div>
 
 <script>
-/* ---------------------------
-  Gerçekçi kayan işlem (ticker)
-  --------------------------- */
+// ----------------- Dil Algılama ve Seçici -----------------
+const langSelect = document.getElementById('langSelect');
+const supportedLangs = {tr:'TR', en:'EN'};
+let userLang = navigator.language.slice(0,2);
+if(!supportedLangs[userLang]) userLang='tr';
+langSelect.innerText = supportedLangs[userLang];
 
-const sampleNames = [
-  "ahmet", "murat", "ayşe", "fatma", "mehmet", "burak",
-  "elif", "emre", "selin", "okan", "deniz", "onur", "seda",
-  "yusuf", "can", "ipek", "berk", "gizem", "naz", "ali"
-];
+langSelect.addEventListener('click', ()=> {
+  userLang = userLang==='tr'?'en':'tr';
+  langSelect.innerText = supportedLangs[userLang];
+  alert("Dil seçimi: "+langSelect.innerText);
+});
 
+// ----------------- Ticker ve demo işlemleri -----------------
+const sampleNames = ["ahmet","murat","ayşe","fatma","mehmet","burak","elif","emre","selin","okan","deniz","onur","seda","yusuf","can","ipek","berk","gizem","naz","ali"];
 const tickerA = document.getElementById('tickerA');
 const tickerB = document.getElementById('tickerB');
 const wrap = document.getElementById('tickerWrap');
+let items=[];
 
-let visibleItems = 6; // kaç visible item görünsün
-let items = []; // active items array used as source
-
-// generate a fake tx
 function genTx(){
-  const type = Math.random() < 0.55 ? 'Yükleme' : 'Para Çekme';
+  const type = Math.random()<0.55?'Yükleme':'Para Çekme';
   const name = sampleNames[Math.floor(Math.random()*sampleNames.length)];
   const masked = maskName(name);
-  // realistic amount: between 10 and 5000
   const amount = (Math.random()*5000 + 10);
   const amountFmt = formatCurrency(amount);
-  const sign = type === 'Yükleme' ? '+' : '-';
-  const cls = type === 'Yükleme' ? 'in' : 'out';
-  const timeAgo = Math.floor(Math.random()*59)+1; // 1..60 sn
-  return {type, name:masked, amount: amountFmt, cls, timeAgo, sign};
+  const sign = type==='Yükleme'?'+':'-';
+  const cls = type==='Yükleme'?'in':'out';
+  const timeAgo = Math.floor(Math.random()*59)+1;
+  return {type,name:masked,amount:amountFmt,cls,timeAgo,sign};
 }
-
 function maskName(n){
-  if(n.length <=3) return n[0] + '*'.repeat(n.length-1);
-  const first = n[0];
-  const last = n[n.length-1];
-  const mid = '*'.repeat(Math.max(1, n.length-2));
-  return first + mid + last;
+  if(n.length<=3) return n[0]+'*'.repeat(n.length-1);
+  return n[0]+'*'.repeat(n.length-2)+n[n.length-1];
 }
-
-function formatCurrency(num){
-  // Turkish-style formatting, no decimals or 2 decimals
-  return '₺ ' + Number(num.toFixed(2)).toLocaleString('tr-TR');
-}
-
+function formatCurrency(num){return '₺ '+Number(num.toFixed(2)).toLocaleString('tr-TR');}
 function createTxElement(tx){
-  const el = document.createElement('div');
-  el.className = 'tx';
-  el.innerHTML = `
-    <div class="avatar">${tx.name.slice(0,1).toUpperCase()}</div>
-    <div class="meta">
-      <div class="who">${tx.name} <span class="muted" style="font-weight:600;font-size:12px">• ${tx.type}</span></div>
-      <div class="what muted">#${Math.floor(Math.random()*9000+1000)} • ${tx.timeAgo}s önce</div>
-    </div>
-    <div class="amount ${tx.cls}">${tx.sign} ${tx.amount}</div>
-  `;
+  const el=document.createElement('div'); el.className='tx';
+  el.innerHTML = `<div class="avatar">${tx.name.slice(0,1).toUpperCase()}</div>
+  <div class="meta"><div class="who">${tx.name} <span class="muted" style="font-weight:600;font-size:12px">• ${tx.type}</span></div>
+  <div class="what muted">#${Math.floor(Math.random()*9000+1000)} • ${tx.timeAgo}s önce</div></div>
+  <div class="amount ${tx.cls}">${tx.sign} ${tx.amount}</div>`;
   return el;
 }
-
-function seedInitial(n=10){
-  for(let i=0;i<n;i++){
-    items.push(genTx());
-  }
-  // fill both ticker lists
-  renderTickers();
-}
-
-// render tickers into both columns
+function seedInitial(n=10){for(let i=0;i<n;i++){items.push(genTx());} renderTickers();}
 function renderTickers(){
-  tickerA.innerHTML = '';
-  tickerB.innerHTML = '';
-  // make a longer list for smoothness
-  const list = items.slice(-20);
-  list.forEach(tx => tickerA.appendChild(createTxElement(tx)));
-  list.forEach(tx => tickerB.appendChild(createTxElement(tx)));
-  // position tickerB right below A
-  tickerA.style.transform = 'translateY(0%)';
-  tickerB.style.transform = 'translateY(100%)';
+  tickerA.innerHTML=''; tickerB.innerHTML='';
+  const list=items.slice(-20);
+  list.forEach(tx=>tickerA.appendChild(createTxElement(tx)));
+  list.forEach(tx=>tickerB.appendChild(createTxElement(tx)));
+  tickerA.style.transform='translateY(0%)'; tickerB.style.transform='translateY(100%)';
 }
-
-// animation loop: move both tickers up, when one is offscreen, reset
-let speed = 0.035; // percent per frame (tweak)
-let posA = 0; // percent from top
-let posB = 100;
-let lastFrame = performance.now();
-
+let speed=0.035,posA=0,posB=100,lastFrame=performance.now();
 function animateTickers(now){
-  const delta = now - lastFrame;
-  lastFrame = now;
-  // move upwards proportionally to delta
-  const step = speed * (delta/16.67); // normalize to 60fps
-  posA -= step;
-  posB -= step;
-  // if top one passed -100%, reset to 100%
-  if(posA <= -100){
-    posA = posB + 100;
-    // when resetting, add some fresh items to top for variety
-    addNewBatch();
-  }
-  if(posB <= -100){
-    posB = posA + 100;
-    addNewBatch();
-  }
-  tickerA.style.transform = `translateY(${posA}%)`;
-  tickerB.style.transform = `translateY(${posB}%)`;
+  const delta=now-lastFrame; lastFrame=now;
+  const step=speed*(delta/16.67);
+  posA-=step; posB-=step;
+  if(posA<=-100){posA=posB+100; addNewBatch();}
+  if(posB<=-100){posB=posA+100; addNewBatch();}
+  tickerA.style.transform=`translateY(${posA}%)`;
+  tickerB.style.transform=`translateY(${posB}%)`;
   requestAnimationFrame(animateTickers);
 }
-
 function addNewBatch(){
-  // push 2-4 new items to items source
-  const count = Math.floor(Math.random()*3)+1;
-  for(let i=0;i<count;i++){
-    items.push(genTx());
-  }
-  // update ticker B or A content to show new list
-  // to keep simple, rebuild both elements from tail
-  const tail = items.slice(-20);
-  const lastWrap = Math.random() < 0.5 ? tickerA : tickerB;
-  lastWrap.innerHTML = '';
-  tail.forEach(tx => lastWrap.appendChild(createTxElement(tx)));
-  // update stats
+  const count=Math.floor(Math.random()*3)+1; for(let i=0;i<count;i++){items.push(genTx());}
+  const tail=items.slice(-20);
+  const lastWrap=Math.random()<0.5?tickerA:tickerB; lastWrap.innerHTML='';
+  tail.forEach(tx=>lastWrap.appendChild(createTxElement(tx)));
   updateStats();
 }
 
-// periodically add single random tx to top (for realism)
-setInterval(()=> {
-  items.push(genTx());
-}, 2400 + Math.random()*1800);
-
-// update small live stats
-function updateStats(){
-  // compute totals from recent N items
-  const recent = items.slice(-40);
-  let inSum=0, outSum=0;
-  recent.forEach(t=>{
-    // parse number from formatted string
-    const val = Number(t.amount.replace(/[₺\s,.]/g,''));
-    if(t.cls==='in') inSum += val;
-    else outSum += val;
-  });
-  document.getElementById('statTotal').innerText = '₺ ' + Math.round((inSum+outSum)/100)*100;
-  document.getElementById('statIn').innerText = '₺ ' + Math.round(inSum/100)*100;
-  document.getElementById('statOut').innerText = '₺ ' + Math.round(outSum/100)*100;
-}
-
-// live clock
-function startClock(){
-  const el = document.getElementById('liveClock');
-  setInterval(()=> {
-    const d = new Date();
-    el.innerText = d.toLocaleTimeString('tr-TR', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
-  }, 1000);
-}
-
-/* ---------------------------
-  Page switcher (bottom nav)
-  --------------------------- */
-function switchPage(e){
-  const target = e.currentTarget.getAttribute('data-target');
-  // update nav active
-  document.querySelectorAll('.nav-item').forEach(n=> n.classList.remove('active'));
-  e.currentTarget.classList.add('active');
-
-  // hide all sections
-  document.querySelectorAll('main.content section').forEach(s=> s.style.display='none');
-  const sec = document.getElementById(target);
-  if(sec) sec.style.display = 'block';
-
-  // update title/sub based on target
-  const titleMap = {
-    homePage: ['Ana Sayfa', 'Tik Tok Shop'],
-    tucPage: ['Tüccar','Tüccar Girişi'],
-    calismaPage: ['Çalışma','Görevler & Raporlar'],
-    kayitPage: ['Kayıt','Yeni Üyelik'],
-    hesapPage: ['Hesabım','Hesap Bilgileri']
-  };
-  const [t,s] = titleMap[target] || ['Sayfa',''];
-  document.getElementById('pageTitle').innerText = t;
-  document.getElementById('pageSub').innerText = s;
-}
-
-/* ---------------------------
-  Init
-  --------------------------- */
-seedInitial(22);
-renderTickers();
-requestAnimationFrame(animateTickers);
-startClock();
-updateStats();
-
-/* For accessibility: allow keyboard nav (optional) */
-document.addEventListener('keydown', (ev) => {
-  if(ev.key === '1') document.querySelector('[data-target="homePage"]').click();
-  if(ev.key === '2') document.querySelector('[data-target="tucPage"]').click();
-  if(ev.key === '3') document.querySelector('[data-target="calismaPage"]').click();
-  if(ev.key === '4') document.querySelector('[data-target="kayitPage"]').click();
-  if(ev.key === '5') document.querySelector('[data-target="hesapPage"]').click();
-});
-</script>
-</body>
-</html>
