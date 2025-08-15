@@ -1,16 +1,15 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="tr">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>Tik Tok Shop - Mobil</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TikTok Shop - Mobil</title>
 <style>
   :root {
     --bg: #f4f6f8;
     --card: #ffffff;
     --muted: #8b8f98;
-    --accent: #ffb400; /* ana vurgun (sarı) */
+    --accent: #ffb400;
     --accent-600: #f2a900;
     --accent-dark: #d08a00;
     --green: #2bb673;
@@ -18,27 +17,32 @@
     --glass: rgba(255, 255, 255, 0.65);
     --shadow: 0 6px 18px rgba(20, 20, 30, 0.08);
     --radius: 12px;
+    --primary-font: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
+  
   * {
     box-sizing: border-box;
-  }
-  html, body {
-    height: 100%;
-  }
-  body {
-    font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background: linear-gradient(180deg, #f7f9fb 0%, #eef2f5 100%);
     margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: var(--primary-font);
+    background: linear-gradient(180deg, #f7f9fb 0%, #eef2f5 100%);
     color: #0f1724;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
   }
-
-  /* Mobile frame */
+  
   .device {
+    width: 100%;
     max-width: 420px;
     height: 812px;
-    margin: 18px auto;
     border-radius: 22px;
     overflow: hidden;
     box-shadow: 0 20px 50px rgba(10, 20, 40, 0.12);
@@ -47,8 +51,7 @@
     display: flex;
     flex-direction: column;
   }
-
-  /* Top header */
+  
   header.top {
     height: 68px;
     display: flex;
@@ -61,6 +64,7 @@
     position: relative;
     z-index: 10;
   }
+  
   .logo {
     width: 44px;
     height: 44px;
@@ -76,6 +80,7 @@
     flex-shrink: 0;
     user-select: none;
   }
+  
   .title-wrap {
     flex: 1;
     display: flex;
@@ -84,6 +89,7 @@
     min-width: 0;
     user-select: none;
   }
+  
   .page-title {
     font-weight: 700;
     font-size: 16px;
@@ -93,6 +99,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  
   .page-sub {
     font-size: 12px;
     color: var(--muted);
@@ -101,6 +108,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  
   .lang-switcher {
     position: relative;
     font-size: 12px;
@@ -116,12 +124,12 @@
     transition: background-color 0.3s ease, color 0.3s ease;
     z-index: 1000;
   }
+  
   .lang-switcher:hover {
     background-color: var(--accent);
     color: white;
   }
   
-  /* Language dropdown - Fixed for mobile */
   .lang-dropdown {
     position: fixed;
     top: 80px;
@@ -139,11 +147,13 @@
     max-height: 300px;
     overflow-y: auto;
   }
+  
   .lang-dropdown.show {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
   }
+  
   .lang-option {
     padding: 10px 12px;
     cursor: pointer;
@@ -153,18 +163,20 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     transition: background-color 0.2s ease;
   }
+  
   .lang-option:last-child {
     border-bottom: none;
   }
+  
   .lang-option:hover {
     background-color: #f9fafb;
   }
+  
   .lang-option.active {
     background-color: var(--accent);
     color: white;
   }
   
-  /* Small colored box next to lang-switcher */
   header.top > div:last-child {
     width: 36px;
     height: 36px;
@@ -177,16 +189,14 @@
     color: #2c5282;
     user-select: none;
   }
-
-  /* Main content area */
+  
   main.content {
     flex: 1;
     overflow: auto;
     padding: 14px;
     -webkit-overflow-scrolling: touch;
   }
-
-  /* Card */
+  
   .card {
     background: var(--card);
     border-radius: 14px;
@@ -194,13 +204,13 @@
     box-shadow: var(--shadow);
     margin-bottom: 12px;
   }
+  
   .card-title {
     font-weight: 700;
     margin-bottom: 12px;
     font-size: 16px;
   }
-
-  /* Ticker styles */
+  
   .ticker-wrap {
     margin-top: 12px;
     height: 160px;
@@ -210,6 +220,7 @@
     background: linear-gradient(180deg, #ffffff, #fffafa);
     border: 1px solid rgba(15, 20, 36, 0.04);
   }
+  
   .ticker {
     position: absolute;
     left: 0;
@@ -220,6 +231,7 @@
     gap: 8px;
     will-change: transform;
   }
+  
   .tx {
     display: flex;
     align-items: center;
@@ -230,6 +242,7 @@
     border: 1px solid rgba(15, 20, 36, 0.03);
     user-select: none;
   }
+  
   .tx .avatar {
     width: 44px;
     height: 44px;
@@ -242,38 +255,44 @@
     background: linear-gradient(135deg, #ff7a59, #ffb86b);
     flex-shrink: 0;
   }
+  
   .tx .meta {
     flex: 1;
     font-size: 14px;
     color: #2d3748;
   }
+  
   .tx .meta .who {
     font-weight: 600;
   }
+  
   .tx .meta .what {
     font-size: 12px;
     color: var(--muted);
     margin-top: 2px;
   }
+  
   .tx .amount {
     font-weight: 700;
     font-size: 14px;
     text-align: right;
     min-width: 90px;
   }
+  
   .in {
     color: var(--green);
   }
+  
   .out {
     color: var(--red);
   }
-
-  /* Partner logos grid */
+  
   .partner-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
   }
+  
   .partner-logo {
     display: flex;
     flex-direction: column;
@@ -289,9 +308,11 @@
     user-select: none;
     transition: box-shadow 0.3s ease;
   }
+  
   .partner-logo:hover {
     box-shadow: 0 6px 16px rgba(20, 20, 30, 0.12);
   }
+  
   .partner-logo .logo-icon {
     height: 32px;
     width: 100%;
@@ -299,6 +320,7 @@
     align-items: center;
     justify-content: center;
   }
+  
   .partner-logo .logo-icon svg {
     max-height: 100%;
     max-width: 100%;
@@ -306,30 +328,34 @@
     width: auto;
     vertical-align: middle;
   }
+  
   .partner-logo .logo-icon > div {
     font-size: 28px;
     font-weight: bold;
     line-height: 1;
   }
+  
   .partner-logo .logo-name {
     font-size: 12px;
     font-weight: 600;
     color: #4a5568;
     user-select: text;
   }
-
-  /* Genel Form stilleri (değişmeden korundu) */
+  
   .form-container {
     display: flex;
     flex-direction: column;
     gap: 8px;
   }
+  
   .form-title {
     font-weight: 700;
   }
+  
   .form-sub {
     color: var(--muted);
   }
+  
   .field {
     margin-top: 12px;
     background: #f7f9fb;
@@ -337,15 +363,20 @@
     padding: 12px 14px;
     border-radius: 10px;
     color: #111827;
+    font-family: var(--primary-font);
+    font-size: 14px;
   }
+  
   .field::placeholder {
     color: #a0aec0;
   }
+  
   .btn-row {
     display: flex;
     gap: 10px;
     margin-top: 18px;
   }
+  
   .btn {
     flex: 1;
     padding: 12px;
@@ -358,20 +389,24 @@
     cursor: pointer;
     box-shadow: 0 6px 18px rgba(255, 180, 0, 0.25);
     transition: background-color 0.3s ease;
+    font-family: var(--primary-font);
+    font-size: 14px;
   }
+  
   .btn:hover {
     background: var(--accent-600);
   }
+  
   .btn.secondary {
     background: #e2e8f0;
     color: #2d3748;
     box-shadow: none;
   }
+  
   .btn.secondary:hover {
     background-color: #cbd5e1;
   }
-
-  /* Nav ve alt bar stilleri */
+  
   nav.bottom {
     height: 74px;
     display: flex;
@@ -383,6 +418,7 @@
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.98));
     user-select: none;
   }
+  
   .nav-item {
     display: flex;
     flex-direction: column;
@@ -397,6 +433,7 @@
     text-align: center;
     transition: color 0.3s ease;
   }
+  
   .nav-item .ic {
     width: 36px;
     height: 36px;
@@ -409,23 +446,38 @@
     font-size: 22px;
     line-height: 1;
   }
+  
   .nav-item.active {
     color: var(--accent-dark);
   }
+  
   .nav-item.active .ic {
     background: linear-gradient(180deg, var(--accent-600), var(--accent));
     color: white;
     box-shadow: var(--shadow);
   }
-
+  
   .muted {
     color: var(--muted);
     font-size: 13px;
   }
+  
   .center {
     text-align: center;
   }
+  
+  .language-info {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    padding: 0 20px;
+  }
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="device" role="application">
@@ -655,6 +707,9 @@
       </div>
     </nav>
   </div>
+  
+ 
+  </div>
 
 <script>
 /* ---------------------------
@@ -713,33 +768,18 @@ const translations = {
   }
 };
 
-let currentLang = 'tr';
-
-// Sri Lankan names and banks data
-const sriLankanData = {
-  names: [
-    'Nimal Perera', 'Kamala Silva', 'Sunil Fernando', 'Priya Jayawardena', 'Rohan Wickramasinghe',
-    'Sanduni Rajapaksa', 'Tharaka Gunasekara', 'Dilani Mendis', 'Chaminda Rathnayake', 'Malini Wijesinghe',
-    'Kasun Bandara', 'Nimali Dissanayake', 'Ruwan Senanayake', 'Chathuri Amarasinghe', 'Janaka Liyanage',
-    'Thilini Kumarasinghe', 'Sampath Herath', 'Anusha Weerasinghe', 'Mahesh Karunaratne', 'Sachini Pathirana',
-    'Dinesh Abeywardena', 'Ruwani Seneviratne', 'Lakmal Jayasuriya', 'Chathurika Ranasinghe', 'Upul Dharmasena',
-    'Madhavi Cooray', 'Gayan Wijesekara', 'Nilmini Samaraweera', 'Asanka Munasinghe', 'Shyamali Edirisinghe'
-  ],
-  banks: [
-    'Bank of Ceylon', 'People\'s Bank', 'Commercial Bank', 'Hatton National Bank', 'Sampath Bank',
-    'Nations Trust Bank', 'DFCC Bank', 'Union Bank', 'Seylan Bank', 'Pan Asia Banking Corporation',
-    'National Development Bank', 'Regional Development Bank', 'Sanasa Development Bank', 'PABC Bank',
-    'Standard Chartered Bank', 'HSBC Sri Lanka', 'Citibank Sri Lanka', 'Deutsche Bank Sri Lanka'
-  ]
-};
+// localStorage'dan dil tercihini al veya varsayılan olarak 'tr' kullan
+let currentLang = localStorage.getItem('userLang') || 'tr';
 
 function setLanguage(lang) {
     currentLang = lang;
+    // Dili localStorage'a kaydet
+    localStorage.setItem('userLang', lang);
     document.documentElement.lang = lang;
     const t = translations[lang];
     if (!t) return;
 
-    // Update all text elements
+    // Tüm metin elementlerini güncelle
     Object.keys(t).forEach(key => {
         const el = document.getElementById(key);
         if (el) {
@@ -753,7 +793,7 @@ function setLanguage(lang) {
         }
     });
 
-    // Update page title and subtitle
+    // Aktif sayfa başlığını güncelle
     const activePage = document.querySelector('nav .active')?.getAttribute('data-target');
     if (activePage && t['page_' + activePage]) {
         const [title, sub] = t['page_' + activePage];
@@ -761,7 +801,7 @@ function setLanguage(lang) {
         document.getElementById('pageSub').innerText = sub;
     }
 
-    // Update language switcher display
+    // Dil değiştiriciyi güncelle
     const langNames = {
         'en': 'EN',
         'si': 'සි',
@@ -771,12 +811,12 @@ function setLanguage(lang) {
     };
     document.getElementById('langSwitcher').childNodes[0].textContent = langNames[lang] || lang.toUpperCase();
 
-    // Update dropdown active state
+    // Aktif dil seçeneğini güncelle
     document.querySelectorAll('.lang-option').forEach(option => {
         option.classList.toggle('active', option.dataset.lang === lang);
     });
 
-    // Re-render ticker with new language
+    // Ticker'ı yeni dille yeniden oluştur
     renderTickers();
 }
 
@@ -784,7 +824,7 @@ function toggleLanguageDropdown() {
     const dropdown = document.getElementById('langDropdown');
     dropdown.classList.toggle('show');
     
-    // Close dropdown when clicking outside
+    // Dropdown dışına tıklandığında kapat
     if (dropdown.classList.contains('show')) {
         setTimeout(() => {
             document.addEventListener('click', closeDropdownOnOutsideClick);
@@ -814,6 +854,24 @@ function selectLanguage(lang) {
 const tickerA = document.getElementById('tickerA');
 const tickerB = document.getElementById('tickerB');
 let items = [];
+
+// Sri Lankan names and banks data
+const sriLankanData = {
+  names: [
+    'Nimal Perera', 'Kamala Silva', 'Sunil Fernando', 'Priya Jayawardena', 'Rohan Wickramasinghe',
+    'Sanduni Rajapaksa', 'Tharaka Gunasekara', 'Dilani Mendis', 'Chaminda Rathnayake', 'Malini Wijesinghe',
+    'Kasun Bandara', 'Nimali Dissanayake', 'Ruwan Senanayake', 'Chathuri Amarasinghe', 'Janaka Liyanage',
+    'Thilini Kumarasinghe', 'Sampath Herath', 'Anusha Weerasinghe', 'Mahesh Karunaratne', 'Sachini Pathirana',
+    'Dinesh Abeywardena', 'Ruwani Seneviratne', 'Lakmal Jayasuriya', 'Chathurika Ranasinghe', 'Upul Dharmasena',
+    'Madhavi Cooray', 'Gayan Wijesekara', 'Nilmini Samaraweera', 'Asanka Munasinghe', 'Shyamali Edirisinghe'
+  ],
+  banks: [
+    'Bank of Ceylon', 'People\'s Bank', 'Commercial Bank', 'Hatton National Bank', 'Sampath Bank',
+    'Nations Trust Bank', 'DFCC Bank', 'Union Bank', 'Seylan Bank', 'Pan Asia Banking Corporation',
+    'National Development Bank', 'Regional Development Bank', 'Sanasa Development Bank', 'PABC Bank',
+    'Standard Chartered Bank', 'HSBC Sri Lanka', 'Citibank Sri Lanka', 'Deutsche Bank Sri Lanka'
+  ]
+};
 
 function genTx() {
   const t = translations[currentLang];
@@ -932,8 +990,8 @@ function workLogout() {
   Init
 --------------------------- */
 function initializeApp() {
-    // Start with Turkish as default
-    setLanguage('tr');
+    // Kayıtlı dili kullan
+    setLanguage(currentLang);
     seedInitial(22);
     requestAnimationFrame(animateTickers);
 }
