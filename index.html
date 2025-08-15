@@ -100,6 +100,7 @@
     text-overflow: ellipsis;
   }
   .lang-switcher {
+    position: relative;
     font-size: 12px;
     font-weight: 600;
     color: var(--muted);
@@ -116,6 +117,48 @@
     background-color: var(--accent);
     color: white;
   }
+  
+  /* Language dropdown */
+  .lang-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    min-width: 120px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+  }
+  .lang-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .lang-option {
+    padding: 10px 12px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    color: #374151;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    transition: background-color 0.2s ease;
+  }
+  .lang-option:last-child {
+    border-bottom: none;
+  }
+  .lang-option:hover {
+    background-color: #f9fafb;
+  }
+  .lang-option.active {
+    background-color: var(--accent);
+    color: white;
+  }
+  
   /* Small colored box next to lang-switcher */
   header.top > div:last-child {
     width: 36px;
@@ -388,7 +431,16 @@
         <div class="page-title" id="pageTitle"></div>
         <div class="page-sub" id="pageSub"></div>
       </div>
-      <div class="lang-switcher" id="langSwitcher" onclick="toggleLanguage()" role="button" tabindex="0" aria-pressed="false" aria-label="Toggle language">EN</div>
+      <div class="lang-switcher" id="langSwitcher" onclick="toggleLanguageDropdown()" role="button" tabindex="0" aria-pressed="false" aria-label="Select language">
+        EN
+        <div class="lang-dropdown" id="langDropdown">
+          <div class="lang-option" data-lang="en" onclick="selectLanguage('en')">English</div>
+          <div class="lang-option" data-lang="si" onclick="selectLanguage('si')">සිංහල</div>
+          <div class="lang-option" data-lang="ta" onclick="selectLanguage('ta')">தமிழ்</div>
+          <div class="lang-option" data-lang="zh" onclick="selectLanguage('zh')">中文</div>
+          <div class="lang-option" data-lang="tr" onclick="selectLanguage('tr')">Türkçe</div>
+        </div>
+      </div>
       <div aria-hidden="true">A</div>
     </header>
 
@@ -471,8 +523,7 @@
           <div class="form-container">
             <div class="form-title" id="merchantLoginTitle"></div>
             <div class="form-sub" id="merchantLoginSub"></div>
-            <input class="field" id="merchantUser" type="text" autocomplete="username"/>
-            <input class="field" id="merchantPass" type="password" autocomplete="current-password"/>
+            <input class="field" id="merchantUser" type="text" autocomplete="username"/><input class="field" id="merchantPass" type="password" autocomplete="current-password"/>
             <div class="btn-row">
               <button class="btn" id="btnLogin" onclick="alert('Login simulation')"></button>
               <button class="btn secondary" id="btnRegister" onclick="alert('Register simulation')"></button>
@@ -570,18 +621,57 @@ const translations = {
     registerTitle: "Create Account", registerFieldName: "Full Name", registerFieldPhone: "Mobile Phone", registerFieldPass: "Password", registerBtnSubmit: "Sign Up", registerBtnCancel: "Cancel",
     accountLoginTitle: "User Login", accountLoginSub: "Access your account or register", accountUserPlaceholder: "Username", accountPassPlaceholder: "Password", accountBtnLogin: "Login", accountBtnRegister: "Sign Up",
   },
-  si: { /*...*/ },
-  ta: { /*...*/ }
+  si: {
+    navHome: "මුල් පිටුව", navMerchant: "වෙළෙන්දා", navWork: "වැඩ", navRegister: "ලියාපදිංචි", navAccount: "මගේ ගිණුම",
+    page_homePage: ["මුල් පිටුව", "ජනප්‍රිය වේදිකා"], page_tucPage: ["වෙළෙන්දා", "වෙළෙන්දා ප්‍රවේශය"], page_calismaPage: ["වැඩ", "කාර්ය ප්‍රවේශය"], page_kayitPage: ["ලියාපදිංචි", "නව ගිණුමක් සාදන්න"], page_hesapPage: ["මගේ ගිණුම", "පරිශීලක ප්‍රවේශය සහ ලියාපදිංචිය"],
+    partnersTitle: "ජනප්‍රිය ඊ-වාණිජ වේදිකා", tickerTitle: "සජීව ගනුදෙනු", txIn: "තැන්පත්", txOut: "ආපසු ගැනීම",
+    merchantLoginTitle: "වෙළෙන්දා ප්‍රවේශය", merchantLoginSub: "ඔබේ වෙළෙන්දා අක්තපත්‍ර ඇතුළත් කරන්න", merchantUserPlaceholder: "පරිශීලක නාමය/ජංගම", merchantPassPlaceholder: "මුරපදය", btnLogin: "ප්‍රවේශය", btnRegister: "ලියාපදිංචි",
+    workLoginTitle: "කාර්ය ප්‍රවේශය", workLoginSub: "ඔබේ කාර්ය කළමනාකරණය කිරීමට ප්‍රවේශ වන්න", workUserPlaceholder: "සේවක හැඳුනුම්පත", workPassPlaceholder: "මුරපදය", workBtnLogin: "ප්‍රවේශය",
+    workDashboardTitle: "වැඩ පැනලය", workDashboardWelcome: "සාදරයෙන් පිළිගනිමු! ඔබේ කාර්ය සූදානම්.", workBtnLogout: "ඉවත්වන්න",
+    registerTitle: "ගිණුම සාදන්න", registerFieldName: "සම්පූර්ණ නම", registerFieldPhone: "ජංගම දුරකථනය", registerFieldPass: "මුරපදය", registerBtnSubmit: "ලියාපදිංචි වන්න", registerBtnCancel: "අවලංගු කරන්න",
+    accountLoginTitle: "පරිශීලක ප්‍රවේශය", accountLoginSub: "ඔබේ ගිණුමට ප්‍රවේශ වන්න හෝ ලියාපදිංචි වන්න", accountUserPlaceholder: "පරිශීලක නාමය", accountPassPlaceholder: "මුරපදය", accountBtnLogin: "ප්‍රවේශය", accountBtnRegister: "ලියාපදිංචි වන්න",
+  },
+  ta: {
+    navHome: "முகப்பு", navMerchant: "வணிகர்", navWork: "வேலை", navRegister: "பதிவு", navAccount: "என் கணக்கு",
+    page_homePage: ["முகப்பு", "பிரபலமான தளங்கள்"], page_tucPage: ["வணிகர்", "வணிகர் அணுகல்"], page_calismaPage: ["வேலை", "பணி உள்நுழைவு"], page_kayitPage: ["பதிவு", "புதிய கணக்கை உருவாக்கவும்"], page_hesapPage: ["என் கணக்கு", "பயனர் உள்நுழைவு மற்றும் பதிவு"],
+    partnersTitle: "பிரபலமான மின்-வணிக தளங்கள்", tickerTitle: "நேரடி பரிவர்த்தனைகள்", txIn: "வைப்பு", txOut: "திரும்பப் பெறுதல்",
+    merchantLoginTitle: "வணிகர் உள்நுழைவு", merchantLoginSub: "உங்கள் வணிகர் சான்றுகளை உள்ளிடவும்", merchantUserPlaceholder: "பயனர்பெயர்/மொபைல்", merchantPassPlaceholder: "கடவுச்சொல்", btnLogin: "உள்நுழைவு", btnRegister: "பதிவு",
+    workLoginTitle: "பணி உள்நுழைவு", workLoginSub: "உங்கள் பணிகளை நிர்வகிக்க உள்நுழையவும்", workUserPlaceholder: "தொழிலாளர் அடையாளம்", workPassPlaceholder: "கடவுச்சொல்", workBtnLogin: "உள்நுழைவு",
+    workDashboardTitle: "வேலை பேனல்", workDashboardWelcome: "வரவேற்கிறோம்! உங்கள் பணிகள் தயார்.", workBtnLogout: "வெளியேறு",
+    registerTitle: "கணக்கை உருவாக்கவும்", registerFieldName: "முழு பெயர்", registerFieldPhone: "மொபைல் போன்", registerFieldPass: "கடவுச்சொல்", registerBtnSubmit: "பதிவு செய்யவும்", registerBtnCancel: "ரத்து செய்",
+    accountLoginTitle: "பயனர் உள்நுழைவு", accountLoginSub: "உங்கள் கணக்கை அணுகவும் அல்லது பதிவு செய்யவும்", accountUserPlaceholder: "பயனர்பெயர்", accountPassPlaceholder: "கடவுச்சொல்", accountBtnLogin: "உள்நுழைவு", accountBtnRegister: "பதிவு செய்யவும்",
+  },
+  zh: {
+    navHome: "首页", navMerchant: "商户", navWork: "工作", navRegister: "注册", navAccount: "我的账户",
+    page_homePage: ["首页", "热门平台"], page_tucPage: ["商户", "商户访问"], page_calismaPage: ["工作", "任务登录"], page_kayitPage: ["注册", "创建新账户"], page_hesapPage: ["我的账户", "用户登录和注册"],
+    partnersTitle: "热门电商平台", tickerTitle: "实时交易", txIn: "存款", txOut: "提款",
+    merchantLoginTitle: "商户登录", merchantLoginSub: "输入您的商户凭据", merchantUserPlaceholder: "用户名/手机", merchantPassPlaceholder: "密码", btnLogin: "登录", btnRegister: "注册",
+    workLoginTitle: "任务登录", workLoginSub: "登录以管理您的任务", workUserPlaceholder: "工作者ID", workPassPlaceholder: "密码", workBtnLogin: "登录",
+    workDashboardTitle: "工作面板", workDashboardWelcome: "欢迎！您的任务已准备就绪。", workBtnLogout: "退出",
+    registerTitle: "创建账户", registerFieldName: "全名", registerFieldPhone: "手机号码", registerFieldPass: "密码", registerBtnSubmit: "注册", registerBtnCancel: "取消",
+    accountLoginTitle: "用户登录", accountLoginSub: "访问您的账户或注册", accountUserPlaceholder: "用户名", accountPassPlaceholder: "密码", accountBtnLogin: "登录", accountBtnRegister: "注册",
+  },
+  tr: {
+    navHome: "Ana Sayfa", navMerchant: "Satıcı", navWork: "Çalışma", navRegister: "Kayıt", navAccount: "Hesabım",
+    page_homePage: ["Ana Sayfa", "Popüler Platformlar"], page_tucPage: ["Satıcı", "Satıcı Erişimi"], page_calismaPage: ["Çalışma", "Görev Girişi"], page_kayitPage: ["Kayıt", "Yeni Hesap Oluştur"], page_hesapPage: ["Hesabım", "Kullanıcı Girişi ve Kayıt"],
+    partnersTitle: "Popüler E-Ticaret Platformları", tickerTitle: "Canlı İşlemler", txIn: "Para Yatırma", txOut: "Para Çekme",
+    merchantLoginTitle: "Satıcı Girişi", merchantLoginSub: "Satıcı bilgilerinizi girin", merchantUserPlaceholder: "Kullanıcı Adı/Mobil", merchantPassPlaceholder: "Şifre", btnLogin: "Giriş", btnRegister: "Kayıt",
+    workLoginTitle: "Görev Girişi", workLoginSub: "Görevlerinizi yönetmek için giriş yapın", workUserPlaceholder: "Çalışan ID", workPassPlaceholder: "Şifre", workBtnLogin: "Giriş",
+    workDashboardTitle: "Çalışma Paneli", workDashboardWelcome: "Hoş geldiniz! Görevleriniz hazır.", workBtnLogout: "Çıkış",
+    registerTitle: "Hesap Oluştur", registerFieldName: "Ad Soyad", registerFieldPhone: "Cep Telefonu", registerFieldPass: "Şifre", registerBtnSubmit: "Kayıt Ol", registerBtnCancel: "İptal",
+    accountLoginTitle: "Kullanıcı Girişi", accountLoginSub: "Hesabınıza erişin veya kayıt olun", accountUserPlaceholder: "Kullanıcı Adı", accountPassPlaceholder: "Şifre", accountBtnLogin: "Giriş", accountBtnRegister: "Kayıt Ol",
+  }
 };
-const langCycle = ['en', 'si', 'ta'];
-let currentLangIndex = 0;
+
+let currentLang = 'tr';
 
 function setLanguage(lang) {
-    currentLangIndex = langCycle.indexOf(lang);
+    currentLang = lang;
     document.documentElement.lang = lang;
     const t = translations[lang];
     if (!t) return;
 
+    // Update all text elements
     Object.keys(t).forEach(key => {
         const el = document.getElementById(key);
         if (el) {
@@ -595,18 +685,59 @@ function setLanguage(lang) {
         }
     });
 
+    // Update page title and subtitle
     const activePage = document.querySelector('nav .active')?.getAttribute('data-target');
-    const [title, sub] = t['page_' + activePage] || ["", ""];
-    document.getElementById('pageTitle').innerText = title;
-    document.getElementById('pageSub').innerText = sub;
+    if (activePage && t['page_' + activePage]) {
+        const [title, sub] = t['page_' + activePage];
+        document.getElementById('pageTitle').innerText = title;
+        document.getElementById('pageSub').innerText = sub;
+    }
 
-    document.getElementById('langSwitcher').innerText = lang.toUpperCase();
+    // Update language switcher display
+    const langNames = {
+        'en': 'EN',
+        'si': 'සි',
+        'ta': 'த',
+        'zh': '中',
+        'tr': 'TR'
+    };
+    document.getElementById('langSwitcher').childNodes[0].textContent = langNames[lang] || lang.toUpperCase();
+
+    // Update dropdown active state
+    document.querySelectorAll('.lang-option').forEach(option => {
+        option.classList.toggle('active', option.dataset.lang === lang);
+    });
+
+    // Re-render ticker with new language
     renderTickers();
 }
 
-function toggleLanguage() {
-    currentLangIndex = (currentLangIndex + 1) % langCycle.length;
-    setLanguage(langCycle[currentLangIndex]);
+function toggleLanguageDropdown() {
+    const dropdown = document.getElementById('langDropdown');
+    dropdown.classList.toggle('show');
+    
+    // Close dropdown when clicking outside
+    if (dropdown.classList.contains('show')) {
+        setTimeout(() => {
+            document.addEventListener('click', closeDropdownOnOutsideClick);
+        }, 0);
+    }
+}
+
+function closeDropdownOnOutsideClick(event) {
+    const dropdown = document.getElementById('langDropdown');
+    const switcher = document.getElementById('langSwitcher');
+    
+    if (!switcher.contains(event.target)) {
+        dropdown.classList.remove('show');
+        document.removeEventListener('click', closeDropdownOnOutsideClick);
+    }
+}
+
+function selectLanguage(lang) {
+    setLanguage(lang);
+    document.getElementById('langDropdown').classList.remove('show');
+    document.removeEventListener('click', closeDropdownOnOutsideClick);
 }
 
 /* ---------------------------
@@ -617,9 +748,9 @@ const tickerB = document.getElementById('tickerB');
 let items = [];
 
 function genTx() {
-  const lang = langCycle[currentLangIndex];
+  const t = translations[currentLang];
   const isDeposit = Math.random() < 0.55;
-  const type = isDeposit ? translations[lang].txIn : translations[lang].txOut;
+  const type = isDeposit ? t.txIn : t.txOut;
   return {type, cls: isDeposit ? 'in' : 'out'};
 }
 
@@ -686,10 +817,12 @@ function switchPage(e) {
   const sec = document.getElementById(target);
   if (sec) sec.style.display = 'block';
 
-  const lang = langCycle[currentLangIndex];
-  const [title, sub] = translations[lang]['page_' + target];
-  document.getElementById('pageTitle').innerText = title;
-  document.getElementById('pageSub').innerText = sub;
+  const t = translations[currentLang];
+  if (t['page_' + target]) {
+    const [title, sub] = t['page_' + target];
+    document.getElementById('pageTitle').innerText = title;
+    document.getElementById('pageSub').innerText = sub;
+  }
 
   /* Aria attributes for tabs */
   document.querySelectorAll('.nav-item').forEach((item, idx) => {
@@ -721,12 +854,8 @@ function workLogout() {
   Init
 --------------------------- */
 function initializeApp() {
-    const userLang = (navigator.language || navigator.userLanguage).slice(0, 2);
-    let initialLang = 'en';
-    if (userLang === 'si') initialLang = 'si';
-    if (userLang === 'ta') initialLang = 'ta';
-
-    setLanguage(initialLang);
+    // Start with Turkish as default
+    setLanguage('tr');
     seedInitial(22);
     requestAnimationFrame(animateTickers);
 }
