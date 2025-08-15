@@ -476,6 +476,22 @@
     font-size: 12px;
     padding: 0 20px;
   }
+  
+  .form-hint {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+    padding: 0 4px;
+  }
+  
+  /* Yeni eklenen stil - telefon formatı için */
+  .phone-format-hint {
+    font-size: 11px;
+    color: #6c757d;
+    margin-top: 2px;
+    padding-left: 4px;
+    font-style: italic;
+  }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 </head>
@@ -625,10 +641,11 @@
           <div class="form-container">
             <div class="form-title" id="merchantLoginTitle"></div>
             <div class="form-sub" id="merchantLoginSub"></div>
-            <input class="field" id="merchantUser" type="text" autocomplete="username"/><input class="field" id="merchantPass" type="password" autocomplete="current-password"/>
+            <input class="field" id="merchantUser" type="text" autocomplete="username" placeholder="Username/Mobile"/>
+            <input class="field" id="merchantPass" type="password" autocomplete="current-password" placeholder="Password"/>
             <div class="btn-row">
-              <button class="btn" id="btnLogin" onclick="alert('Login simulation')"></button>
-              <button class="btn secondary" id="btnRegister" onclick="alert('Register simulation')"></button>
+              <button class="btn" id="btnLogin" onclick="alert('Login simulation')">Login</button>
+              <button class="btn secondary" id="btnRegister" onclick="alert('Register simulation')">Register</button>
             </div>
           </div>
         </div>
@@ -639,17 +656,17 @@
           <div class="form-container">
             <div class="form-title" id="workLoginTitle"></div>
             <div class="form-sub" id="workLoginSub"></div>
-            <input class="field" id="workUser" type="text" autocomplete="username"/>
-            <input class="field" id="workPass" type="password" autocomplete="current-password"/>
+            <input class="field" id="workUser" type="text" autocomplete="username" placeholder="Worker ID"/>
+            <input class="field" id="workPass" type="password" autocomplete="current-password" placeholder="Password"/>
             <div class="btn-row">
-              <button class="btn" id="workBtnLogin" onclick="simulateWorkLogin()"></button>
+              <button class="btn" id="workBtnLogin" onclick="simulateWorkLogin()">Login</button>
             </div>
           </div>
         </div>
         <div class="card" id="workDashboard" style="display:none; text-align:center;">
           <h3 id="workDashboardTitle"></h3>
           <p id="workDashboardWelcome"></p>
-          <button class="btn secondary" onclick="workLogout()" id="workBtnLogout"></button>
+          <button class="btn secondary" onclick="workLogout()" id="workBtnLogout">Logout</button>
         </div>
       </section>
 
@@ -657,27 +674,35 @@
          <div class="card">
             <div class="form-container">
                 <div class="form-title" id="registerTitle"></div>
-                <input class="field" id="registerFieldName" type="text" autocomplete="name"/>
-                <input class="field" id="registerFieldPhone" type="text" autocomplete="tel"/>
-                <input class="field" id="registerFieldPass" type="password" autocomplete="new-password"/>
+                <input class="field" id="registerFieldName" type="text" autocomplete="name" placeholder="Full Name"/>
+                <input class="field" id="registerFieldPhone" type="text" autocomplete="tel" placeholder="Mobile Phone"/>
+                <input class="field" id="registerFieldPass" type="password" autocomplete="new-password" placeholder="Password"/>
                 <div class="btn-row">
-                    <button class="btn" id="registerBtnSubmit"></button>
-                    <button class="btn secondary" id="registerBtnCancel"></button>
+                    <button class="btn" id="registerBtnSubmit">Sign Up</button>
+                    <button class="btn secondary" id="registerBtnCancel">Cancel</button>
                 </div>
             </div>
         </div>
       </section>
 
+      <!-- Tüm giriş alanları İngilizce yapıldı -->
       <section id="hesapPage" style="display:none">
         <div class="card">
             <div class="form-container">
-                <div class="form-title" id="accountLoginTitle"></div>
-                <div class="form-sub" id="accountLoginSub"></div>
-                <input class="field" id="accountUser" type="text" autocomplete="username"/>
-                <input class="field" id="accountPass" type="password" autocomplete="current-password"/>
+                <div class="form-title" id="accountLoginTitle">User Login</div>
+                <div class="form-sub" id="accountLoginSub">Access your account or register</div>
+                
+                <!-- Kullanıcı adı veya telefon girişi -->
+                <input class="field" id="accountUser" type="text" autocomplete="username" placeholder="Username or Phone"/>
+                <div class="phone-format-hint">Format: (e.g. 11 2345678)</div>
+                
+                <!-- Şifre girişi -->
+                <input class="field" id="accountPass" type="password" autocomplete="current-password" placeholder="Password"/>
+                <div class="form-hint" id="passwordHint">Enter your password</div>
+                
                 <div class="btn-row">
-                    <button class="btn" id="accountBtnLogin" onclick="alert('Account login simulation')"></button>
-                    <button class="btn secondary" id="accountBtnRegister" onclick="alert('Account registration simulation')"></button>
+                    <button class="btn" id="accountBtnLogin" onclick="alert('Account login simulation')">Login</button>
+                    <button class="btn secondary" id="accountBtnRegister" onclick="alert('Account registration simulation')">Sign Up</button>
                 </div>
             </div>
         </div>
@@ -708,7 +733,7 @@
     </nav>
   </div>
   
- 
+  
   </div>
 
 <script>
@@ -720,51 +745,51 @@ const translations = {
     navHome: "Home", navMerchant: "Merchant", navWork: "Work", navRegister: "Register", navAccount: "My Account",
     page_homePage: ["Home", "Popular Platforms"], page_tucPage: ["Merchant", "Merchant Access"], page_calismaPage: ["Work", "Task Login"], page_kayitPage: ["Register", "Create New Account"], page_hesapPage: ["My Account", "User Login & Sign Up"],
     partnersTitle: "Popular E-Commerce Platforms", tickerTitle: "Live Transactions", txIn: "Deposit", txOut: "Withdrawal",
-    merchantLoginTitle: "Merchant Login", merchantLoginSub: "Enter your merchant credentials", merchantUserPlaceholder: "Username/Mobile", merchantPassPlaceholder: "Password", btnLogin: "Login", btnRegister: "Register",
-    workLoginTitle: "Task Login", workLoginSub: "Log in to manage your tasks", workUserPlaceholder: "Worker ID", workPassPlaceholder: "Password", workBtnLogin: "Login",
-    workDashboardTitle: "Work Panel", workDashboardWelcome: "Welcome! Your tasks are ready.", workBtnLogout: "Logout",
-    registerTitle: "Create Account", registerFieldName: "Full Name", registerFieldPhone: "Mobile Phone", registerFieldPass: "Password", registerBtnSubmit: "Sign Up", registerBtnCancel: "Cancel",
-    accountLoginTitle: "User Login", accountLoginSub: "Access your account or register", accountUserPlaceholder: "Username", accountPassPlaceholder: "Password", accountBtnLogin: "Login", accountBtnRegister: "Sign Up",
+    merchantLoginTitle: "Merchant Login", merchantLoginSub: "Enter your merchant credentials",
+    workLoginTitle: "Task Login", workLoginSub: "Log in to manage your tasks",
+    workDashboardTitle: "Work Panel", workDashboardWelcome: "Welcome! Your tasks are ready.",
+    registerTitle: "Create Account",
+    accountLoginTitle: "User Login", accountLoginSub: "Access your account or register", 
   },
   si: {
     navHome: "මුල් පිටුව", navMerchant: "වෙළෙන්දා", navWork: "වැඩ", navRegister: "ලියාපදිංචි", navAccount: "මගේ ගිණුම",
     page_homePage: ["මුල් පිටුව", "ජනප්‍රිය වේදිකා"], page_tucPage: ["වෙළෙන්දා", "වෙළෙන්දා ප්‍රවේශය"], page_calismaPage: ["වැඩ", "කාර්ය ප්‍රවේශය"], page_kayitPage: ["ලියාපදිංචි", "නව ගිණුමක් සාදන්න"], page_hesapPage: ["මගේ ගිණුම", "පරිශීලක ප්‍රවේශය සහ ලියාපදිංචිය"],
     partnersTitle: "ජනප්‍රිය ඊ-වාණිජ වේදිකා", tickerTitle: "සජීව ගනුදෙනු", txIn: "තැන්පත්", txOut: "ආපසු ගැනීම",
-    merchantLoginTitle: "වෙළෙන්දා ප්‍රවේශය", merchantLoginSub: "ඔබේ වෙළෙන්දා අක්තපත්‍ර ඇතුළත් කරන්න", merchantUserPlaceholder: "පරිශීලක නාමය/ජංගම", merchantPassPlaceholder: "මුරපදය", btnLogin: "ප්‍රවේශය", btnRegister: "ලියාපදිංචි",
-    workLoginTitle: "කාර්ය ප්‍රවේශය", workLoginSub: "ඔබේ කාර්ය කළමනාකරණය කිරීමට ප්‍රවේශ වන්න", workUserPlaceholder: "සේවක හැඳුනුම්පත", workPassPlaceholder: "මුරපදය", workBtnLogin: "ප්‍රවේශය",
-    workDashboardTitle: "වැඩ පැනලය", workDashboardWelcome: "සාදරයෙන් පිළිගනිමු! ඔබේ කාර්ය සූදානම්.", workBtnLogout: "ඉවත්වන්න",
-    registerTitle: "ගිණුම සාදන්න", registerFieldName: "සම්පූර්ණ නම", registerFieldPhone: "ජංගම දුරකථනය", registerFieldPass: "මුරපදය", registerBtnSubmit: "ලියාපදිංචි වන්න", registerBtnCancel: "අවලංගු කරන්න",
-    accountLoginTitle: "පරිශීලක ප්‍රවේශය", accountLoginSub: "ඔබේ ගිණුමට ප්‍රවේශ වන්න හෝ ලියාපදිංචි වන්න", accountUserPlaceholder: "පරිශීලක නාමය", accountPassPlaceholder: "මුරපදය", accountBtnLogin: "ප්‍රවේශය", accountBtnRegister: "ලියාපදිංචි වන්න",
+    merchantLoginTitle: "වෙළෙන්දා ප්‍රවේශය", merchantLoginSub: "ඔබේ වෙළෙන්දා අක්තපත්‍ර ඇතුළත් කරන්න",
+    workLoginTitle: "කාර්ය ප්‍රවේශය", workLoginSub: "ඔබේ කාර්ය කළමනාකරණය කිරීමට ප්‍රවේශ වන්න",
+    workDashboardTitle: "වැඩ පැනලය", workDashboardWelcome: "සාදරයෙන් පිළිගනිමු! ඔබේ කාර්ය සූදානම්.",
+    registerTitle: "ගිණුම සාදන්න",
+    accountLoginTitle: "පරිශීලක ප්‍රවේශය", accountLoginSub: "ඔබේ ගිණුමට ප්‍රවේශ වන්න හෝ ලියාපදිංචි වන්න", 
   },
   ta: {
     navHome: "முகப்பு", navMerchant: "வணிகர்", navWork: "வேலை", navRegister: "பதிவு", navAccount: "என் கணக்கு",
     page_homePage: ["முகப்பு", "பிரபலமான தளங்கள்"], page_tucPage: ["வணிகர்", "வணிகர் அணுகல்"], page_calismaPage: ["வேலை", "பணி உள்நுழைவு"], page_kayitPage: ["பதிவு", "புதிய கணக்கை உருவாக்கவும்"], page_hesapPage: ["என் கணக்கு", "பயனர் உள்நுழைவு மற்றும் பதிவு"],
     partnersTitle: "பிரபலமான மின்-வணிக தளங்கள்", tickerTitle: "நேரடி பரிவர்த்தனைகள்", txIn: "வைப்பு", txOut: "திரும்பப் பெறுதல்",
-    merchantLoginTitle: "வணிகர் உள்நுழைவு", merchantLoginSub: "உங்கள் வணிகர் சான்றுகளை உள்ளிடவும்", merchantUserPlaceholder: "பயனர்பெயர்/மொபைல்", merchantPassPlaceholder: "கடவுச்சொல்", btnLogin: "உள்நுழைவு", btnRegister: "பதிவு",
-    workLoginTitle: "பணி உள்நுழைவு", workLoginSub: "உங்கள் பணிகளை நிர்வகிக்க உள்நுழையவும்", workUserPlaceholder: "தொழிலாளர் அடையாளம்", workPassPlaceholder:"கடவுச்சொல்", workBtnLogin: "உள்நுழைவு",
-    workDashboardTitle: "வேலை பேனல்", workDashboardWelcome: "வரவேற்கிறோம்! உங்கள் பணிகள் தயார்.", workBtnLogout: "வெளியேறு",
-    registerTitle: "கணக்கை உருவாக்கவும்", registerFieldName: "முழு பெயர்", registerFieldPhone: "மொபைல் போன்", registerFieldPass: "கடவுச்சொல்", registerBtnSubmit: "பதிவு செய்யவும்", registerBtnCancel: "ரத்து செய்",
-    accountLoginTitle: "பயனர் உள்நுழைவு", accountLoginSub: "உங்கள் கணக்கை அணுகவும் அல்லது பதிவு செய்யவும்", accountUserPlaceholder: "பயனர்பெயர்", accountPassPlaceholder: "கடவுச்சொல்", accountBtnLogin: "உள்நுழைவு", accountBtnRegister: "பதிவு செய்யவும்",
+    merchantLoginTitle: "வணிகர் உள்நுழைவு", merchantLoginSub: "உங்கள் வணிகர் சான்றுகளை உள்ளிடவும்",
+    workLoginTitle: "பணி உள்நுழைவு", workLoginSub: "உங்கள் பணிகளை நிர்வகிக்க உள்நுழையவும்",
+    workDashboardTitle: "வேலை பேனல்", workDashboardWelcome: "வரவேற்கிறோம்! உங்கள் பணிகள் தயார்.",
+    registerTitle: "கணக்கை உருவாக்கவும்",
+    accountLoginTitle: "பயனர் உள்நுழைவு", accountLoginSub: "உங்கள் கணக்கை அணுகவும் அல்லது பதிவு செய்யவும்", 
   },
   zh: {
     navHome: "首页", navMerchant: "商户", navWork: "工作", navRegister: "注册", navAccount: "我的账户",
     page_homePage: ["首页", "热门平台"], page_tucPage: ["商户", "商户访问"], page_calismaPage: ["工作", "任务登录"], page_kayitPage: ["注册", "创建新账户"], page_hesapPage: ["我的账户", "用户登录和注册"],
     partnersTitle: "热门电商平台", tickerTitle: "实时交易", txIn: "存款", txOut: "提款",
-    merchantLoginTitle: "商户登录", merchantLoginSub: "输入您的商户凭据", merchantUserPlaceholder: "用户名/手机", merchantPassPlaceholder: "密码", btnLogin: "登录", btnRegister: "注册",
-    workLoginTitle: "任务登录", workLoginSub: "登录以管理您的任务", workUserPlaceholder: "工作者ID", workPassPlaceholder: "密码", workBtnLogin: "登录",
-    workDashboardTitle: "工作面板", workDashboardWelcome: "欢迎！您的任务已准备就绪。", workBtnLogout: "退出",
-    registerTitle: "创建账户", registerFieldName: "全名", registerFieldPhone: "手机号码", registerFieldPass: "密码", registerBtnSubmit: "注册", registerBtnCancel: "取消",
-    accountLoginTitle: "用户登录", accountLoginSub: "访问您的账户或注册", accountUserPlaceholder: "用户名", accountPassPlaceholder: "密码", accountBtnLogin: "登录", accountBtnRegister: "注册",
+    merchantLoginTitle: "商户登录", merchantLoginSub: "输入您的商户凭据",
+    workLoginTitle: "任务登录", workLoginSub: "登录以管理您的任务",
+    workDashboardTitle: "工作面板", workDashboardWelcome: "欢迎！您的任务已准备就绪。",
+    registerTitle: "创建账户",
+    accountLoginTitle: "用户登录", accountLoginSub: "访问您的账户或注册", 
   },
   tr: {
     navHome: "Ana Sayfa", navMerchant: "Satıcı", navWork: "Çalışma", navRegister: "Kayıt", navAccount: "Hesabım",
     page_homePage: ["Ana Sayfa", "Popüler Platformlar"], page_tucPage: ["Satıcı", "Satıcı Erişimi"], page_calismaPage: ["Çalışma", "Görev Girişi"], page_kayitPage: ["Kayıt", "Yeni Hesap Oluştur"], page_hesapPage: ["Hesabım", "Kullanıcı Girişi ve Kayıt"],
     partnersTitle: "Popüler E-Ticaret Platformları", tickerTitle: "Canlı İşlemler", txIn: "Para Yatırma", txOut: "Para Çekme",
-    merchantLoginTitle: "Satıcı Girişi", merchantLoginSub: "Satıcı bilgilerinizi girin", merchantUserPlaceholder: "Kullanıcı Adı/Mobil", merchantPassPlaceholder: "Şifre", btnLogin: "Giriş", btnRegister: "Kayıt",
-    workLoginTitle: "Görev Girişi", workLoginSub: "Görevlerinizi yönetmek için giriş yapın", workUserPlaceholder: "Çalışan ID", workPassPlaceholder: "Şifre", workBtnLogin: "Giriş",
-    workDashboardTitle: "Çalışma Paneli", workDashboardWelcome: "Hoş geldiniz! Görevleriniz hazır.", workBtnLogout: "Çıkış",
-    registerTitle: "Hesap Oluştur", registerFieldName: "Ad Soyad", registerFieldPhone: "Cep Telefonu", registerFieldPass: "Şifre", registerBtnSubmit: "Kayıt Ol", registerBtnCancel: "İptal",
-    accountLoginTitle: "Kullanıcı Girişi", accountLoginSub: "Hesabınıza erişin veya kayıt olun", accountUserPlaceholder: "Kullanıcı Adı", accountPassPlaceholder: "Şifre", accountBtnLogin: "Giriş", accountBtnRegister: "Kayıt Ol",
+    merchantLoginTitle: "Satıcı Girişi", merchantLoginSub: "Satıcı bilgilerinizi girin",
+    workLoginTitle: "Görev Girişi", workLoginSub: "Görevlerinizi yönetmek için giriş yapın",
+    workDashboardTitle: "Çalışma Paneli", workDashboardWelcome: "Hoş geldiniz! Görevleriniz hazır.",
+    registerTitle: "Hesap Oluştur",
+    accountLoginTitle: "Kullanıcı Girişi", accountLoginSub: "Hesabınıza erişin veya kayıt olun", 
   }
 };
 
@@ -784,12 +809,7 @@ function setLanguage(lang) {
         const el = document.getElementById(key);
         if (el) {
             if (key.startsWith('page_')) return;
-            if (key.endsWith('Placeholder')) {
-                const input = document.getElementById(key.replace('Placeholder', ''));
-                if (input) input.placeholder = t[key];
-            } else {
-                el.innerHTML = t[key];
-            }
+            el.innerHTML = t[key];
         }
     });
 
@@ -955,10 +975,10 @@ function switchPage(e) {
 
   const t = translations[currentLang];
   if (t['page_' + target]) {
-    const [title, sub] = t['page_' + target];
-    document.getElementById('pageTitle').innerText = title;
-    document.getElementById('pageSub').innerText = sub;
-  }
+        const [title, sub] = t['page_' + target];
+        document.getElementById('pageTitle').innerText = title;
+        document.getElementById('pageSub').innerText = sub;
+    }
 
   /* Aria attributes for tabs */
   document.querySelectorAll('.nav-item').forEach((item, idx) => {
