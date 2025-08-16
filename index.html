@@ -962,7 +962,33 @@ initializeApp();
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAsxSubuCBjs7FRdxzxcoPDJ0UvrPkXxnY",
+  authDomain: "tiktok-70e02.firebaseapp.com",
+  projectId: "tiktok-70e02",
+  storageBucket: "tiktok-70e02.firebasestorage.app",
+  messagingSenderId: "24505699148",
+  appId: "1:24505699148:web:030f8283af33a86336dde9"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 </script>
+<body>
+  <!-- HTML içeriğiniz burada -->
+
+  <!-- Firebase SDK'larını ekledik -->
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+</body>
 
 </body>
 </html>
+
