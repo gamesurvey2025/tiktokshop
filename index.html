@@ -69,7 +69,7 @@
     width: 44px;
     height: 44px;
     border-radius: 10px;
-    background: linear-gradient(135deg, #111827, #111827);
+    background: linear-gradient(135deg, #000000, #000000);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -207,8 +207,9 @@
   
   .card-title {
     font-weight: 700;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
     font-size: 16px;
+    color: #111827;
   }
   
   .ticker-wrap {
@@ -290,7 +291,7 @@
   .partner-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    gap: 12px;
   }
   
   .partner-logo {
@@ -299,18 +300,20 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 12px 6px;
+    padding: 16px 8px;
     border-radius: 12px;
     background: #fff;
     border: 1px solid #f0f2f5;
     text-align: center;
     box-shadow: 0 2px 8px rgba(20, 20, 30, 0.04);
     user-select: none;
-    transition: box-shadow 0.3s ease;
+    transition: all 0.3s ease;
+    min-height: 80px;
   }
   
   .partner-logo:hover {
     box-shadow: 0 6px 16px rgba(20, 20, 30, 0.12);
+    transform: translateY(-2px);
   }
   
   .partner-logo .logo-icon {
@@ -319,28 +322,46 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 4px;
   }
   
-  .partner-logo .logo-icon svg {
-    max-height: 100%;
+  .partner-logo .logo-icon img {
+    max-height: 32px;
     max-width: 100%;
     height: auto;
     width: auto;
-    vertical-align: middle;
+    object-fit: contain;
   }
   
-  .partner-logo .logo-icon > div {
-    font-size: 28px;
-    font-weight: bold;
-    line-height: 1;
+  .partner-logo .logo-icon .logo-bg {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: white;
   }
   
   .partner-logo .logo-name {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     color: #4a5568;
+    line-height: 1.2;
     user-select: text;
   }
+  
+  /* Platform specific colors */
+  .amazon-bg { background: linear-gradient(135deg, #FF9900, #FFB84D); }
+  .aliexpress-bg { background: linear-gradient(135deg, #FF4747, #FF6B6B); }
+  .etsy-bg { background: linear-gradient(135deg, #F1641E, #FF7A3D); }
+  .ebay-bg { background: linear-gradient(135deg, #E53238, #F04449); }
+  .shein-bg { background: linear-gradient(135deg, #000000, #333333); }
+  .asos-bg { background: linear-gradient(135deg, #2D2D2D, #4A4A4A); }
+  .banggood-bg { background: linear-gradient(135deg, #FF6B35, #FF8555); }
+  .tiktok-bg { background: linear-gradient(135deg, #000000, #333333); }
   
   .form-container {
     display: flex;
@@ -484,7 +505,6 @@
     padding: 0 4px;
   }
   
-  /* Yeni eklenen stil - telefon formatı için */
   .phone-format-hint {
     font-size: 11px;
     color: #6c757d;
@@ -498,10 +518,14 @@
 <body>
   <div class="device" role="application">
     <header class="top">
-      <div class="logo" aria-label="Site logo">T</div>
+      <div class="logo" aria-label="Site logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+        </svg>
+      </div>
       <div class="title-wrap" aria-live="polite">
-        <div class="page-title" id="pageTitle"></div>
-        <div class="page-sub" id="pageSub"></div>
+        <div class="page-title" id="pageTitle">TikTok Shop</div>
+        <div class="page-sub" id="pageSub">Popüler Platformlar</div>
       </div>
       <div class="lang-switcher" id="langSwitcher" onclick="toggleLanguageDropdown()" role="button" tabindex="0" aria-pressed="false" aria-label="Select language">
         TR
@@ -519,105 +543,53 @@
     <main class="content" id="contentArea" tabindex="0" aria-label="Main content area">
       <section id="homePage" aria-labelledby="partnersTitle" role="region">
          <div class="card">
-            <div class="card-title" id="partnersTitle">Popüler Platformlar</div>
+            <div class="card-title" id="partnersTitle">Popüler E-Ticaret Platformları</div>
             <div class="partner-grid" role="list">
                 <div class="partner-logo" role="listitem" tabindex="0" aria-label="Amazon platform">
                     <div class="logo-icon" aria-hidden="true">
-                      <svg viewBox="0 0 100 30" width="64" height="19" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M28.1 21.8c-4.2 3.1-10.3 4.8-15.5 4.8-7.3 0-13.9-2.7-18.9-7.2-.4-.4-.04-.9.4-.6 5.3 3.1 11.9 4.9 18.7 4.9 4.6 0 9.6-.9 14.2-2.8.7-.3 1.3.4.6.9z" fill="#FF9900"/>
-                        <path d="M29.9 19.7c-.5-.7-3.5-.3-4.8-.2-.4 0-.5-.3-.1-.5 2.4-1.7 6.3-1.2 6.8-.6.5.6-.1 4.8-2.5 6.8-.4.3-.7.2-.5-.2.4-1.1 1.4-3.6.9-4.3z" fill="#FF9900"/>
-                        <path d="M26.6 5.4V3.7c0-.3.2-.4.4-.4h7.3c.2 0 .4.2.4.4v1.4c0 .2-.2.5-.4.7l-3.8 5.4c1.4-.03 2.9.2 4.2.8.3.1.4.3.4.6v1.8c0 .2-.2.4-.4.3-2.6-1.4-6.1-1.5-9 .03-.2.1-.4-.1-.4-.3v-1.7c0-.2 0-.6.2-.9l4.4-6.3h-3.8c-.2 0-.4-.2-.4-.4z" fill="#232F3E"/>
-                        <path d="M9.1 14.5h-2.3c-.2 0-.3-.1-.3-.3V3.9c0-.2.2-.3.4-.3h2.1c.2 0 .3.1.3.3v1.3h.04c.6-1.2 1.5-1.8 2.8-1.8 1.3 0 2.1.6 2.7 1.8.6-1.2 1.7-1.8 2.9-1.8 .9 0 1.8.4 2.4 1.2.7.9.5 2.2.5 3.4v6.3c0 .2-.2.3-.4.3h-2.3c-.2 0-.3-.1-.3-.3V8.7c0-.5.05-1.6-.06-2-.2-.7-.7-.9-1.4-.9-.6 0-1.2.4-1.4 1-.2.6-.2 1.6-.2 2.5v4.9c0 .2-.2.3-.4.3H9.8c-.2 0-.3-.1-.3-.3V8.7c0-1-.2-2.5-1.5-2.5s-1.5 1.4-1.5 2.5v5.5c-.1.2-.2.3-.4.3z" fill="#232F3E"/>
-                        <path d="M64.5 14.5c-.2 0-.3-.1-.3-.3l-.03-10.3c0-.2.2-.4.4-.4h2.2c.2 0 .3.1.3.3v1.5h.04c.7-1.4 1.7-2 3.1-2 1 0 2 .4 2.6 1.3.6.8.6 2.2.6 3.2v6.4c0 .2-.2.3-.4.3h-2.3c-.2 0-.3-.1-.3-.3V8.9c0-.9.1-2.2-1-2.2-.4 0-.7.3-.9.7-.2.5-.2 1-.2 1.5v5.3c0 .2-.2.3-.4.3h-2.3z" fill="#232F3E"/>
-                      </svg>
+                      <div class="logo-bg amazon-bg">A</div>
                     </div>
                     <div class="logo-name">Amazon</div>
                 </div>
                 <div class="partner-logo" role="listitem" tabindex="0" aria-label="AliExpress platform">
                     <div class="logo-icon" aria-hidden="true">
-                      <svg viewBox="0 0 100 30" width="64" height="19" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15.7 8.2L12.4 17h-2.1L7 8.2h2.2l2.2 6.8h.03L13.6 8.2h2.1z" fill="#FF4747"/>
-                        <path d="M20.8 17.2c-2.1 0-3.5-1.4-3.5-3.6s1.4-3.6 3.5-3.6 3.5 1.4 3.5 3.6-1.4 3.6-3.5 3.6zm0-1.7c1 0 1.6-.8 1.6-1.9s-.6-1.9-1.6-1.9-1.6.8-1.6 1.9.6 1.9 1.6 1.9z" fill="#FF4747"/>
-                        <path d="M28.9 17.2c-2.1 0-3.5-1.4-3.5-3.6s1.4-3.6 3.5-3.6 3.5 1.4 3.5 3.6-1.4 3.6-3.5 3.6zm0-1.7c1 0 1.6-.8 1.6-1.9s-.6-1.9-1.6-1.9-1.6.8-1.6 1.9.6 1.9 1.6 1.9z" fill="#FF4747"/>
-                        <path d="M36.8 17.2c-2.1 0-3.5-1.4-3.5-3.6s1.4-3.6 3.5-3.6 3.5 1.4 3.5 3.6-1.4 3.6-3.5 3.6zm0-1.7c1 0 1.6-.8 1.6-1.9s-.6-1.9-1.6-1.9-1.6.8-1.6 1.9.6 1.9 1.6 1.9z" fill="#FF4747"/>
-                        <path d="M44.7 17.2c-2.1 0-3.5-1.4-3.5-3.6s1.4-3.6 3.5-3.6 3.5 1.4 3.5 3.6-1.4 3.6-3.5 3.6zm0-1.7c1 0 1.6-.8 1.6-1.9s-.6-1.9-1.6-1.9-1.6.8-1.6 1.9.6 1.9 1.6 1.9z" fill="#FF4747"/>
-                        <path d="M52.6 17.2c-2.1 0-3.5-1.4-3.5-3.6s1.4-3.6 3.5-3.6 3.5 1.4 3.5 3.6-1.4 3.6-3.5 3.6zm0-1.7c1 0 1.6-.8 1.6-1.9s-.6-1.9-1.6-1.9-1.6.8-1.6 1.9.6 1.9 1.6 1.9z" fill="#FF4747"/>
-                        <path d="M60.5 17.2c-2.1 0-3.5-1.4-3.5-3.6s1.4-3.6 3.5-3.6 3.5 1.4 3.5 3.6-1.4 3.6-3.5 3.6zm0-1.7c1 0 1.6-.8 1.6-1.9s-.6-1.9-1.6-1.9-1.6.8-1.6 1.9.6 1.9 1.6 1.9z" fill="#FF4747"/>
-                        <path d="M68.4 17.2c-2.1 0-3.5-1.4-3.5-3.6s1.4-3.6 3.5-3.6 3.5 1.4 3.5 3.6-1.4 3.6-3.5 3.6zm0-1.7c1 0 1.6-.8 1.6-1.9s-.6-1.9-1.6-1.9-1.6.8-1.6 1.9.6 1.9 1.6 1.9z" fill="#FF4747"/>
-                        <path d="M76.3 17.2c-2.1 0-3.5-1.4-3.5-3.6s1.4-3.6 3.5-3.6 3.5 1.4 3.5 3.6-1.4 3.6-3.5 3.6zm0-1.7c1 0 1.6-.8 1.6-1.9s-.6-1.9-1.6-1.9-1.6.8-1.6 1.9.6 1.9 1.6 1.9z" fill="#FF4747"/>
-                        <path d="M84.2 17.2c-2.1 0-3.5-1.4-3.5-3.6s1.4-3.6 3.5-3.6 3.5 1.4 3.5 3.6-1.4 3.6-3.5 3.6zm0-1.7c1 0 1.6-.8 1.6-1.9s-.6-1.9-1.6-1.9-1.6.8-1.6 1.9.6 1.9 1.6 1.9z" fill="#FF4747"/>
-                        <path d="M92.1 17.2c-2.1 0-3.5-1.4-3.5-3.6s1.4-3.6 3.5-3.6 3.5 1.4 3.5 3.6-1.4 3.6-3.5 3.6zm0-1.7c1 0 1.6-.8 1.6-1.9s-.6-1.9-1.6-1.9-1.6.8-1.6 1.9.6 1.9 1.6 1.9z" fill="#FF4747"/>
-                      </svg>
+                      <div class="logo-bg aliexpress-bg">AE</div>
                     </div>
                     <div class="logo-name">AliExpress</div>
                 </div>
                 <div class="partner-logo" role="listitem" tabindex="0" aria-label="Etsy platform">
                     <div class="logo-icon" aria-hidden="true">
-                      <svg viewBox="0 0 100 30" width="64" height="19" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15.7 8.2h8.4v2.1h-6.1v2.8h5.7v2.1h-5.7v3.1h6.3V20h-8.6V8.2z" fill="#F1641E"/>
-                        <path d="M28.4 11.8v-1.6h2.3v1.6h1.8v1.9h-1.8v4.2c0 .8.3 1.1 1 1.1.3 0 .6-.1.8-.2v1.9c-.4.2-.9.3-1.5.3-1.8 0-2.6-.8-2.6-2.6v-4.7h-1.3v-1.9h1.3z" fill="#F1641E"/>
-                        <path d="M36.8 20.2c-2.4 0-4.1-1.6-4.1-4.2s1.7-4.2 4.1-4.2c2.3 0 3.9 1.5 3.9 4.1 0 .3 0 .6-.05.9h-5.7c.1 1.2.9 1.8 2 1.8.7 0 1.3-.2 1.8-.6l1 1.4c-.8.7-1.9 1-3 1zm-1.8-5.1h3.5c-.1-1-.7-1.6-1.7-1.6s-1.7.6-1.8 1.6z" fill="#F1641E"/>
-                        <path d="M45.2 20.2c-2.4 0-3.9-1.7-3.9-4.2s1.5-4.2 3.9-4.2c1.2 0 2.2.4 2.9 1.2l-1.3 1.5c-.5-.5-1-.7-1.6-.7-1.2 0-1.9.9-1.9 2.2s.7 2.2 1.9 2.2c.6 0 1.1-.2 1.6-.7l1.3 1.5c-.7.8-1.7 1.2-2.9 1.2z" fill="#F1641E"/>
-                        <path d="M52.1 20.2c-1.2 0-2.2-.4-2.9-1.2l1.3-1.5c.5.5 1 .7 1.6.7 1.2 0 1.9-.9 1.9-2.2s-.7-2.2-1.9-2.2c-.6 0-1.1.2-1.6.7l-1.3-1.5c.7-.8 1.7-1.2 2.9-1.2 2.4 0 3.9 1.7 3.9 4.2s-1.5 4.2-3.9 4.2z" fill="#F1641E"/>
-                        <path d="M60.8 20.2c-1.2 0-2.2-.4-2.9-1.2l1.3-1.5c.5.5 1 .7 1.6.7 1.2 0 1.9-.9 1.9-2.2s-.7-2.2-1.9-2.2c-.6 0-1.1.2-1.6.7l-1.3-1.5c.7-.8 1.7-1.2 2.9-1.2 2.4 0 3.9 1.7 3.9 4.2s-1.5 4.2-3.9 4.2z" fill="#F1641E"/>
-                      </svg>
+                      <div class="logo-bg etsy-bg">E</div>
                     </div>
                     <div class="logo-name">Etsy</div>
                 </div>
                 <div class="partner-logo" role="listitem" tabindex="0" aria-label="eBay platform">
                     <div class="logo-icon" aria-hidden="true">
-                      <svg viewBox="0 0 100 30" width="64" height="19" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15.7 8.2h8.4v2.1h-6.1v2.8h5.7v2.1h-5.7v3.1h6.3V20h-8.6V8.2z" fill="#E53238"/>
-                        <path d="M28.4 8.2h2.3v4.8h4.2V8.2h2.3V20h-2.3v-5.1h-4.2V20h-2.3V8.2z" fill="#0064D3"/>
-                        <path d="M41.8 20.2c-2.4 0-4.1-1.6-4.1-4.2s1.7-4.2 4.1-4.2c2.3 0 3.9 1.5 3.9 4.1 0 .3 0 .6-.05.9h-5.7c.1 1.2.9 1.8 2 1.8.7 0 1.3-.2 1.8-.6l1 1.4c-.8.7-1.9 1-3 1zm-1.8-5.1h3.5c-.1-1-.7-1.6-1.7-1.6s-1.7.6-1.8 1.6z" fill="#F5AF02"/>
-                        <path d="M50.2 20.2c-1.2 0-2.2-.4-2.9-1.2l1.3-1.5c.5.5 1 .7 1.6.7 1.2 0 1.9-.9 1.9-2.2s-.7-2.2-1.9-2.2c-.6 0-1.1.2-1.6.7l-1.3-1.5c.7-.8 1.7-1.2 2.9-1.2 2.4 0 3.9 1.7 3.9 4.2s-1.5 4.2-3.9 4.2z" fill="#86B817"/>
-                      </svg>
+                      <div class="logo-bg ebay-bg">eB</div>
                     </div>
                     <div class="logo-name">eBay</div>
                 </div>
                 <div class="partner-logo" role="listitem" tabindex="0" aria-label="Shein platform">
                     <div class="logo-icon" aria-hidden="true">
-                      <svg viewBox="0 0 100 30" width="64" height="19" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15.7 20.2c-2.2 0-3.8-1.2-3.8-3.1 0-1.6 1.1-2.6 2.8-3l2.1-.5v-.4c0-1-.6-1.5-1.7-1.5-.8 0-1.4.3-1.8.8l-1.4-1.3c.7-.9 1.9-1.4 3.3-1.4 2.3 0 3.8 1.2 3.8 3.4v6.1h-2.1v-1.2c-.6.9-1.5 1.4-2.6 1.4zm2.1-3.8l-1.5.4c-.8.2-1.2.6-1.2 1.2s.5 1.1 1.3 1.1c1 0 1.7-.6 1.7-1.6v-1.1z" fill="#000"/>
-                        <path d="M24.8 20.2c-2.4 0-4.1-1.6-4.1-4.2s1.7-4.2 4.1-4.2c2.3 0 3.9 1.5 3.9 4.1 0 .3 0 .6-.05.9h-5.7c.1 1.2.9 1.8 2 1.8.7 0 1.3-.2 1.8-.6l1 1.4c-.8.7-1.9 1-3 1zm-1.8-5.1h3.5c-.1-1-.7-1.6-1.7-1.6s-1.7.6-1.8 1.6z" fill="#000"/>
-                        <path d="M33.2 20.2c-1.2 0-2.2-.4-2.9-1.2l1.3-1.5c.5.5 1 .7 1.6.7 1.2 0 1.9-.9 1.9-2.2s-.7-2.2-1.9-2.2c-.6 0-1.1.2-1.6.7l-1.3-1.5c.7-.8 1.7-1.2 2.9-1.2 2.4 0 3.9 1.7 3.9 4.2s-1.5 4.2-3.9 4.2z" fill="#000"/>
-                        <path d="M41.8 20.2c-1.2 0-2.2-.4-2.9-1.2l1.3-1.5c.5.5 1 .7 1.6.7 1.2 0 1.9-.9 1.9-2.2s-.7-2.2-1.9-2.2c-.6 0-1.1.2-1.6.7l-1.3-1.5c.7-.8 1.7-1.2 2.9-1.2 2.4 0 3.9 1.7 3.9 4.2s-1.5 4.2-3.9 4.2z" fill="#000"/>
-                      </svg>
+                      <div class="logo-bg shein-bg">S</div>
                     </div>
                     <div class="logo-name">Shein</div>
                 </div>
                 <div class="partner-logo" role="listitem" tabindex="0" aria-label="ASOS platform">
                     <div class="logo-icon" aria-hidden="true">
-                      <svg viewBox="0 0 100 30" width="64" height="19" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15.7 8.2L12.4 17h-2.1L7 8.2h2.2l2.2 6.8h.03L13.6 8.2h2.1z" fill="#000"/>
-                        <path d="M20.8 20.2c-2.2 0-3.8-1.2-3.8-3.1 0-1.6 1.1-2.6 2.8-3l2.1-.5v-.4c0-1-.6-1.5-1.7-1.5-.8 0-1.4.3-1.8.8l-1.4-1.3c.7-.9 1.9-1.4 3.3-1.4 2.3 0 3.8 1.2 3.8 3.4v6.1h-2.1v-1.2c-.6.9-1.5 1.4-2.6 1.4zm2.1-3.8l-1.5.4c-.8.2-1.2.6-1.2 1.2s.5 1.1 1.3 1.1c1 0 1.7-.6 1.7-1.6v-1.1z" fill="#000"/>
-                        <path d="M28.9 20.2c-2.4 0-3.9-1.7-3.9-4.2s1.5-4.2 3.9-4.2c1.2 0 2.2.4 2.9 1.2l-1.3 1.5c-.5-.5-1-.7-1.6-.7-1.2 0-1.9.9-1.9 2.2s.7 2.2 1.9 2.2c.6 0 1.1-.2 1.6-.7l1.3 1.5c-.7.8-1.7 1.2-2.9 1.2z" fill="#000"/>
-                        <path d="M36.8 20.2c-2.1 0-3.5-1.4-3.5-3.6s1.4-3.6 3.5-3.6 3.5 1.4 3.5 3.6-1.4 3.6-3.5 3.6zm0-1.7c1 0 1.6-.8 1.6-1.9s-.6-1.9-1.6-1.9-1.6.8-1.6 1.9.6 1.9 1.6 1.9z" fill="#000"/>
-                      </svg>
+                      <div class="logo-bg asos-bg">AS</div>
                     </div>
                     <div class="logo-name">ASOS</div>
                 </div>
                 <div class="partner-logo" role="listitem" tabindex="0" aria-label="Banggood platform">
                     <div class="logo-icon" aria-hidden="true">
-                      <svg viewBox="0 0 100 30" width="64" height="19" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15.7 8.2h4.2c2.1 0 3.6 1.4 3.6 3.5s-1.5 3.5-3.6 3.5h-1.9V20h-2.3V8.2zm2.3 5.2h1.7c.9 0 1.5-.6 1.5-1.5s-.6-1.5-1.5-1.5h-1.7v3z" fill="#E53238"/>
-                        <path d="M28.4 20.2c-2.2 0-3.8-1.2-3.8-3.1 0-1.6 1.1-2.6 2.8-3l2.1-.5v-.4c0-1-.6-1.5-1.7-1.5-.8 0-1.4.3-1.8.8l-1.4-1.3c.7-.9 1.9-1.4 3.3-1.4 2.3 0 3.8 1.2 3.8 3.4v6.1h-2.1v-1.2c-.6.9-1.5 1.4-2.6 1.4zm2.1-3.8l-1.5.4c-.8.2-1.2.6-1.2 1.2s.5 1.1 1.3 1.1c1 0 1.7-.6 1.7-1.6v-1.1z" fill="#E53238"/>
-                        <path d="M36.8 20h-2.3v-7.8h2.1v1.2c.6-.9 1.5-1.4 2.6-1.4v2.1h-.6c-1.2 0-1.8.7-1.8 2.1V20z" fill="#E53238"/>
-                        <path d="M44.7 20h-2.3v-7.8h2.1v1.2c.6-.9 1.5-1.4 2.6-1.4v2.1h-.6c-1.2 0-1.8.7-1.8 2.1V20z" fill="#E53238"/>
-                      </svg>
+                      <div class="logo-bg banggood-bg">B</div>
                     </div>
                     <div class="logo-name">Banggood</div>
                 </div>
                 <div class="partner-logo" role="listitem" tabindex="0" aria-label="TikTok Shop platform">
                     <div class="logo-icon" aria-hidden="true">
-                      <svg viewBox="0 0 100 30" width="64" height="19" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20.1 8.2c-.1 1.4.4 2.7 1.4 3.6.9.9 2.2 1.4 3.6 1.3v2.8c-1.2.1-2.4-.2-3.4-.8-.6-.4-1.1-.9-1.5-1.5v6.2c0 3.1-2.5 5.6-5.6 5.6s-5.6-2.5-5.6-5.6 2.5-5.6 5.6-5.6c.6 0 1.1.1 1.6.2v2.9c-.5-.2-1-.3-1.6-.3-1.5 0-2.7 1.2-2.7 2.7s1.2 2.7 2.7 2.7 2.7-1.2 2.7-2.7V8.2h2.8z" fill="#000"/>
-                        <path d="M30.8 20h-2.3v-7.8h2.3V20zm-1.2-9.1c-.8 0-1.4-.6-1.4-1.4s.6-1.4 1.4-1.4 1.4.6 1.4 1.4-.6 1.4-1.4 1.4z" fill="#000"/>
-                        <path d="M36.8 20h-2.3V8.2h2.3v7.1l3.2-3.1h2.8l-3.5 3.4L42.8 20h-2.9l-2.1-3.2-1 1V20z" fill="#000"/>
-                        <path d="M48.4 11.8v-1.6h2.3v1.6h1.8v1.9h-1.8v4.2c0 .8.3 1.1 1 1.1.3 0 .6-.1.8-.2v1.9c-.4.2-.9.3-1.5.3-1.8 0-2.6-.8-2.6-2.6v-4.7h-1.3v-1.9h1.3z" fill="#000"/>
-                        <path d="M56.8 20.2c-2.1 0-3.5-1.4-3.5-3.6s1.4-3.6 3.5-3.6 3.5 1.4 3.5 3.6-1.4 3.6-3.5 3.6zm0-1.7c1 0 1.6-.8 1.6-1.9s-.6-1.9-1.6-1.9-1.6.8-1.6 1.9.6 1.9 1.6 1.9z" fill="#000"/>
-                        <path d="M64.8 20h-2.3v-7.8h2.1v1.2c.6-.9 1.5-1.4 2.6-1.4v2.1h-.6c-1.2 0-1.8.7-1.8 2.1V20z" fill="#000"/>
-                      </svg>
+                      <div class="logo-bg tiktok-bg">T</div>
                     </div>
                     <div class="logo-name">TikTok Shop</div>
                 </div>
@@ -626,7 +598,7 @@
 
         <div class="card" aria-live="polite">
           <div style="display:flex;justify-content:space-between;align-items:center">
-            <div class="card-title" id="tickerTitle">Giriş ve Çıkış</div>
+            <div class="card-title" id="tickerTitle">Canlı İşlemler</div>
           </div>
           <div class="ticker-wrap" id="tickerWrap" aria-label="Live transactions ticker">
             <div class="ticker" id="tickerA"></div>
@@ -635,7 +607,6 @@
         </div>
       </section>
 
-      <!-- Diğer sekmeler kodları olduğu gibi bırakıldı -->
       <section id="tucPage" style="display:none">
         <div class="card">
           <div class="form-container">
@@ -685,18 +656,15 @@
         </div>
       </section>
 
-      <!-- Tüm giriş alanları İngilizce yapıldı -->
       <section id="hesapPage" style="display:none">
         <div class="card">
             <div class="form-container">
                 <div class="form-title" id="accountLoginTitle">User Login</div>
                 <div class="form-sub" id="accountLoginSub">Access your account or register</div>
                 
-                <!-- Kullanıcı adı veya telefon girişi -->
                 <input class="field" id="accountUser" type="text" autocomplete="username" placeholder="Username or Phone"/>
                 <div class="phone-format-hint">Format: (e.g. 11 2345678)</div>
                 
-                <!-- Şifre girişi -->
                 <input class="field" id="accountPass" type="password" autocomplete="current-password" placeholder="Password"/>
                 <div class="form-hint" id="passwordHint">Enter your password</div>
                 
@@ -732,18 +700,12 @@
       </div>
     </nav>
   </div>
-  
-  
-  </div>
 
 <script>
-/* ---------------------------
-  Dil ve Çeviri Yönetimi
---------------------------- */
 const translations = {
   en: {
     navHome: "Home", navMerchant: "Merchant", navWork: "Work", navRegister: "Register", navAccount: "My Account",
-    page_homePage: ["Home", "Popular Platforms"], page_tucPage: ["Merchant", "Merchant Access"], page_calismaPage: ["Work", "Task Login"], page_kayitPage: ["Register", "Create New Account"], page_hesapPage: ["My Account", "User Login & Sign Up"],
+    page_homePage: ["TikTok Shop", "Popular Platforms"], page_tucPage: ["Merchant", "Merchant Access"], page_calismaPage: ["Work", "Task Login"], page_kayitPage: ["Register", "Create New Account"], page_hesapPage: ["My Account", "User Login & Sign Up"],
     partnersTitle: "Popular E-Commerce Platforms", tickerTitle: "Live Transactions", txIn: "Deposit", txOut: "Withdrawal",
     merchantLoginTitle: "Merchant Login", merchantLoginSub: "Enter your merchant credentials",
     workLoginTitle: "Task Login", workLoginSub: "Log in to manage your tasks",
@@ -753,7 +715,7 @@ const translations = {
   },
   si: {
     navHome: "මුල් පිටුව", navMerchant: "වෙළෙන්දා", navWork: "වැඩ", navRegister: "ලියාපදිංචි", navAccount: "මගේ ගිණුම",
-    page_homePage: ["මුල් පිටුව", "ජනප්‍රිය වේදිකා"], page_tucPage: ["වෙළෙන්දා", "වෙළෙන්දා ප්‍රවේශය"], page_calismaPage: ["වැඩ", "කාර්ය ප්‍රවේශය"], page_kayitPage: ["ලියාපදිංචි", "නව ගිණුමක් සාදන්න"], page_hesapPage: ["මගේ ගිණුම", "පරිශීලක ප්‍රවේශය සහ ලියාපදිංචිය"],
+    page_homePage: ["TikTok Shop", "ජනප්‍රිය වේදිකා"], page_tucPage: ["වෙළෙන්දා", "වෙළෙන්දා ප්‍රවේශය"], page_calismaPage: ["වැඩ", "කාර්ය ප්‍රවේශය"], page_kayitPage: ["ලියාපදිංචි", "නව ගිණුමක් සාදන්න"], page_hesapPage: ["මගේ ගිණුම", "පරිශීලක ප්‍රවේශය සහ ලියාපදිංචිය"],
     partnersTitle: "ජනප්‍රිය ඊ-වාණිජ වේදිකා", tickerTitle: "සජීව ගනුදෙනු", txIn: "තැන්පත්", txOut: "ආපසු ගැනීම",
     merchantLoginTitle: "වෙළෙන්දා ප්‍රවේශය", merchantLoginSub: "ඔබේ වෙළෙන්දා අක්තපත්‍ර ඇතුළත් කරන්න",
     workLoginTitle: "කාර්ය ප්‍රවේශය", workLoginSub: "ඔබේ කාර්ය කළමනාකරණය කිරීමට ප්‍රවේශ වන්න",
@@ -763,7 +725,7 @@ const translations = {
   },
   ta: {
     navHome: "முகப்பு", navMerchant: "வணிகர்", navWork: "வேலை", navRegister: "பதிவு", navAccount: "என் கணக்கு",
-    page_homePage: ["முகப்பு", "பிரபலமான தளங்கள்"], page_tucPage: ["வணிகர்", "வணிகர் அணுகல்"], page_calismaPage: ["வேலை", "பணி உள்நுழைவு"], page_kayitPage: ["பதிவு", "புதிய கணக்கை உருவாக்கவும்"], page_hesapPage: ["என் கணக்கு", "பயனர் உள்நுழைவு மற்றும் பதிவு"],
+    page_homePage: ["TikTok Shop", "பிரபலமான தளங்கள்"], page_tucPage: ["வணிகர்", "வணிகர் அணுகல்"], page_calismaPage: ["வேலை", "பணி உள்நுழைவு"], page_kayitPage: ["பதிவு", "புதிய கணக்கை உருவாக்கவும்"], page_hesapPage: ["என் கணக்கு", "பயனர் உள்நுழைவு மற்றும் பதிவு"],
     partnersTitle: "பிரபலமான மின்-வணிக தளங்கள்", tickerTitle: "நேரடி பரிவர்த்தனைகள்", txIn: "வைப்பு", txOut: "திரும்பப் பெறுதல்",
     merchantLoginTitle: "வணிகர் உள்நுழைவு", merchantLoginSub: "உங்கள் வணிகர் சான்றுகளை உள்ளிடவும்",
     workLoginTitle: "பணி உள்நுழைவு", workLoginSub: "உங்கள் பணிகளை நிர்வகிக்க உள்நுழையவும்",
@@ -773,7 +735,7 @@ const translations = {
   },
   zh: {
     navHome: "首页", navMerchant: "商户", navWork: "工作", navRegister: "注册", navAccount: "我的账户",
-    page_homePage: ["首页", "热门平台"], page_tucPage: ["商户", "商户访问"], page_calismaPage: ["工作", "任务登录"], page_kayitPage: ["注册", "创建新账户"], page_hesapPage: ["我的账户", "用户登录和注册"],
+    page_homePage: ["TikTok Shop", "热门平台"], page_tucPage: ["商户", "商户访问"], page_calismaPage: ["工作", "任务登录"], page_kayitPage: ["注册", "创建新账户"], page_hesapPage: ["我的账户", "用户登录和注册"],
     partnersTitle: "热门电商平台", tickerTitle: "实时交易", txIn: "存款", txOut: "提款",
     merchantLoginTitle: "商户登录", merchantLoginSub: "输入您的商户凭据",
     workLoginTitle: "任务登录", workLoginSub: "登录以管理您的任务",
@@ -783,7 +745,7 @@ const translations = {
   },
   tr: {
     navHome: "Ana Sayfa", navMerchant: "Satıcı", navWork: "Çalışma", navRegister: "Kayıt", navAccount: "Hesabım",
-    page_homePage: ["Ana Sayfa", "Popüler Platformlar"], page_tucPage: ["Satıcı", "Satıcı Erişimi"], page_calismaPage: ["Çalışma", "Görev Girişi"], page_kayitPage: ["Kayıt", "Yeni Hesap Oluştur"], page_hesapPage: ["Hesabım", "Kullanıcı Girişi ve Kayıt"],
+    page_homePage: ["TikTok Shop", "Popüler Platformlar"], page_tucPage: ["Satıcı", "Satıcı Erişimi"], page_calismaPage: ["Çalışma", "Görev Girişi"], page_kayitPage: ["Kayıt", "Yeni Hesap Oluştur"], page_hesapPage: ["Hesabım", "Kullanıcı Girişi ve Kayıt"],
     partnersTitle: "Popüler E-Ticaret Platformları", tickerTitle: "Canlı İşlemler", txIn: "Para Yatırma", txOut: "Para Çekme",
     merchantLoginTitle: "Satıcı Girişi", merchantLoginSub: "Satıcı bilgilerinizi girin",
     workLoginTitle: "Görev Girişi", workLoginSub: "Görevlerinizi yönetmek için giriş yapın",
@@ -793,18 +755,15 @@ const translations = {
   }
 };
 
-// localStorage'dan dil tercihini al veya varsayılan olarak 'tr' kullan
 let currentLang = localStorage.getItem('userLang') || 'tr';
 
 function setLanguage(lang) {
     currentLang = lang;
-    // Dili localStorage'a kaydet
     localStorage.setItem('userLang', lang);
     document.documentElement.lang = lang;
     const t = translations[lang];
     if (!t) return;
 
-    // Tüm metin elementlerini güncelle
     Object.keys(t).forEach(key => {
         const el = document.getElementById(key);
         if (el) {
@@ -813,7 +772,6 @@ function setLanguage(lang) {
         }
     });
 
-    // Aktif sayfa başlığını güncelle
     const activePage = document.querySelector('nav .active')?.getAttribute('data-target');
     if (activePage && t['page_' + activePage]) {
         const [title, sub] = t['page_' + activePage];
@@ -821,7 +779,6 @@ function setLanguage(lang) {
         document.getElementById('pageSub').innerText = sub;
     }
 
-    // Dil değiştiriciyi güncelle
     const langNames = {
         'en': 'EN',
         'si': 'සි',
@@ -831,12 +788,10 @@ function setLanguage(lang) {
     };
     document.getElementById('langSwitcher').childNodes[0].textContent = langNames[lang] || lang.toUpperCase();
 
-    // Aktif dil seçeneğini güncelle
     document.querySelectorAll('.lang-option').forEach(option => {
         option.classList.toggle('active', option.dataset.lang === lang);
     });
 
-    // Ticker'ı yeni dille yeniden oluştur
     renderTickers();
 }
 
@@ -844,7 +799,6 @@ function toggleLanguageDropdown() {
     const dropdown = document.getElementById('langDropdown');
     dropdown.classList.toggle('show');
     
-    // Dropdown dışına tıklandığında kapat
     if (dropdown.classList.contains('show')) {
         setTimeout(() => {
             document.addEventListener('click', closeDropdownOnOutsideClick);
@@ -868,14 +822,10 @@ function selectLanguage(lang) {
     document.removeEventListener('click', closeDropdownOnOutsideClick);
 }
 
-/* ---------------------------
-  Ticker & Other Functions...
---------------------------- */
 const tickerA = document.getElementById('tickerA');
 const tickerB = document.getElementById('tickerB');
 let items = [];
 
-// Sri Lankan names and banks data
 const sriLankanData = {
   names: [
     'Nimal Perera', 'Kamala Silva', 'Sunil Fernando', 'Priya Jayawardena', 'Rohan Wickramasinghe',
@@ -961,9 +911,6 @@ function animateTickers(now) {
 
 setInterval(() => { items.push(genTx()); }, 3000);
 
-/* ---------------------------
-  Page & App Logic
---------------------------- */
 function switchPage(e) {
   const target = e.currentTarget.getAttribute('data-target');
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -980,14 +927,12 @@ function switchPage(e) {
         document.getElementById('pageSub').innerText = sub;
     }
 
-  /* Aria attributes for tabs */
   document.querySelectorAll('.nav-item').forEach((item, idx) => {
     item.setAttribute('aria-selected', item.classList.contains('active') ? "true" : "false");
     item.tabIndex = item.classList.contains('active') ? 0 : -1;
   });
 }
 
-/* Çalışma sayfası giriş ve çıkış */
 function simulateWorkLogin() {
     const user = document.getElementById('workUser').value;
     const pass = document.getElementById('workPass').value;
@@ -1006,11 +951,7 @@ function workLogout() {
     document.getElementById('workPass').value = '';
 }
 
-/* ---------------------------
-  Init
---------------------------- */
 function initializeApp() {
-    // Kayıtlı dili kullan
     setLanguage(currentLang);
     seedInitial(22);
     requestAnimationFrame(animateTickers);
